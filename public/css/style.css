@@ -124,6 +124,23 @@ body, html {
   letter-spacing: 1px;
 }
 
+.href-auth {
+  min-width: 150px;
+  height: 42px;
+  margin: 0;
+  padding: 15px 20px;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #3F3540;
+  border-radius: 4px;
+  background: #3F3540;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 
 @media screen and (min-width: 560px) {
   .button-auth {
