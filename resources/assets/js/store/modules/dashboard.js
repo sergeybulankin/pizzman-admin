@@ -7,14 +7,28 @@ export default {
         },
 
         SELECTED_ORDERS(ctx) {
-            axios.get('/api/selected-orders')
-                .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
-                .catch(error => {console.log(error)})
+            setTimeout(() => {
+                axios.get('/api/selected-orders')
+                    .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
+                    .catch(error => {console.log(error)})
+                    .finally (() => { ctx.commit('LOADER_MUTATION') })
+            }, 2000)
         },
 
         SELECTED_ORDERS_BY_STATUS(ctx, id) {
-            axios.post('/api/selected-orders-by-status', {id: id})
-                .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
+            ctx.commit('LOADER_VISIBILITY_MUTATION');
+
+            setTimeout(() => {
+                axios.post('/api/selected-orders-by-status', {id: id})
+                    .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
+                    .catch(error => {console.log(error)})
+                    .finally (() => { ctx.commit('LOADER_MUTATION') })
+            }, 1000)
+        },
+
+        TRANSITION_TO_A_NEW_STAGE(ctx, id) {
+            axios.post('/api/transition-to-a-new-stage', {id: id})
+                .then(res => {console.log('Заказ перешел на новую стадию')})
                 .catch(error => {console.log(error)})
         }
     },
@@ -25,11 +39,20 @@ export default {
 
         SELECTED_ORDERS_MUTATION(state, orders) {
             state.orders = orders
+        },
+
+        LOADER_MUTATION(state) {
+            state.loading = false
+        },
+
+        LOADER_VISIBILITY_MUTATION(state) {
+            state.loading = true
         }
     },
     state: {
         statuses: [],
-        orders: []
+        orders: [],
+        loading: true
     },
     getters: {
         ALL_STATUSES(state) {
@@ -38,6 +61,10 @@ export default {
 
         ALL_ORDERS(state) {
             return state.orders
+        },
+
+        LOADER(state) {
+            return state.loading
         }
     }
 }

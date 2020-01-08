@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\OrderStatus;
+use App\User;
+use App\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -21,11 +22,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $orders = OrderStatus::with('order', 'status')
-            ->where('status_id', '>', 1)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $user = Auth::user()->id;
+        
+        $account = User::with('account')->where('id', $user)->first();
+        
+        $role = UserRole::with('role')->where('user_id', $user)->first();
 
-        return view('dashboard', compact('orders'));
+        return view('dashboard', compact('account', 'role'));
     }
 }

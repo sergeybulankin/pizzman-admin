@@ -12,6 +12,13 @@
 */
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/control', 'ControlController@index');
+
+Route::get('/list/accounts', 'AccountController@show');
+
+Route::get('/create/account', 'AccountController@index');
+
+Route::post('/store/account', 'AccountController@store');
 
 Auth::routes();
 

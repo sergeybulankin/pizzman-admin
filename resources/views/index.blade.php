@@ -34,25 +34,27 @@
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <div class="col-md-6">
                             <input id="name" type="name" class="input-auth" placeholder="Номер телефона" name="name" value="{{ old('name') }}" required autofocus><br /><br />
-
-                            @if ($errors->has('name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
                         </div>
                     </div>
 
                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                         <div class="col-md-6">
                             <input id="password" type="password" placeholder="Пароль" class="input-auth" name="password" required><br /><br />
-
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
                         </div>
+                    </div>
+
+                    <div class="errors">
+                        @if ($errors->has('name'))
+                            <div class="help-block">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </div>
+                        @endif
+
+                        @if ($errors->has('password'))
+                            <div class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="form-group">

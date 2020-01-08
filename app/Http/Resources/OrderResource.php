@@ -17,7 +17,11 @@ class OrderResource extends Resource
         //return parent::toArray($request);
 
         return [
-            'id' => $this->id
+            'id' => $this->id,
+
+            'address' => $this->address[0],
+            'user' => $this->user,
+            'status' => $this->order_status
         ];
     }
 }

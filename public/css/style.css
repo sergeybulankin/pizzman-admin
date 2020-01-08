@@ -171,3 +171,29 @@ body, html {
   line-height: 2;
   color: white;
 }
+
+
+.account {
+  background: #2B1B35;
+  margin: 0 0 25px 0;
+  padding: 15px;
+  color: white;
+}
+
+
+.form-add {
+  width: 1000px;
+}
+
+.errors {
+  width: 300px;
+  background: #3F3540;
+  color: white;
+  margin: 15px 0;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+}
+.help-block {
+  padding: 10px;
+}
