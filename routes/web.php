@@ -15,10 +15,14 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/control', 'ControlController@index');
 
 Route::get('/list/accounts', 'AccountController@show');
+Route::put('/list/account/black/{id}', 'AccountController@blackList')->middleware('auth');
+Route::put('/list/account/unblack/{id}', 'AccountController@unlockedUser')->middleware('auth');
 
 Route::get('/create/account', 'AccountController@index');
 
-Route::post('/store/account', 'AccountController@store');
+Route::post('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
+
+Route::post('/store/account', 'AccountController@store')->middleware('auth');
 
 Auth::routes();
 

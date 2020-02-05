@@ -1,6 +1,19 @@
 <template>
     <div class="container">
         <div class="row">
+
+            <circular-count-down-timer
+                    :initial-value="5"
+                    :steps="5"
+                    :size="60"
+                    :stroke-width="3"
+                    :second-label="''"
+                    @finish="updateOrders"
+                    :show-negatives="true"
+                    ref="countDown"
+            ></circular-count-down-timer>
+
+
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <h1>Срочная готовка</h1>
@@ -36,10 +49,12 @@
                         </td>
                         <td class="address">{{ order.address.address }} - {{ order.address.kv }}</td>
                         <td>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)">Дальше</button>
+                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 5">Дальше</button>
 
-                            <div v-if="order.status[0].status_id == 5">
-                                <h5>выбрать водителя</h5>
+                            <div v-if="order.status[0].status_id == 4">
+                                <select name="driver" class="form-control">
+                                    <option :value="driver.id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
+                                </select>
                             </div>
 
                         </td>
@@ -58,13 +73,20 @@
         mounted() {
             this.SELECTED_ALL_STATUSES();
             this.SELECTED_ORDERS();
+            this.SELECTED_ALL_DRIVERS();
         },
-        computed: mapGetters(['ALL_STATUSES', 'ALL_ORDERS', 'LOADER']),
+        computed: mapGetters([
+            'ALL_STATUSES',
+            'ALL_ORDERS',
+            'ALL_DRIVERS',
+            'LOADER'
+        ]),
         methods: {
             ...mapActions([
                     'SELECTED_ALL_STATUSES',
                     'SELECTED_ORDERS',
                     'SELECTED_ORDERS_BY_STATUS',
+                    'SELECTED_ALL_DRIVERS',
                     'TRANSITION_TO_A_NEW_STAGE'
                 ]),
 
@@ -76,52 +98,14 @@
                 this.TRANSITION_TO_A_NEW_STAGE(id);
                 this.SELECTED_ALL_STATUSES();
                 this.SELECTED_ORDERS_BY_STATUS(status_id)
+            },
+
+            updateOrders() {
+                this.SELECTED_ALL_STATUSES();
+                this.SELECTED_ORDERS();
+                this.SELECTED_ALL_DRIVERS();
+                console.log('Данные обновились');
             }
         }
     }
 </script>
-
-<style>
-    .table-title {
-        background: #f5f5f5;
-    }
-    .table-title td {
-        padding: 12px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .list td {
-        padding: 12px;
-        font-size: 14px;
-    }
-    .number-order {
-        width: 150px;
-        text-align: center;
-    }
-    .number-phone {
-        width: 150px;
-    }
-    .list-foods {
-        width: 250px;
-    }
-
-    .list > .address {
-        font-size: 12px;
-    }
-
-    .count {
-        padding: 4px;
-        background: #ffac92;
-        color: red;
-        border-radius: 3px;
-    }
-
-    .load {
-        text-align: center;
-    }
-
-    .mt-50 {
-        margin-top: 50px;
-    }
-</style>

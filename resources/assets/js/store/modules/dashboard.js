@@ -26,6 +26,12 @@ export default {
             }, 1000)
         },
 
+        SELECTED_ALL_DRIVERS(ctx) {
+            axios.get('/api/selected-all-drivers')
+                .then(res => {ctx.commit('SELECTED_ALL_DRIVERS_MUTATION', res.data.data)})
+                .catch(error => {console.log(error)})
+        },
+
         TRANSITION_TO_A_NEW_STAGE(ctx, id) {
             axios.post('/api/transition-to-a-new-stage', {id: id})
                 .then(res => {console.log('Заказ перешел на новую стадию')})
@@ -41,6 +47,10 @@ export default {
             state.orders = orders
         },
 
+        SELECTED_ALL_DRIVERS_MUTATION(state, drivers) {
+            state.drivers = drivers
+        },
+
         LOADER_MUTATION(state) {
             state.loading = false
         },
@@ -52,6 +62,7 @@ export default {
     state: {
         statuses: [],
         orders: [],
+        drivers: [],
         loading: true
     },
     getters: {
@@ -61,6 +72,10 @@ export default {
 
         ALL_ORDERS(state) {
             return state.orders
+        },
+
+        ALL_DRIVERS(state) {
+            return state.drivers
         },
 
         LOADER(state) {

@@ -197,3 +197,56 @@ body, html {
 .help-block {
   padding: 10px;
 }
+
+
+
+
+.table-title {
+  background: #f5f5f5;
+}
+.table-title td {
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.table-list td {
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.list td {
+  padding: 12px;
+  font-size: 14px;
+}
+.number-order {
+  width: 150px;
+  text-align: center;
+}
+.number-phone {
+  width: 150px;
+}
+.list-foods {
+  width: 250px;
+}
+
+
+.list > .address {
+  font-size: 12px;
+}
+
+.count {
+  padding: 4px;
+  background: #ffac92;
+  color: red;
+  border-radius: 3px;
+}
+
+.load {
+  text-align: center;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}

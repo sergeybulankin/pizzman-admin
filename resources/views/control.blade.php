@@ -55,4 +55,10 @@
     </div>
 </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $('.alert-success, .alert-danger').fadeIn().delay(3000).fadeOut();
+    });
+</script>
 </html>

@@ -1,7 +1,7 @@
 @extends('control')
 
 @section('content')
-    <h1>Новый ползователь</h1>
+    <h1>Редактирование ползователя</h1>
 
     <div class="form-add">
         @if(session()->has('success'))
@@ -21,7 +21,7 @@
             {{ csrf_field() }}
 
             <div class="form-group">
-                <input type="text" name="name_account" id="name_account" placeholder="Имя" class="form-control">
+                <input type="text" name="name_account" id="name_account" placeholder="Имя" class="form-control" value="{{ $account }}">
             </div>
 
             <div class="form-group">
