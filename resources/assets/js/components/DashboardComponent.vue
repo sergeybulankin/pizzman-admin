@@ -2,16 +2,20 @@
     <div class="container">
         <div class="row">
 
-            <circular-count-down-timer
-                    :initial-value="5"
-                    :steps="5"
-                    :size="60"
-                    :stroke-width="3"
-                    :second-label="''"
-                    @finish="updateOrders"
-                    :show-negatives="true"
-                    ref="countDown"
-            ></circular-count-down-timer>
+            <vue-countdown-timer
+                    @start_callback="startCallBack('Начало')"
+                    @end_callback="endCallBack('Конец')"
+                    :interval="100"
+                    :start-time="startTime"
+                    :end-time="endTime"
+                    :start-label="'Till starts'"
+                    :end-label="'Till ends'"
+                    :end-text="'Ended'"
+                    :day-txt = null
+                    :hour-txt = null
+                    :minutes-txt= null
+                    :seconds-txt="'секунд'">
+            </vue-countdown-timer>
 
 
             <div class="col-md-12">
@@ -47,14 +51,25 @@
                         <td class="list-foods">
                             Здесь будут блюда
                         </td>
-                        <td class="address">{{ order.address.address }} - {{ order.address.kv }}</td>
-                        <td>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 5">Дальше</button>
+                        <td class="address">
+                            {{ order.address.address }} - {{ order.address.kv }}
 
+                            <div v-if="order.status[0].status_id == 5">
+                                {{ order.courier }}
+                            </div>
+                        </td>
+                        <td>
                             <div v-if="order.status[0].status_id == 4">
-                                <select name="driver" class="form-control">
+                                <select name="driver" class="form-control" v-model="driver">
                                     <option :value="driver.id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
                                 </select>
+                                <br>
+
+                                <button class="btn btn-danger" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                            </div>
+
+                            <div v-else>
+                                <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 5">Дальше</button>
                             </div>
 
                         </td>
@@ -70,6 +85,15 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
+        data() {
+            const now = new Date();
+            return {
+                driver: '',
+
+                startTime: new Date(now.getTime() + (1000 * 10)),
+                endTime: new Date(now.getTime() + (1000 * 20)),
+            }
+        },
         mounted() {
             this.SELECTED_ALL_STATUSES();
             this.SELECTED_ORDERS();
@@ -87,11 +111,19 @@
                     'SELECTED_ORDERS',
                     'SELECTED_ORDERS_BY_STATUS',
                     'SELECTED_ALL_DRIVERS',
-                    'TRANSITION_TO_A_NEW_STAGE'
+                    'TRANSITION_TO_A_NEW_STAGE',
+                    'SEND_ORDER_TO_COURIER'
                 ]),
 
             changeOrdersByStatus(id) {
                 this.SELECTED_ORDERS_BY_STATUS(id)
+            },
+
+            passOrder(id, status_id, driver){
+                var data = {id, driver}
+                this.SEND_ORDER_TO_COURIER(data);
+
+                this.nextStep(id, status_id);
             },
 
             nextStep(id, status_id){
@@ -105,6 +137,14 @@
                 this.SELECTED_ORDERS();
                 this.SELECTED_ALL_DRIVERS();
                 console.log('Данные обновились');
+            },
+
+            startCallBack: function (x) {
+                console.log(x)
+            },
+
+            endCallBack: function (x) {
+                console.log(x)
             }
         }
     }

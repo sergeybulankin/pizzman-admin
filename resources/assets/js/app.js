@@ -11,8 +11,8 @@ window.Vue = require('vue');
 
 import store from './store/index';
 
-import CircularCountDownTimer from "vue-circular-count-down-timer";
-window.Vue.use(CircularCountDownTimer);
+import VueCountdownTimer from 'vuejs-countdown-timer';
+window.Vue.use(VueCountdownTimer);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

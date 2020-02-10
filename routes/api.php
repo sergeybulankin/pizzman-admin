@@ -13,3 +13,4 @@ Route::get('selected-orders', 'OrderController@index');
 Route::post('selected-orders-by-status', 'OrderController@selectOrderByStatus');
 Route::get('selected-all-drivers', 'AccountController@selectDrivers');
 Route::post('transition-to-a-new-stage', 'OrderController@nextStage');
+Route::post('send-order-to-courier', 'OrderController@sendOrderToCourier');

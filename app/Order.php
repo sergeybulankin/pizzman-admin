@@ -44,4 +44,13 @@ class Order extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function courier()
+    {
+        //return $this->hasOne(OrderCourier::class, 'order_id', 'id');
+        return $this->hasManyThrough(User::class, OrderCourier::class, 'user_id', 'id', 'user_id');
+    }
 }

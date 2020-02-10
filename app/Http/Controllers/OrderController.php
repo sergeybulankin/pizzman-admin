@@ -8,6 +8,7 @@ use App\FoodAdditive;
 use App\FoodInOrder;
 use App\Http\Resources\OrderResource;
 use App\Order;
+use App\OrderCourier;
 use App\OrderStatus;
 use Illuminate\Http\Request;
 
@@ -78,5 +79,18 @@ class OrderController extends Controller
 
         $order->status_id = $order->status_id + 1;
         $order->save();
+    }
+    
+
+    /**
+     * @param Request $request
+     */
+    public function sendOrderToCourier(Request $request)
+    {
+        $order_courier = new OrderCourier();
+        $order_courier->order_id = $request->order_id;
+        $order_courier->user_id = $request->driver;
+
+        $order_courier->save();
     }
 }

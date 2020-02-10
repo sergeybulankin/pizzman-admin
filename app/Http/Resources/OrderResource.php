@@ -21,7 +21,8 @@ class OrderResource extends Resource
 
             'address' => $this->address[0],
             'user' => $this->user,
-            'status' => $this->order_status
+            'status' => $this->order_status,
+            'courier' => $this->courier
         ];
     }
 }
