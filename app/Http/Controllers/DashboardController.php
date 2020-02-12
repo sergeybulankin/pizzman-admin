@@ -28,6 +28,8 @@ class DashboardController extends Controller
         
         $role = UserRole::with('role')->where('user_id', $user)->first();
 
-        return view('dashboard', compact('account', 'role'));
+        $role_id = $role['role_id'];
+
+        return view('dashboard', compact('account', 'role', 'role_id'));
     }
 }

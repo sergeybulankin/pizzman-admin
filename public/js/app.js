@@ -45606,6 +45606,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_dashboard__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_user__ = __webpack_require__(47);
 
 
 
@@ -45617,9 +45618,11 @@ var debug = "development" !== 'production';
 
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        dashboard: __WEBPACK_IMPORTED_MODULE_2__modules_dashboard__["a" /* default */]
+        dashboard: __WEBPACK_IMPORTED_MODULE_2__modules_dashboard__["a" /* default */],
+        user: __WEBPACK_IMPORTED_MODULE_3__modules_user__["a" /* default */]
     },
     strict: debug
 }));
@@ -45892,11 +45895,142 @@ module.exports = function normalizeComponent (
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AdminComponent__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AdminComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AdminComponent__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DriverComponent__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DriverComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__DriverComponent__);
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.$store.commit('setAuthUser', window.Laravel.role);
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ROLE']),
+    components: {
+        Admin: __WEBPACK_IMPORTED_MODULE_1__AdminComponent___default.a,
+        Driver: __WEBPACK_IMPORTED_MODULE_2__DriverComponent___default.a
+    }
+});
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm.ROLE == 4 ? _c("Admin") : _vm._e(),
+      _vm._v(" "),
+      _vm.ROLE == 3 ? _c("Driver") : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fbc12a80", module.exports)
+  }
+}
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    state: {
+        role: []
+    },
+
+    mutations: {
+        setAuthUser: function setAuthUser(state, role) {
+            state.role = role;
+        }
+    },
+
+    getters: {
+        ROLE: function ROLE(state) {
+            return state.role;
+        }
+    }
+});
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(44)
+/* script */
+var __vue_script__ = __webpack_require__(49)
+/* template */
+var __vue_template__ = __webpack_require__(50)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/AdminComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-18f46165", Component.options)
+  } else {
+    hotAPI.reload("data-v-18f46165", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(10);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
 //
 //
 //
@@ -46031,228 +46165,225 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _c("vue-countdown-timer", {
-          attrs: {
-            interval: 100,
-            "start-time": _vm.startTime,
-            "end-time": _vm.endTime,
-            "start-label": "Till starts",
-            "end-label": "Till ends",
-            "end-text": "Ended",
-            "day-txt": null,
-            "hour-txt": null,
-            "minutes-txt": null,
-            "seconds-txt": "секунд"
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("vue-countdown-timer", {
+        attrs: {
+          interval: 100,
+          "start-time": _vm.startTime,
+          "end-time": _vm.endTime,
+          "start-label": "Till starts",
+          "end-label": "Till ends",
+          "end-text": "Ended",
+          "day-txt": null,
+          "hour-txt": null,
+          "minutes-txt": null,
+          "seconds-txt": "секунд"
+        },
+        on: {
+          start_callback: function($event) {
+            return _vm.startCallBack("Начало")
           },
-          on: {
-            start_callback: function($event) {
-              return _vm.startCallBack("Начало")
-            },
-            end_callback: function($event) {
-              return _vm.endCallBack("Конец")
-            }
+          end_callback: function($event) {
+            return _vm.endCallBack("Конец")
           }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "panel panel-default" }, [
-            _c("h1", [_vm._v("Срочная готовка")]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticClass: "nav" },
-              _vm._l(_vm.ALL_STATUSES, function(status, index) {
-                return _c("li", { key: index, staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link active",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          return _vm.changeOrdersByStatus(status.id)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(status.status_name) +
-                          " "
-                      ),
-                      _c("span", { staticClass: "count" }, [
-                        _vm._v(_vm._s(status.count))
-                      ])
-                    ]
-                  )
-                ])
-              }),
-              0
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12 mt-50" }, [
-          _vm.LOADER
-            ? _c("div", { staticClass: "load" }, [
-                _c("img", {
-                  attrs: { src: "images/loader.gif", alt: "", width: "20px" }
-                }),
-                _vm._v(" "),
-                _c("h4", [_vm._v("Загружаем заказы...")])
-              ])
-            : _vm._e(),
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("h1", [_vm._v("Срочная готовка")]),
           _vm._v(" "),
           _c(
-            "table",
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.ALL_ORDERS, function(order, index) {
-                return _c("tr", { key: index, staticClass: "list" }, [
-                  _c("td", { staticClass: "number-order" }, [
-                    _vm._v("# " + _vm._s(order.id))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "number-phone" }, [
-                    _vm._v(_vm._s(order.user.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "list-foods" }, [
-                    _vm._v(
-                      "\n                        Здесь будут блюда\n                    "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "address" }, [
+            "ul",
+            { staticClass: "nav" },
+            _vm._l(_vm.ALL_STATUSES, function(status, index) {
+              return _c("li", { key: index, staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link active",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeOrdersByStatus(status.id)
+                      }
+                    }
+                  },
+                  [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(order.address.address) +
-                        " - " +
-                        _vm._s(order.address.kv) +
-                        "\n\n                        "
+                        _vm._s(status.status_name) +
+                        " "
                     ),
-                    order.status[0].status_id == 5
-                      ? _c("div", [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(order.courier) +
-                              "\n                        "
-                          )
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    order.status[0].status_id == 4
-                      ? _c("div", [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.driver,
-                                  expression: "driver"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "driver" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.driver = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            _vm._l(_vm.ALL_DRIVERS, function(driver, i) {
-                              return _c(
-                                "option",
-                                { key: i, domProps: { value: driver.id } },
-                                [
-                                  _vm._v(
-                                    _vm._s(driver.name) +
-                                      "  " +
-                                      _vm._s(driver.second_name)
-                                  )
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              on: {
-                                click: function($event) {
-                                  return _vm.passOrder(
-                                    order.id,
-                                    order.status[0].status_id,
-                                    _vm.driver
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Дальше")]
-                          )
-                        ])
-                      : _c("div", [
-                          order.status[0].status_id <= 5
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.nextStep(
-                                        order.id,
-                                        order.status[0].status_id
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("Дальше")]
-                              )
-                            : _vm._e()
-                        ])
-                  ])
-                ])
-              })
-            ],
-            2
+                    _c("span", { staticClass: "count" }, [
+                      _vm._v(_vm._s(status.count))
+                    ])
+                  ]
+                )
+              ])
+            }),
+            0
           )
         ])
-      ],
-      1
-    )
-  ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12 mt-50" }, [
+        _vm.LOADER
+          ? _c("div", { staticClass: "load" }, [
+              _c("img", {
+                attrs: { src: "images/loader.gif", alt: "", width: "20px" }
+              }),
+              _vm._v(" "),
+              _c("h4", [_vm._v("Загружаем заказы...")])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "table",
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.ALL_ORDERS, function(order, index) {
+              return _c("tr", { key: index, staticClass: "list" }, [
+                _c("td", { staticClass: "number-order" }, [
+                  _vm._v("# " + _vm._s(order.id))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "number-phone" }, [
+                  _vm._v(_vm._s(order.user.name))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "list-foods" }, [
+                  _vm._v(
+                    "\n                    Здесь будут блюда\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "address" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(order.address.address) +
+                      " - " +
+                      _vm._s(order.address.kv) +
+                      "\n\n                    "
+                  ),
+                  order.status[0].status_id == 5
+                    ? _c("div", [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(order.courier) +
+                            "\n                    "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  order.status[0].status_id == 4
+                    ? _c("div", [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.driver,
+                                expression: "driver"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "driver" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.driver = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.ALL_DRIVERS, function(driver, i) {
+                            return _c(
+                              "option",
+                              { key: i, domProps: { value: driver.id } },
+                              [
+                                _vm._v(
+                                  _vm._s(driver.name) +
+                                    "  " +
+                                    _vm._s(driver.second_name)
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.passOrder(
+                                  order.id,
+                                  order.status[0].status_id,
+                                  _vm.driver
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("Дальше")]
+                        )
+                      ])
+                    : _c("div", [
+                        order.status[0].status_id <= 5
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.nextStep(
+                                      order.id,
+                                      order.status[0].status_id
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("Дальше")]
+                            )
+                          : _vm._e()
+                      ])
+                ])
+              ])
+            })
+          ],
+          2
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -46277,7 +46408,74 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fbc12a80", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-18f46165", module.exports)
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(44)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(52)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DriverComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4e607a4e", Component.options)
+  } else {
+    hotAPI.reload("data-v-4e607a4e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("h1", [_vm._v("DRIVER")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4e607a4e", module.exports)
   }
 }
 

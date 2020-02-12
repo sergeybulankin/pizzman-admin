@@ -16,7 +16,8 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {
-            csrfToken: '{{ csrf_token() }}'
+            csrfToken: '{{ csrf_token() }}',
+            role: '{{ json_encode($role_id) }}'
         };
     </script>
 </head>
