@@ -1,25 +1,8 @@
 <template>
     <div class="row">
-
-        <vue-countdown-timer
-                @start_callback="startCallBack('Начало')"
-                @end_callback="endCallBack('Конец')"
-                :interval="100"
-                :start-time="startTime"
-                :end-time="endTime"
-                :start-label="'Till starts'"
-                :end-label="'Till ends'"
-                :end-text="'Ended'"
-                :day-txt = null
-                :hour-txt = null
-                :minutes-txt= null
-                :seconds-txt="'секунд'">
-        </vue-countdown-timer>
-
-
         <div class="col-md-12">
             <div class="panel panel-default">
-                <h1>Срочная готовка</h1>
+                <h1>Срочная готовка | <span>{{ countDown }}</span></h1>
                 <ul class="nav">
                     <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
                         <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
@@ -54,13 +37,16 @@
                         {{ order.address.address }} - {{ order.address.kv }}
 
                         <div v-if="order.status[0].status_id == 5">
-                            {{ order.courier }}
+                            <span class="view-driver" @click="viewDriver(order.courier.user_id)">Посмотреть водителя</span>
+                            <div class="driver">
+                                Заказ везёт <strong>{{ DRIVER.name }} - <span v-for="(driver, i) in DRIVER"> {{ driver.name }} </span>  </strong>
+                            </div>
                         </div>
                     </td>
                     <td>
                         <div v-if="order.status[0].status_id == 4">
                             <select name="driver" class="form-control" v-model="driver">
-                                <option :value="driver.id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
+                                <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
                             </select>
                             <br>
 
@@ -83,13 +69,15 @@
 
     export default {
         data() {
-            const now = new Date();
             return {
                 driver: '',
 
-                startTime: new Date(now.getTime() + (1000 * 10)),
-                endTime: new Date(now.getTime() + (1000 * 20)),
+                countDown: 100
             }
+        },
+        created() {
+            this.updateOrders();
+            this.countDownTimer();
         },
         mounted() {
             this.SELECTED_ALL_STATUSES();
@@ -100,7 +88,8 @@
             'ALL_STATUSES',
             'ALL_ORDERS',
             'ALL_DRIVERS',
-            'LOADER'
+            'LOADER',
+            'DRIVER'
         ]),
         methods: {
                 ...mapActions([
@@ -109,7 +98,8 @@
                     'SELECTED_ORDERS_BY_STATUS',
                     'SELECTED_ALL_DRIVERS',
                     'TRANSITION_TO_A_NEW_STAGE',
-                    'SEND_ORDER_TO_COURIER'
+                    'SEND_ORDER_TO_COURIER',
+                    'VIEW_DRIVER'
                 ]),
 
         changeOrdersByStatus(id) {
@@ -130,19 +120,41 @@
         },
 
         updateOrders() {
-            this.SELECTED_ALL_STATUSES();
-            this.SELECTED_ORDERS();
-            this.SELECTED_ALL_DRIVERS();
-            console.log('Данные обновились');
+            setInterval(() => {
+                this.SELECTED_ALL_STATUSES();
+                this.SELECTED_ORDERS();
+                this.SELECTED_ALL_DRIVERS();
+                console.log('Данные обновились');
+            }, 100000);
         },
 
-        startCallBack: function (x) {
-            console.log(x)
+        viewDriver(driver) {
+            this.VIEW_DRIVER(driver);
         },
 
-        endCallBack: function (x) {
-            console.log(x)
+        countDownTimer() {
+            if(this.countDown > 0) {
+                setTimeout(() => {
+                    this.countDown -= 1
+                    this.countDownTimer()
+            }, 1000)
+            }
+
+            if(this.countDown <= 0) {
+                this.countDown = 100;
+                this.countDownTimer();
+            }
         }
     }
     }
 </script>
+
+<style>
+    .view-driver{
+        text-decoration: underline;
+    }
+    .driver {
+        background: #98cbe8;
+        padding: 5px;
+    }
+</style>

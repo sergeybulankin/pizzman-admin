@@ -20,9 +20,11 @@ Route::put('/list/account/unblack/{id}', 'AccountController@unlockedUser')->midd
 
 Route::get('/create/account', 'AccountController@index');
 
-Route::post('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
+Route::put('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
 
 Route::post('/store/account', 'AccountController@store')->middleware('auth');
+
+Route::patch('/update/account', 'AccountController@update')->middleware('auth');
 
 Auth::routes();
 

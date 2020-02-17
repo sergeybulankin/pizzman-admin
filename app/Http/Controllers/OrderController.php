@@ -10,6 +10,7 @@ use App\Http\Resources\OrderResource;
 use App\Order;
 use App\OrderCourier;
 use App\OrderStatus;
+use App\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -92,5 +93,18 @@ class OrderController extends Controller
         $order_courier->user_id = $request->driver;
 
         $order_courier->save();
+    }
+
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function viewDriver(Request $request) {
+        $driver = User::with('account')
+            ->where('id', $request->driver)
+            ->first();
+
+        return json_encode($driver);
     }
 }

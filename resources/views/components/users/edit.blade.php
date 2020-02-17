@@ -16,16 +16,20 @@
             </div>
         @endif()
 
-        <form action="/store/account" method="POST">
-            {{ method_field('POST') }}
+        <form action="/update/account" method="POST">
+            {{ method_field('PUT') }}
             {{ csrf_field() }}
 
             <div class="form-group">
-                <input type="text" name="name_account" id="name_account" placeholder="Имя" class="form-control" value="{{ $account }}">
+                <input type="text" name="user_id" id="user_id" placeholder="Телефон" class="form-control" value="{{ $account_user->user_id }}">
             </div>
 
             <div class="form-group">
-                <input type="text" name="name" id="name" placeholder="Телефон" class="form-control">
+
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="name" id="name" placeholder="Телефон" class="form-control" value="{{ $account_user->name }}">
             </div>
 
             <div class="form-group">
@@ -50,7 +54,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Добавить" class="btn btn-default">
+                <input type="submit" value="Обновить" class="btn btn-default">
             </div>
         </form>
     </div>

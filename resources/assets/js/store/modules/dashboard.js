@@ -42,6 +42,12 @@ export default {
             axios.post('/api/send-order-to-courier', {order_id: data.id, driver: data.driver})
                 .then(res => {console.log('Заказ закреплен за курьером')})
                 .catch(error => {console.log(error)})
+        },
+
+        VIEW_DRIVER(ctx, driver) {
+            axios.post('/api/view-driver', {driver: driver})
+                .then(res => {ctx.commit('VIEW_DRIVER_MUTATION', res.data)})
+                .catch(error => {console.log(error)})
         }
     },
     mutations: {
@@ -63,12 +69,17 @@ export default {
 
         LOADER_VISIBILITY_MUTATION(state) {
             state.loading = true
+        },
+
+        VIEW_DRIVER_MUTATION(state, driver) {
+            state.driver = driver
         }
     },
     state: {
         statuses: [],
         orders: [],
         drivers: [],
+        driver: [],
         loading: true
     },
     getters: {
@@ -82,6 +93,10 @@ export default {
 
         ALL_DRIVERS(state) {
             return state.drivers
+        },
+
+        DRIVER(state) {
+            return state.driver
         },
 
         LOADER(state) {

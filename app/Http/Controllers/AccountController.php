@@ -52,18 +52,58 @@ class AccountController extends Controller
      */
     public function edit(Request $request)
     {
-        //$user = Auth::user()->id;
+        $user = Auth::user()->id;
 
-        //$account = User::with('account')->where('id', $user)->first();
+        $account = User::with('account')->where('id', $user)->first();
 
-        $editUser = User::with('account')->where('id', $request->id)->first();
-        dd($editUser);
+        $account_user = Account::with('user')
+            ->where('id', $request->id)
+            ->first();
 
-        //$roles = Role::all();
+        $roles = Role::all();
 
-        //$points = PizzmanAddress::all();
+        $points = PizzmanAddress::all();
 
-        //return view('components.users.edit', compact('roles', 'account', 'points'));
+        return view('components.users.edit', compact('roles', 'account', 'points', 'account_user'));
+    }
+    
+    
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|unique:users|min:10',
+            'password' => 'required|min:4'
+        ]);
+
+        $phone = $request->name;
+        $password = $request->password;
+        $name = $request->name_account;
+        $role = $request->role;
+        $point = $request->point;
+        $user_id = $request->user_id;
+
+        $user = User::all()->where('id', $user_id)->first();
+
+        $user->name = $phone;
+        $user->password = bcrypt($password);
+        $user->save();
+
+        $account = Account::all()->where('user_id', $user_id)->first();
+        $account->name = $name;
+        $account->second_name = '';
+        $account->save();
+
+        $user_role = UserRole::all()->where('user_id', $user_id)->first();
+        $user_role->role_id = $role;
+        $user_role->save();
+
+        if ($point != 0) {
+            $p = UserPoint::all()->where('user_id', $user_id)->first();
+            $p->pizzman_address_id = $point;
+            $p->save();
+        }
+
+        return redirect()->back()->with('success', 'Данные обновились');        
     }
 
     /**
@@ -111,7 +151,7 @@ class AccountController extends Controller
             $p->save();
         }
 
-        return redirect()->back()->with('success', 'Данные обновились');
+        return redirect()->back()->with('success', 'Данные добавились');
     }
 
     /**

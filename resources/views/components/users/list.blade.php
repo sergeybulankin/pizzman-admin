@@ -24,7 +24,12 @@
                         <td class="number-phone">{{ $acc->user->name }}</td>
                         <td class="level">{{ $acc->role[0]->name }}</td>
                         <td>
-                            <a href="/edit/account/{{ $acc->id }}">редактировать</a>
+                            <form action="/edit/account/{{ $acc->id }}" method="POST">
+                                {{ method_field('PUT') }}
+                                {{ csrf_field() }}
+
+                                <button>редактировать</button>
+                            </form>
                         </td>
                         <td>
                             @if(empty($acc->black_list[0]))

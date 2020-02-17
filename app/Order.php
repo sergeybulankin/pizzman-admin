@@ -50,7 +50,6 @@ class Order extends Model
      */
     public function courier()
     {
-        //return $this->hasOne(OrderCourier::class, 'order_id', 'id');
-        return $this->hasManyThrough(User::class, OrderCourier::class, 'user_id', 'id', 'user_id');
+        return $this->hasOne(OrderCourier::class, 'order_id', 'id');
     }
 }
