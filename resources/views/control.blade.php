@@ -27,7 +27,7 @@
 <body>
 <div id="app">
     <div class="account">
-        <h3>Привет, {{ $account->account->name }}!</h3>
+        @include('components.roles.roles')
 
         <div class="list-group">
                 <nav class="navbar navbar-expand-lg navbar-light">

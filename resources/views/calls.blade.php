@@ -16,18 +16,27 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {
-            csrfToken: '{{ csrf_token() }}',
-            role: '{{ json_encode($role_id) }}'
+            csrfToken: '{{ csrf_token() }}'
         };
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        @include('components.roles.roles')
+<div id="app">
+    @include('components.roles.roles')
 
-        <board></board>
+    <div class="col-md-12">
+        @yield('calls')
     </div>
+</div>
 </body>
-    <script src={{ asset('js/app.js') }} type="text/javascript"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.alert-success, .alert-danger').fadeIn().delay(3000).fadeOut();
+    });
+</script>
 </html>

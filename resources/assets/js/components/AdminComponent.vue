@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <h1>Срочная готовка | <span>{{ countDown }}</span></h1>
+                <h1>Срочная готовка <span class="timer">{{ countDown }}</span></h1>
                 <ul class="nav">
                     <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
                         <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
@@ -156,5 +156,9 @@
     .driver {
         background: #98cbe8;
         padding: 5px;
+    }
+    .timer {
+        font-size: 14px;
+        color: #3F3540;
     }
 </style>

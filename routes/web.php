@@ -13,6 +13,8 @@
 
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/control', 'ControlController@index');
+Route::get('/calls', 'CallController@index');
+Route::get('/calls/accepted', 'CallController@callsAccepted');
 
 Route::get('/list/accounts', 'AccountController@show');
 Route::put('/list/account/black/{id}', 'AccountController@blackList')->middleware('auth');
@@ -25,6 +27,7 @@ Route::put('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
 Route::post('/store/account', 'AccountController@store')->middleware('auth');
 
 Route::patch('/update/account', 'AccountController@update')->middleware('auth');
+Route::put('/update/call/{id}', 'CallController@update')->middleware('auth');
 
 Auth::routes();
 

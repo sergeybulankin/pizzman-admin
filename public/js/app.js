@@ -46022,7 +46022,7 @@ var content = __webpack_require__(49);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(51)("78e59bd8", content, false, {});
+var update = __webpack_require__(51)("7b85c038", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -46046,7 +46046,7 @@ exports = module.exports = __webpack_require__(50)(false);
 
 
 // module
-exports.push([module.i, "\n.view-driver{\n    text-decoration: underline;\n}\n.driver {\n    background: #98cbe8;\n    padding: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.view-driver{\n    text-decoration: underline;\n}\n.driver {\n    background: #98cbe8;\n    padding: 5px;\n}\n.timer {\n    font-size: 14px;\n    color: #3F3540;\n}\n", ""]);
 
 // exports
 
@@ -46549,8 +46549,8 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "panel panel-default" }, [
         _c("h1", [
-          _vm._v("Срочная готовка | "),
-          _c("span", [_vm._v(_vm._s(_vm.countDown))])
+          _vm._v("Срочная готовка "),
+          _c("span", { staticClass: "timer" }, [_vm._v(_vm._s(_vm.countDown))])
         ]),
         _vm._v(" "),
         _c(
