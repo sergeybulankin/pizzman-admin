@@ -32,6 +32,12 @@ export default {
                 .catch(error => {console.log(error)})
         },
 
+        LIST_FOOD(ctx, id) {
+            axios.post('/api/selected-list-food', {id: id})
+                .then(res => (ctx.commit('LIST_FOOD_MUTATION', res.data)))
+                .catch(error => {console.log(error)})
+        },
+
         TRANSITION_TO_A_NEW_STAGE(ctx, id) {
             axios.post('/api/transition-to-a-new-stage', {id: id})
                 .then(res => {console.log('Заказ перешел на новую стадию')})
@@ -73,6 +79,10 @@ export default {
 
         VIEW_DRIVER_MUTATION(state, driver) {
             state.driver = driver
+        },
+
+        LIST_FOOD_MUTATION(state, list) {
+            return state.list = list
         }
     },
     state: {
@@ -80,6 +90,7 @@ export default {
         orders: [],
         drivers: [],
         driver: [],
+        list: [],
         loading: true
     },
     getters: {
@@ -101,6 +112,10 @@ export default {
 
         LOADER(state) {
             return state.loading
+        },
+
+        LIST(state) {
+            return state.list
         }
     }
 }

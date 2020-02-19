@@ -45781,6 +45781,13 @@ var debug = "development" !== 'production';
                 console.log(error);
             });
         },
+        LIST_FOOD: function LIST_FOOD(ctx, id) {
+            axios.post('/api/selected-list-food', { id: id }).then(function (res) {
+                return ctx.commit('LIST_FOOD_MUTATION', res.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         TRANSITION_TO_A_NEW_STAGE: function TRANSITION_TO_A_NEW_STAGE(ctx, id) {
             axios.post('/api/transition-to-a-new-stage', { id: id }).then(function (res) {
                 console.log('Заказ перешел на новую стадию');
@@ -45821,6 +45828,9 @@ var debug = "development" !== 'production';
         },
         VIEW_DRIVER_MUTATION: function VIEW_DRIVER_MUTATION(state, driver) {
             state.driver = driver;
+        },
+        LIST_FOOD_MUTATION: function LIST_FOOD_MUTATION(state, list) {
+            return state.list = list;
         }
     },
     state: {
@@ -45828,6 +45838,7 @@ var debug = "development" !== 'production';
         orders: [],
         drivers: [],
         driver: [],
+        list: [],
         loading: true
     },
     getters: {
@@ -45845,6 +45856,9 @@ var debug = "development" !== 'production';
         },
         LOADER: function LOADER(state) {
             return state.loading;
+        },
+        LIST: function LIST(state) {
+            return state.list;
         }
     }
 });
@@ -46022,7 +46036,7 @@ var content = __webpack_require__(49);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(51)("7b85c038", content, false, {});
+var update = __webpack_require__(51)("78e59bd8", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -46046,7 +46060,7 @@ exports = module.exports = __webpack_require__(50)(false);
 
 
 // module
-exports.push([module.i, "\n.view-driver{\n    text-decoration: underline;\n}\n.driver {\n    background: #98cbe8;\n    padding: 5px;\n}\n.timer {\n    font-size: 14px;\n    color: #3F3540;\n}\n", ""]);
+exports.push([module.i, "\n.view-driver{\n    text-decoration: underline;\n}\n.driver {\n    background: #98cbe8;\n    padding: 5px;\n}\n.timer {\n    font-size: 14px;\n    color: #3F3540;\n}\n.list-food {\n    text-decoration: underline;\n    cursor: pointer;\n}\n.list-food:hover {\n    text-decoration: none;\n}\n.food-position {\n    margin: 0 0 10px 0;\n    font-size: 12px;\n    font-weight: 600;\n}\n.additive-position {\n    font-size: 10px;\n    font-style: italic;\n}\n.count-food {\n    font-size: 10px;\n    color: red;\n}\n", ""]);
 
 // exports
 
@@ -46469,6 +46483,38 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -46476,8 +46522,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             driver: '',
-
-            countDown: 100
+            countDown: 100,
+            showModal: false
         };
     },
     created: function created() {
@@ -46490,10 +46536,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.SELECTED_ALL_DRIVERS();
     },
 
-    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ALL_STATUSES', 'ALL_ORDERS', 'ALL_DRIVERS', 'LOADER', 'DRIVER']),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_ALL_STATUSES', 'SELECTED_ORDERS', 'SELECTED_ORDERS_BY_STATUS', 'SELECTED_ALL_DRIVERS', 'TRANSITION_TO_A_NEW_STAGE', 'SEND_ORDER_TO_COURIER', 'VIEW_DRIVER']), {
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ALL_STATUSES', 'ALL_ORDERS', 'ALL_DRIVERS', 'LOADER', 'DRIVER', 'LIST']),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_ALL_STATUSES', 'SELECTED_ORDERS', 'SELECTED_ORDERS_BY_STATUS', 'SELECTED_ALL_DRIVERS', 'LIST_FOOD', 'TRANSITION_TO_A_NEW_STAGE', 'SEND_ORDER_TO_COURIER', 'VIEW_DRIVER']), {
         changeOrdersByStatus: function changeOrdersByStatus(id) {
             this.SELECTED_ORDERS_BY_STATUS(id);
+        },
+        listFood: function listFood(id) {
+            this.showModal = !this.showModal;
+            this.LIST_FOOD(id);
         },
         passOrder: function passOrder(id, status_id, driver) {
             var data = { id: id, driver: driver };
@@ -46614,8 +46664,17 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "list-foods" }, [
-                _vm._v(
-                  "\n                    Здесь будут блюда\n                "
+                _c(
+                  "span",
+                  {
+                    staticClass: "list-food",
+                    on: {
+                      click: function($event) {
+                        return _vm.listFood(order.id)
+                      }
+                    }
+                  },
+                  [_vm._v("просмотреть")]
                 )
               ]),
               _vm._v(" "),
@@ -46753,7 +46812,111 @@ var render = function() {
         ],
         2
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showModal,
+            expression: "showModal"
+          }
+        ],
+        staticClass: "modal-mask"
+      },
+      [
+        _c("div", { staticClass: "modal-wrapper" }, [
+          _c(
+            "div",
+            { staticClass: "modal-container" },
+            [
+              _c("div", { staticClass: "modal-header" }, [
+                _vm._v("\n                    Список блюд\n                ")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.LIST, function(list, i) {
+                return _c(
+                  "div",
+                  { key: i },
+                  _vm._l(list.food, function(food_additive, food_additive_i) {
+                    return _c(
+                      "div",
+                      { key: food_additive_i },
+                      _vm._l(food_additive.food, function(food, food_i) {
+                        return _c(
+                          "div",
+                          { key: food_i, staticClass: "food-position" },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(food.name) +
+                                "\n                            "
+                            ),
+                            _vm._l(food_additive.additive, function(
+                              additive,
+                              additive_i
+                            ) {
+                              return _c(
+                                "div",
+                                {
+                                  key: additive_i,
+                                  staticClass: "additive-position"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                добавки - " +
+                                      _vm._s(additive.name) +
+                                      "\n                            "
+                                  )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "count-food" }, [
+                              _vm._v(
+                                "\n                                количество - " +
+                                  _vm._s(list.count) +
+                                  "\n                            "
+                              )
+                            ])
+                          ],
+                          2
+                        )
+                      }),
+                      0
+                    )
+                  }),
+                  0
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "modal-default-button",
+                    on: {
+                      click: function($event) {
+                        _vm.showModal = false
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        закрыть\n                    "
+                    )
+                  ]
+                )
+              ])
+            ],
+            2
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [

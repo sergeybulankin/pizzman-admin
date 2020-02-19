@@ -26,32 +26,30 @@ class OrderController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        /*
-        $order = [];
-        foreach ($orders as $k => $v) {
-            $foods_in_orders = FoodInOrder::with('food_additive')->where('order_id', $v['id'])->get();
-
-            $food_additive = FoodAdditive::all()->where('food_id', $foods_in_orders[0]->food_id);
-
-            $order[$k]['id'] = $foods_in_orders[0]->order_id;
-            $order[$k]['food'] = Food::all()->where('id', $foods_in_orders[0]->food_id);
-
-            foreach ($foods_in_orders[0]->food_additive as $key => $value) {
-                $order[$k][$key]['additive'] = Additive::all()->where('id', $value['additive_id']);
-            }
-
-            $order[$k]['additive'] = Additive::all()->where('id', $foods_in_orders[0]->additive_id);
-        }
-
-        $formattedOrder = [];
-        foreach ($order as $item) {
-            $formattedOrder[] = (object) $item;
-        }
-
-        $orders = collect($formattedOrder);
-        */
-
         return OrderResource::collection($orders);
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function listFood(Request $request)
+    {
+        $foods_in_orders = FoodInOrder::with('food_additive')
+            ->where('order_id', $request->id)
+            ->get();
+
+        $order = [];
+
+        foreach ($foods_in_orders as $k => $v) {
+            foreach ($v['food_additive'] as $key => $value) {
+                $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
+                $order[$k]['additive'][$key] = FoodAdditive::with('food', 'additive')->where('id', $value->additive_id)->get();
+                $order[$k]['count'] = $v->count;
+            }
+        }
+
+        return json_encode($order);
     }
 
 

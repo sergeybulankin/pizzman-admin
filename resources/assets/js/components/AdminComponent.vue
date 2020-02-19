@@ -31,7 +31,7 @@
                     <td class="number-order"># {{ order.id }}</td>
                     <td class=number-phone>{{ order.user.name }}</td>
                     <td class="list-foods">
-                        Здесь будут блюда
+                        <span class="list-food" @click="listFood(order.id)">просмотреть</span>
                     </td>
                     <td class="address">
                         {{ order.address.address }} - {{ order.address.kv }}
@@ -61,6 +61,38 @@
                 </tr>
             </table>
         </div>
+
+
+        <div class="modal-mask" v-show="showModal">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        Список блюд
+                    </div>
+
+                    <div v-for="(list, i) in LIST" :key="i">
+                        <div v-for="(food_additive, food_additive_i) in list.food" :key="food_additive_i">
+                            <div class="food-position" v-for="(food, food_i) in food_additive.food" :key="food_i">
+                                {{ food.name }}
+                                <div class="additive-position" v-for="(additive, additive_i) in food_additive.additive" :key="additive_i">
+                                    добавки - {{ additive.name }}
+                                </div>
+                                <div class="count-food">
+                                    количество - {{ list.count }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="modal-default-button" @click="showModal = false">
+                            закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -71,8 +103,8 @@
         data() {
             return {
                 driver: '',
-
-                countDown: 100
+                countDown: 100,
+                showModal: false
             }
         },
         created() {
@@ -89,7 +121,8 @@
             'ALL_ORDERS',
             'ALL_DRIVERS',
             'LOADER',
-            'DRIVER'
+            'DRIVER',
+            'LIST'
         ]),
         methods: {
                 ...mapActions([
@@ -97,6 +130,7 @@
                     'SELECTED_ORDERS',
                     'SELECTED_ORDERS_BY_STATUS',
                     'SELECTED_ALL_DRIVERS',
+                    'LIST_FOOD',
                     'TRANSITION_TO_A_NEW_STAGE',
                     'SEND_ORDER_TO_COURIER',
                     'VIEW_DRIVER'
@@ -104,6 +138,11 @@
 
         changeOrdersByStatus(id) {
             this.SELECTED_ORDERS_BY_STATUS(id)
+        },
+
+        listFood(id) {
+            this.showModal = !this.showModal;
+            this.LIST_FOOD(id);
         },
 
         passOrder(id, status_id, driver){
@@ -160,5 +199,26 @@
     .timer {
         font-size: 14px;
         color: #3F3540;
+    }
+    .list-food {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .list-food:hover {
+        text-decoration: none;
+    }
+
+    .food-position {
+        margin: 0 0 10px 0;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .additive-position {
+        font-size: 10px;
+        font-style: italic;
+    }
+    .count-food {
+        font-size: 10px;
+        color: red;
     }
 </style>

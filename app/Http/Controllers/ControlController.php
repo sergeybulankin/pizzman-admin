@@ -21,8 +21,10 @@ class ControlController extends Controller
 
         $role = UserRole::with('role')->where('user_id', $user)->first();
 
-        $count_calls = Call::all()->where('noted', 0)->sortByDesc('created_at');
+        $role_id = $role['role_id'];
 
-        return view('control', compact('account', 'role', 'count_calls'));
+        $count_calls = Call::all()->where('noted', 0)->count();
+
+        return view('control', compact('account', 'role', 'count_calls', 'role_id'));
     }
 }

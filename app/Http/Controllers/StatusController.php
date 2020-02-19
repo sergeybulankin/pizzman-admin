@@ -14,7 +14,9 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $statuses = Status::withCount('counts')->get();
+        $statuses = Status::withCount('counts')
+            ->where('id', '!=', 1)
+            ->get();
 
         return StatusResource::collection($statuses);
     }

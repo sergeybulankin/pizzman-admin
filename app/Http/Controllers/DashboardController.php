@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Call;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ class DashboardController extends Controller
 
         $role_id = $role['role_id'];
 
-        return view('dashboard', compact('account', 'role', 'role_id'));
+        $count_calls = Call::all()->where('noted', 0)->count();
+
+        return view('dashboard', compact('account', 'role', 'role_id', 'count_calls'));
     }
 }

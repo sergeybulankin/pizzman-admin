@@ -21,11 +21,13 @@ class CallController extends Controller
 
         $role = UserRole::with('role')->where('user_id', $user)->first();
 
+        $role_id = $role['role_id'];
+
         $calls = Call::all()->where('noted', 0)->sortByDesc('created_at');
 
         $count_calls = $calls->count();
 
-        return view('components.calls.list', compact('account', 'calls', 'role', 'count_calls'));
+        return view('components.calls.list', compact('account', 'calls', 'role', 'count_calls', 'role_id'));
     }
 
 
@@ -42,9 +44,11 @@ class CallController extends Controller
 
         $calls = Call::all()->where('noted', 1)->sortByDesc('created_at');
 
+        $role_id = $role['role_id'];
+
         $count_calls = $calls->count();
 
-        return view('components.calls.accepted', compact('account', 'calls', 'role', 'count_calls'));
+        return view('components.calls.accepted', compact('account', 'calls', 'role', 'count_calls', 'role_id'));
 
     }
 

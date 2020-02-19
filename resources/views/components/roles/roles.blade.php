@@ -2,7 +2,7 @@
     <h3>Привет, {{ $account->account->name }}!</h3>
 
     <div class="list-group">
-        @if($role->role->id == 4)
+        @if($role_id == 4)
             <nav class="navbar navbar-expand-lg">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
@@ -21,7 +21,7 @@
                     </ul>
                 </div>
             </nav>
-        @elseif($role->role->id == 2)
+        @elseif($role_id == 2)
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">

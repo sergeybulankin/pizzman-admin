@@ -18,7 +18,7 @@
             @endif()
 
             <div style="margin: 5px 0">
-                <a href="/calls/accepted">принятые звонки</a>
+                <a href="/calls">непринятые звонки</a>
             </div>
 
             <table>

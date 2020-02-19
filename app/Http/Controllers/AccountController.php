@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\BlackList;
+use App\Call;
 use App\Http\Resources\AccountResource;
 use App\PizzmanAddress;
 use App\Role;
@@ -26,9 +27,15 @@ class AccountController extends Controller
 
         $roles = Role::all();
 
+        $role = UserRole::with('role')->where('user_id', $user)->first();
+
+        $role_id = $role['role_id'];
+
         $points = PizzmanAddress::all();
 
-        return view('components.users.create', compact('roles', 'account', 'points'));
+        $count_calls = Call::all()->where('noted', 0)->count();
+
+        return view('components.users.create', compact('roles', 'account', 'points', 'role_id', 'count_calls'));
     }
 
     /**
@@ -38,13 +45,19 @@ class AccountController extends Controller
     {
         $user = Auth::user()->id;
 
+        $role = UserRole::with('role')->where('user_id', $user)->first();
+
+        $role_id = $role['role_id'];
+
         $account = User::with('account')->where('id', $user)->first();
 
         $accounts = Account::with('user', 'role', 'black_list')
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        return view('components.users.list', compact('accounts', 'account'));
+        $count_calls = Call::all()->where('noted', 0)->count();
+
+        return view('components.users.list', compact('accounts', 'account', 'role_id', 'count_calls'));
     }
 
     /**
