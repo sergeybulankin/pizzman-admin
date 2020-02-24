@@ -15,3 +15,4 @@ Route::post('view-driver', 'OrderController@viewDriver');
 Route::get('selected-all-drivers', 'AccountController@selectDrivers');
 Route::post('transition-to-a-new-stage', 'OrderController@nextStage');
 Route::post('send-order-to-courier', 'OrderController@sendOrderToCourier');
+Route::post('selected-orders-for-driver', 'DriverController@index');

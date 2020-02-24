@@ -9,11 +9,13 @@ const debug = process.env.NODE_ENV !== 'production';
 
 import dashboard from './modules/dashboard';
 import user from './modules/user';
+import driver from './modules/driver';
 
 export default new Vuex.Store({
     modules: {
         dashboard,
-        user
+        user,
+        driver
     },
     strict: debug
 });

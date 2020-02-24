@@ -54,7 +54,7 @@
                         </div>
 
                         <div v-else>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 5">Дальше</button>
+                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 4">Дальше</button>
                         </div>
 
                     </td>

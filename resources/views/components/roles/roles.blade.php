@@ -21,7 +21,7 @@
                     </ul>
                 </div>
             </nav>
-        @elseif($role_id == 2)
+        @elseif($role_id == 3)
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">

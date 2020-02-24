@@ -75,19 +75,20 @@ class AccountController extends Controller
 
         $roles = Role::all();
 
+        $role = UserRole::with('role')->where('user_id', $user)->first();
+
+        $role_id = $role['role_id'];
+
+        $count_calls = Call::all()->where('noted', 0)->count();
+
         $points = PizzmanAddress::all();
 
-        return view('components.users.edit', compact('roles', 'account', 'points', 'account_user'));
+        return view('components.users.edit', compact('roles', 'account', 'points', 'account_user', 'role_id', 'count_calls'));
     }
     
     
     public function update(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:users|min:10',
-            'password' => 'required|min:4'
-        ]);
-
         $phone = $request->name;
         $password = $request->password;
         $name = $request->name_account;
@@ -96,7 +97,6 @@ class AccountController extends Controller
         $user_id = $request->user_id;
 
         $user = User::all()->where('id', $user_id)->first();
-
         $user->name = $phone;
         $user->password = bcrypt($password);
         $user->save();
@@ -116,7 +116,7 @@ class AccountController extends Controller
             $p->save();
         }
 
-        return redirect()->back()->with('success', 'Данные обновились');        
+        return redirect('/list/accounts')->with('success', 'Данные обновились');
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('control')
 
 @section('content')
-    <h1>Редактирование ползователя</h1>
+    <h1>Редактирование пользователя</h1>
 
     <div class="form-add">
         @if(session()->has('success'))
@@ -16,7 +16,7 @@
             </div>
         @endif()
 
-        <form action="/update/account" method="POST">
+        <form action="/update/account/{{ $account_user->id }}" method="POST">
             {{ method_field('PUT') }}
             {{ csrf_field() }}
 
@@ -29,7 +29,11 @@
             </div>
 
             <div class="form-group">
-                <input type="text" name="name" id="name" placeholder="Телефон" class="form-control" value="{{ $account_user->name }}">
+                <input type="text" name="name" id="name" placeholder="Телефон" class="form-control" value="{{ $account_user->user->name }}">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="name_account" id="name_account" placeholder="Имя" class="form-control" value="{{ $account_user->name }}">
             </div>
 
             <div class="form-group">

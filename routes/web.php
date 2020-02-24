@@ -26,7 +26,7 @@ Route::put('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
 
 Route::post('/store/account', 'AccountController@store')->middleware('auth');
 
-Route::patch('/update/account', 'AccountController@update')->middleware('auth');
+Route::put('/update/account/{id}', 'AccountController@update')->middleware('auth');
 Route::put('/update/call/{id}', 'CallController@update')->middleware('auth');
 
 Auth::routes();
