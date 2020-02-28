@@ -2,7 +2,7 @@ export default {
     actions: {
         SELECTED_ALL_STATUSES(ctx) {
             axios.get('/api/selected-all-statuses')
-                .then(res => {ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data)})
+                .then(res => {ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data)})
                 .catch(error => {console.log(error)})
         },
 

@@ -14,10 +14,30 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $statuses = Status::withCount('counts')
+        /*$statuses = Status::withCount('counts')
             ->where('id', '!=', 1)
-            ->get();
+            ->get();*/
 
-        return StatusResource::collection($statuses);
+        $statuses = Status::all();
+
+        $order_status = OrderStatus::all()->where('success', 0);
+
+        $result =[];
+        foreach ($order_status as $order) {
+            foreach ($statuses as $k => $v) {
+                $count = 0;
+                if ($v->id == $order->status_id) {
+                    $result[$k] = $v;
+                    $result[$k]['count'] = $count + 1;
+                }else {
+                    $result[$k] = $v;
+                }
+            }
+        }
+
+        $result = collect($result);
+
+        //return StatusResource::collection($statuses);
+        return json_encode($result);
     }
 }

@@ -15,6 +15,7 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/control', 'ControlController@index');
 Route::get('/calls', 'CallController@index');
 Route::get('/calls/accepted', 'CallController@callsAccepted');
+Route::get('/driver/archive', 'DriverController@archive');
 
 Route::get('/list/accounts', 'AccountController@show');
 Route::put('/list/account/black/{id}', 'AccountController@blackList')->middleware('auth');

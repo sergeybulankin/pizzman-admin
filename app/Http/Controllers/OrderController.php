@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::whereHas('order_status', function ($query) {
-            $query->where('status_id', 2);
+            $query->where('status_id', 2)->where('success', 0);
         })
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -62,7 +62,8 @@ class OrderController extends Controller
         $id = $request->id;
 
         $orders = Order::whereHas('order_status', function ($query) use($id) {
-            $query->where('status_id', $id);
+            $query->where('status_id', $id)->where('success', 0);
+
         })->get();
 
         return OrderResource::collection($orders);
@@ -74,10 +75,19 @@ class OrderController extends Controller
      */
     public function nextStage(Request $request)
     {
-        $order = OrderStatus::all()->where('order_id', $request->id)->first();
+        $order = OrderStatus::all()->where('order_id', $request->id)->last();
 
-        $order->status_id = $order->status_id + 1;
+        $order_id = $order->order_id;
+        $status_stage = $order->status_id + 1;
+
+        $order->success = 1;
         $order->save();
+
+        $newStage = new OrderStatus();
+        $newStage->order_id = $order_id;
+        $newStage->status_id = $status_stage;
+        $newStage->success = 0;
+        $newStage->save();
     }
     
 

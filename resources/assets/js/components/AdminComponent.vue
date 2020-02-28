@@ -6,7 +6,7 @@
                 <ul class="nav">
                     <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
                         <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
-                            {{ status.status_name }} <span class="count">{{ status.count }}</span>
+                            {{ status.name }} <span class="count" v-if="status.count > 0">{{ status.count }}</span>
                         </a>
                     </li>
                 </ul>
@@ -44,19 +44,20 @@
                         </div>
                     </td>
                     <td>
-                        <div v-if="order.status[0].status_id == 4">
-                            <select name="driver" class="form-control" v-model="driver">
-                                <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
-                            </select>
-                            <br>
+                        <div v-for="(status, status_id) in order.status" :key="status_id">
+                            <div v-if="status.status_id == 4">
+                                <select name="driver" class="form-control" v-model="driver">
+                                    <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
+                                </select>
+                                <br>
 
-                            <button class="btn btn-danger" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                                <button class="btn btn-danger" @click="passOrder(order.id, status.status_id, driver)">Дальше</button>
+                            </div>
+
+                            <div>
+                                <!--<button class="btn btn-danger" @click="nextStep(order.id, status.status_id)" v-if="status.status_id <= 4">Дальше</button>-->
+                            </div>
                         </div>
-
-                        <div v-else>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id <= 4">Дальше</button>
-                        </div>
-
                     </td>
                 </tr>
             </table>

@@ -16,4 +16,12 @@ class Status extends Model
     {
         return $this->hasMany(OrderStatus::class, 'status_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function order_status()
+    {
+        return $this->hasMany(OrderStatus::class, 'order_id', 'id');
+    }
 }
