@@ -18,7 +18,7 @@ class StatusController extends Controller
             ->where('id', '!=', 1)
             ->get();*/
 
-        $statuses = Status::all();
+        $statuses = Status::all()->where('id', '!=', 1);
 
         $order_status = OrderStatus::all()->where('success', 0);
 

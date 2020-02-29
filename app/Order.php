@@ -30,6 +30,14 @@ class Order extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Query\Builder|static
+     */
+    public function order_status_last()
+    {
+        return $this->hasOne(OrderStatus::class, 'order_id', 'id')->latest()->limit(1)->first();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function address()

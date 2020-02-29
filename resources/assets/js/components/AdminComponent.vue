@@ -44,19 +44,17 @@
                         </div>
                     </td>
                     <td>
-                        <div v-for="(status, status_id) in order.status" :key="status_id">
-                            <div v-if="status.status_id == 4">
-                                <select name="driver" class="form-control" v-model="driver">
-                                    <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
-                                </select>
-                                <br>
+                        <div v-if="order.status[0].status_id == 4">
+                            <select name="driver" class="form-control" v-model="driver">
+                                <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
+                            </select>
+                            <br>
 
-                                <button class="btn btn-danger" @click="passOrder(order.id, status.status_id, driver)">Дальше</button>
-                            </div>
+                            <button class="btn btn-danger" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                        </div>
 
-                            <div>
-                                <!--<button class="btn btn-danger" @click="nextStep(order.id, status.status_id)" v-if="status.status_id <= 4">Дальше</button>-->
-                            </div>
+                        <div v-else>
+                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id < 4">Дальше</button>
                         </div>
                     </td>
                 </tr>
@@ -72,15 +70,13 @@
                     </div>
 
                     <div v-for="(list, i) in LIST" :key="i">
-                        <div v-for="(food_additive, food_additive_i) in list.food" :key="food_additive_i">
-                            <div class="food-position" v-for="(food, food_i) in food_additive.food" :key="food_i">
-                                {{ food.name }}
-                                <div class="additive-position" v-for="(additive, additive_i) in food_additive.additive" :key="additive_i">
-                                    добавки - {{ additive.name }}
-                                </div>
-                                <div class="count-food">
-                                    количество - {{ list.count }}
-                                </div>
+                        <div v-for="(food, food_i) in list.food" :key="food_i">
+                            {{ food.name }}
+                            <div class="additive-position" v-for="(additive_block, additive_block_i) in list.additive" :key="additive_block_i">
+                                <span v-for="(additive, additive_i) in additive_block">{{ additive.name }}</span>
+                            </div>
+                            <div class="count-food">
+                                количество - {{ list.count }}
                             </div>
                         </div>
                     </div>

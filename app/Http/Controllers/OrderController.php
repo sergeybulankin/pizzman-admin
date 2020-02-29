@@ -21,7 +21,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::whereHas('order_status', function ($query) {
-            $query->where('status_id', 2)->where('success', 0);
+            $query->where('status_id', 2)
+                ->where('success', 0)
+                ->orderBy('status_id', 'DESC');
         })
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -40,16 +42,30 @@ class OrderController extends Controller
             ->get();
 
         $order = [];
-
         foreach ($foods_in_orders as $k => $v) {
             foreach ($v['food_additive'] as $key => $value) {
                 $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
-                $order[$k]['additive'][$key] = FoodAdditive::with('food', 'additive')->where('id', $value->additive_id)->get();
+                //$order[$k]['additive'][$key] = FoodAdditive::with('food', 'additive')->where('id', $value->additive_id)->get();
                 $order[$k]['count'] = $v->count;
+                $order[$k]['food_key'] = $v->u_id;
             }
         }
 
-        return json_encode($order);
+        $group_order = collect($order)->groupBy('food_key');
+
+        $result =[];
+        foreach ($group_order as $k => $v) {
+            foreach ($v as $key => $value) {
+                foreach ($value['food'] as $food_key => $food_value) {
+                    $result[$k]['food'] = $value['food'][0]['food'];
+                    $result[$k]['additive'][$key] = $food_value['additive'];
+                    $result[$k]['count'] = $value['count'];
+                }
+
+            }
+        }
+
+        return json_encode($result);
     }
 
 
@@ -62,8 +78,9 @@ class OrderController extends Controller
         $id = $request->id;
 
         $orders = Order::whereHas('order_status', function ($query) use($id) {
-            $query->where('status_id', $id)->where('success', 0);
-
+            $query->where('status_id', $id)
+                ->where('success', 0)
+                ->orderBy('status_id', 'DESC');
         })->get();
 
         return OrderResource::collection($orders);
