@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <Admin v-if="ROLE == 4"></Admin>
         <Driver v-if="ROLE == 3"></Driver>
     </div>

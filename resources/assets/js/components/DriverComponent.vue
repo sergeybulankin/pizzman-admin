@@ -1,27 +1,29 @@
 <template>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row content">
+        <div class="col-md-12 title">
             <div class="panel panel-default">
                 <h1>Режим доставки</h1>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/dashboard">
-                            Текущие <span class="count-orders"> {{ COUNT_ORDERS }} </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/driver/archive">
-                            Архив
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
 
-        <div>
+        <div class="col-md-12 working-field">
+            <ul class="nav nav-statuses mb-20">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/dashboard">
+                        Текущие <span class="count-orders"> {{ COUNT_ORDERS }} </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/driver/archive">
+                        Архив
+                    </a>
+                </li>
+            </ul>
+
             <div v-for="(list, i) in ORDERS" :key="i">
-                <div v-for="(address, address_id) in list[0].address.address">
-                    {{ address.address }} / {{ address.kv }}
+                <div class="address" v-for="(address, address_id) in list[0].address.address">
+                    <span class="address-info">Адрес:</span> {{ address.address }} &nbsp;&nbsp;
+                    <span class="address-info">Квартира:</span> {{ address.kv }}
                 </div>
 
                 <div v-for="(order, order_i) in list" :key="order_i">
@@ -38,16 +40,16 @@
                     </div>
                 </div>
 
-                <div class="map">
-                    <span @click="openMap">Показать адрес на карте</span>
+                <div class="map-info">
+                    <span class="map" @click="openMap">Показать адрес на карте</span>
                 </div>
 
-                <span class="btn btn-danger" @click="orderDelivered(list[0].order_status_id)">Доставлено</span>
+                <button class="btn btn-default" @click="orderDelivered(list[0].order_status_id)">Доставлено</button>
             </div>
         </div>
 
 
-        <yandex-map
+        <!--<yandex-map
                 :coords="coords"
                 :zoom="10"
                 :settings="settings">
@@ -55,7 +57,7 @@
                     :coords="coords"
                     marker-id="123"
                     hint-content="some hint"/>
-        </yandex-map>
+        </yandex-map>-->
 
 
     </div>
@@ -112,21 +114,3 @@
         components: { yandexMap, ymapMarker }
     }
 </script>
-
-<style>
-    .count-orders {
-        padding: 5px 10px;
-        background-color: #2B1B35;
-        color: white;
-        font-weight: 600;
-        font-size: 12px;
-    }
-
-    .map {
-        margin: 10px 0;
-        background-color: #2B1B35;
-        color: white;
-        padding: 5px;
-        cursor: pointer;
-    }
-</style>

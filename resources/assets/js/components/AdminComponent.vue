@@ -1,19 +1,20 @@
 <template>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row content">
+        <div class="col-md-12 title">
             <div class="panel panel-default">
-                <h1>Срочная готовка <span class="timer">{{ countDown }}</span></h1>
-                <ul class="nav">
-                    <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
-                        <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
-                            {{ status.status_name }} <span class="count" v-if="status.count > 0">{{ status.count }}</span>
-                        </a>
-                    </li>
-                </ul>
+                <h1>Таблица заказов <span class="timer">{{ countDown }}</span></h1>
             </div>
         </div>
 
-        <div class="col-md-12 mt-50">
+        <div class="col-md-12 working-field">
+            <ul class="nav nav-statuses mb-20">
+                <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
+                    <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
+                        {{ status.status_name }} <span class="count" v-if="status.count > 0">{{ status.count }}</span>
+                    </a>
+                </li>
+            </ul>
+
             <div v-if="LOADER" class="load">
                 <img src="images/loader.gif" alt="" width="20px">
                 <h4>Загружаем заказы...</h4>
@@ -37,9 +38,10 @@
                         {{ order.address.address }} - {{ order.address.kv }}
 
                         <div v-if="order.last_status.status_id == 5">
-                            <span class="view-driver" @click="viewDriver(order.courier.user_id)">Посмотреть водителя</span>
-                            <div class="driver">
-                                Заказ везёт <strong>{{ DRIVER.name }} - <span v-for="(driver, i) in DRIVER"> {{ driver.name }} </span>  </strong>
+                            <div class="view-driver" @click="viewDriver(order.courier.user_id)">Посмотреть водителя ▼</div>
+                            <div class="driver" v-show="showDriver">
+                                <div class="driver-phone">{{ DRIVER.name }} </div>
+                                <div class="driver-name" v-for="(driver, i) in DRIVER"> {{ driver.name }} </div>
                             </div>
                         </div>
                     </td>
@@ -50,11 +52,11 @@
                             </select>
                             <br>
 
-                            <button class="btn btn-danger" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                            <button class="btn btn-default" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
                         </div>
 
                         <div v-else>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.last_status.status_id < 4">Дальше</button>
+                            <button class="btn btn-default" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.last_status.status_id < 4">Дальше ➜</button>
                         </div>
                     </td>
                 </tr>
@@ -66,23 +68,27 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
                     <div class="modal-header">
-                        Список блюд
+                        Описание заказа
                     </div>
 
                     <div v-for="(list, i) in LIST" :key="i">
                         <div v-for="(food, food_i) in list.food" :key="food_i">
-                            {{ food.name }}
-                            <div class="additive-position" v-for="(additive_block, additive_block_i) in list.additive" :key="additive_block_i">
-                                <span v-for="(additive, additive_i) in additive_block">{{ additive.name }}</span>
-                            </div>
-                            <div class="count-food">
-                                количество - {{ list.count }}
+                            <div class="food-position">
+                                <div class="food-name">
+                                    {{ food.name }}
+                                </div>
+                                <div class="additive-position" v-for="(additive_block, additive_block_i) in list.additive" :key="additive_block_i">
+                                    <span v-for="(additive, additive_i) in additive_block">{{ additive.name }}</span>
+                                </div>
+                                <div class="count-food">
+                                    количество - {{ list.count }}
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="modal-default-button" @click="showModal = false">
+                        <button class="btn btn-default" @click="showModal = false">
                             закрыть
                         </button>
                     </div>
@@ -101,7 +107,8 @@
             return {
                 driver: '',
                 countDown: 100,
-                showModal: false
+                showModal: false,
+                showDriver: false
             }
         },
         created() {
@@ -165,6 +172,7 @@
         },
 
         viewDriver(driver) {
+            this.showDriver = !this.showDriver;
             this.VIEW_DRIVER(driver);
         },
 
@@ -184,38 +192,3 @@
     }
     }
 </script>
-
-<style>
-    .view-driver{
-        text-decoration: underline;
-    }
-    .driver {
-        background: #98cbe8;
-        padding: 5px;
-    }
-    .timer {
-        font-size: 14px;
-        color: #3F3540;
-    }
-    .list-food {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    .list-food:hover {
-        text-decoration: none;
-    }
-
-    .food-position {
-        margin: 0 0 10px 0;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    .additive-position {
-        font-size: 10px;
-        font-style: italic;
-    }
-    .count-food {
-        font-size: 10px;
-        color: red;
-    }
-</style>

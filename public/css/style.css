@@ -201,8 +201,149 @@ body, html {
 
 
 
+
+
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+.left-block {
+  width: 200px;
+  background-color: #2B1B35;
+  min-height: 100vh;
+  box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.6);
+  font-family: 'Ubuntu';
+  font-weight: 400;
+}
+.right-block {
+  display: flex;
+  flex-grow: 1;
+  background-color: rgba(244, 244, 244, 0.6);
+  padding: 20px;
+  font-family: 'Ubuntu';
+  flex-flow: column nowrap;
+}
+
+
+.content {
+  min-width: 700px;
+  max-width: 1000px;
+  margin: 80px 0;
+}
+
+.working-field {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px 0 rgba(214, 214, 214, 0.6);
+}
+
+.nav-statuses a {
+  font-size: 14px;
+  color: #7e7e7e;
+}
+
+.count-food {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5c326d;
+}
+
+.logo {
+  margin: 25px 0;
+  color: white;
+  text-align: center;
+}
+
+.navbar a {
+  color: white;
+}
+
+.logout {
+  margin: 25px 0 0 0 ;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+.timer {
+  font-size: 14px;
+  color: #3F3540;
+}
+
+.list-food {
+  background-color: #2B1B35;
+  padding: 9px 12px;
+  border-radius: 5px;
+  color: #f5f5f5;
+  font-size: 12px;
+  cursor: pointer;
+}
+.list-food:hover {
+  background-color: #5c326d;
+}
+
+.view-driver{
+  margin: 10px 0;
+  background-color: white;
+  cursor: pointer;
+}
+.driver {
+  background: #f4f4f4;
+  padding: 5px;
+}
+.driver-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+.driver-phone {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.address {
+  margin: 0 0 15px 0;
+}
+.address-info {
+  font-size: 10px;
+  color: #7e7e7e;
+}
+
+.count-orders {
+  padding: 5px 10px;
+  background-color: #2B1B35;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.map-info {
+  margin: 15px 0;
+}
+.map {
+  color: #0000EE;;
+  display:inline-block;
+  border-bottom:1px dashed #0000EE;
+  padding-bottom:2px;
+  cursor: pointer;
+}
+.map:hover {
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
 .table-title {
-  background: #f5f5f5;
 }
 .table-title td {
   padding: 12px;
@@ -219,6 +360,8 @@ body, html {
 .list td {
   padding: 12px;
   font-size: 14px;
+  color: #3e3e3e;
+  border-bottom: 1px solid #f5f5f5;
 }
 .number-order {
   width: 150px;
@@ -238,8 +381,8 @@ body, html {
 
 .count {
   padding: 4px;
-  background: #ffac92;
-  color: red;
+  background: #2B1B35;
+  color: white;
   border-radius: 3px;
 }
 
@@ -250,13 +393,16 @@ body, html {
 .mt-50 {
   margin-top: 50px;
 }
+.mb-20 {
+  margin-bottom: 20px;
+}
 
 .count-calls {
   background-color: white;
   padding: 4px 9px;
   font-size: 12px;
   font-weight: 600;
-  color: #ff6666;
+  color: #2B1B35;
 }
 
 
@@ -287,13 +433,8 @@ body, html {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
-  font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
 
 .modal-body {
   margin: 20px 0;
@@ -301,4 +442,26 @@ body, html {
 
 .modal-default-button {
   float: right;
+}
+
+.modal-header {
+  font-size: 22px;
+  padding: 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.food-position {
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.food-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.additive-position {
+  font-size: 14px;
+  font-style: italic;
 }

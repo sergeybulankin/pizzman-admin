@@ -29,11 +29,13 @@
 </head>
 
 <body>
-<div id="app">
-    @include('components.roles.roles')
-    @yield('crud')
+<div id="app" class="wrap">
+    <div class="left-block">
+        @include('components.roles.roles')
+        @yield('crud')
+    </div>
 
-    <div id="app">
+    <div class="right-block">
         @yield('content')
         @yield('calls')
     </div>

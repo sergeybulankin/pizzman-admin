@@ -2143,316 +2143,8 @@ if (false) {
 
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(53)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
+/* 12 */,
+/* 13 */,
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46345,10 +46037,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(51)
-}
 var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(54)
@@ -46357,7 +46045,7 @@ var __vue_template__ = __webpack_require__(55)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -46392,79 +46080,9 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(52);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("78e59bd8", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-18f46165\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdminComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-18f46165\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdminComponent.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(12)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.view-driver{\n    text-decoration: underline;\n}\n.driver {\n    background: #98cbe8;\n    padding: 5px;\n}\n.timer {\n    font-size: 14px;\n    color: #3F3540;\n}\n.list-food {\n    text-decoration: underline;\n    cursor: pointer;\n}\n.list-food:hover {\n    text-decoration: none;\n}\n.food-position {\n    margin: 0 0 10px 0;\n    font-size: 12px;\n    font-weight: 600;\n}\n.additive-position {\n    font-size: 10px;\n    font-style: italic;\n}\n.count-food {\n    font-size: 10px;\n    color: red;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
 /* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -46568,6 +46186,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -46576,7 +46200,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             driver: '',
             countDown: 100,
-            showModal: false
+            showModal: false,
+            showDriver: false
         };
     },
     created: function created() {
@@ -46620,6 +46245,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }, 100000);
         },
         viewDriver: function viewDriver(driver) {
+            this.showDriver = !this.showDriver;
             this.VIEW_DRIVER(driver);
         },
         countDownTimer: function countDownTimer() {
@@ -46648,51 +46274,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-12" }, [
+  return _c("div", { staticClass: "row content" }, [
+    _c("div", { staticClass: "col-md-12 title" }, [
       _c("div", { staticClass: "panel panel-default" }, [
         _c("h1", [
-          _vm._v("Срочная готовка "),
+          _vm._v("Таблица заказов "),
           _c("span", { staticClass: "timer" }, [_vm._v(_vm._s(_vm.countDown))])
-        ]),
-        _vm._v(" "),
-        _c(
-          "ul",
-          { staticClass: "nav" },
-          _vm._l(_vm.ALL_STATUSES, function(status, index) {
-            return _c("li", { key: index, staticClass: "nav-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link active",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.changeOrdersByStatus(status.id)
-                    }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(status.status_name) +
-                      " "
-                  ),
-                  status.count > 0
-                    ? _c("span", { staticClass: "count" }, [
-                        _vm._v(_vm._s(status.count))
-                      ])
-                    : _vm._e()
-                ]
-              )
-            ])
-          }),
-          0
-        )
+        ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-12 mt-50" }, [
+    _c("div", { staticClass: "col-md-12 working-field" }, [
+      _c(
+        "ul",
+        { staticClass: "nav nav-statuses mb-20" },
+        _vm._l(_vm.ALL_STATUSES, function(status, index) {
+          return _c("li", { key: index, staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link active",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.changeOrdersByStatus(status.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                    " + _vm._s(status.status_name) + " "
+                ),
+                status.count > 0
+                  ? _c("span", { staticClass: "count" }, [
+                      _vm._v(_vm._s(status.count))
+                    ])
+                  : _vm._e()
+              ]
+            )
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
       _vm.LOADER
         ? _c("div", { staticClass: "load" }, [
             _c("img", {
@@ -46744,7 +46368,7 @@ var render = function() {
                 order.last_status.status_id == 5
                   ? _c("div", [
                       _c(
-                        "span",
+                        "div",
                         {
                           staticClass: "view-driver",
                           on: {
@@ -46753,24 +46377,35 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Посмотреть водителя")]
+                        [_vm._v("Посмотреть водителя ▼")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "driver" }, [
-                        _vm._v("\n                            Заказ везёт "),
-                        _c(
-                          "strong",
-                          [
-                            _vm._v(_vm._s(_vm.DRIVER.name) + " - "),
-                            _vm._l(_vm.DRIVER, function(driver, i) {
-                              return _c("span", [
-                                _vm._v(" " + _vm._s(driver.name) + " ")
-                              ])
-                            })
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.showDriver,
+                              expression: "showDriver"
+                            }
                           ],
-                          2
-                        )
-                      ])
+                          staticClass: "driver"
+                        },
+                        [
+                          _c("div", { staticClass: "driver-phone" }, [
+                            _vm._v(_vm._s(_vm.DRIVER.name) + " ")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.DRIVER, function(driver, i) {
+                            return _c("div", { staticClass: "driver-name" }, [
+                              _vm._v(" " + _vm._s(driver.name) + " ")
+                            ])
+                          })
+                        ],
+                        2
+                      )
                     ])
                   : _vm._e()
               ]),
@@ -46828,7 +46463,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-danger",
+                          staticClass: "btn btn-default",
                           on: {
                             click: function($event) {
                               return _vm.passOrder(
@@ -46847,7 +46482,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
-                              staticClass: "btn btn-danger",
+                              staticClass: "btn btn-default",
                               on: {
                                 click: function($event) {
                                   return _vm.nextStep(
@@ -46857,7 +46492,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("Дальше")]
+                            [_vm._v("Дальше ➜")]
                           )
                         : _vm._e()
                     ])
@@ -46889,7 +46524,9 @@ var render = function() {
             { staticClass: "modal-container" },
             [
               _c("div", { staticClass: "modal-header" }, [
-                _vm._v("\n                    Список блюд\n                ")
+                _vm._v(
+                  "\n                    Описание заказа\n                "
+                )
               ]),
               _vm._v(" "),
               _vm._l(_vm.LIST, function(list, i) {
@@ -46897,45 +46534,52 @@ var render = function() {
                   "div",
                   { key: i },
                   _vm._l(list.food, function(food, food_i) {
-                    return _c(
-                      "div",
-                      { key: food_i },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(food.name) +
-                            "\n                        "
-                        ),
-                        _vm._l(list.additive, function(
-                          additive_block,
-                          additive_block_i
-                        ) {
-                          return _c(
-                            "div",
-                            {
-                              key: additive_block_i,
-                              staticClass: "additive-position"
-                            },
-                            _vm._l(additive_block, function(
-                              additive,
-                              additive_i
-                            ) {
-                              return _c("span", [_vm._v(_vm._s(additive.name))])
-                            }),
-                            0
-                          )
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "count-food" }, [
-                          _vm._v(
-                            "\n                            количество - " +
-                              _vm._s(list.count) +
-                              "\n                        "
-                          )
-                        ])
-                      ],
-                      2
-                    )
+                    return _c("div", { key: food_i }, [
+                      _c(
+                        "div",
+                        { staticClass: "food-position" },
+                        [
+                          _c("div", { staticClass: "food-name" }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(food.name) +
+                                "\n                            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(list.additive, function(
+                            additive_block,
+                            additive_block_i
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                key: additive_block_i,
+                                staticClass: "additive-position"
+                              },
+                              _vm._l(additive_block, function(
+                                additive,
+                                additive_i
+                              ) {
+                                return _c("span", [
+                                  _vm._v(_vm._s(additive.name))
+                                ])
+                              }),
+                              0
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "count-food" }, [
+                            _vm._v(
+                              "\n                                количество - " +
+                                _vm._s(list.count) +
+                                "\n                            "
+                            )
+                          ])
+                        ],
+                        2
+                      )
+                    ])
                   }),
                   0
                 )
@@ -46945,7 +46589,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "modal-default-button",
+                    staticClass: "btn btn-default",
                     on: {
                       click: function($event) {
                         _vm.showModal = false
@@ -46999,10 +46643,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(57)
-}
 var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(59)
@@ -47011,7 +46651,7 @@ var __vue_template__ = __webpack_require__(61)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -47046,46 +46686,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(58);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("239b9f9d", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4e607a4e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DriverComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4e607a4e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DriverComponent.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(12)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.count-orders {\n    padding: 5px 10px;\n    background-color: #2B1B35;\n    color: white;\n    font-weight: 600;\n    font-size: 12px;\n}\n.map {\n    margin: 10px 0;\n    background-color: #2B1B35;\n    color: white;\n    padding: 5px;\n    cursor: pointer;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 57 */,
+/* 58 */,
 /* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -47095,6 +46697,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__ = __webpack_require__(60);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
 //
 //
 //
@@ -47216,52 +46820,47 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("h1", [_vm._v("Режим доставки")]),
+  return _c("div", { staticClass: "row content" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-md-12 working-field" },
+      [
+        _c("ul", { staticClass: "nav nav-statuses mb-20" }, [
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              { staticClass: "nav-link active", attrs: { href: "/dashboard" } },
+              [
+                _vm._v("\n                    Текущие "),
+                _c("span", { staticClass: "count-orders" }, [
+                  _vm._v(" " + _vm._s(_vm.COUNT_ORDERS) + " ")
+                ])
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _c("ul", { staticClass: "nav" }, [
-            _c("li", { staticClass: "nav-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link active",
-                  attrs: { href: "/dashboard" }
-                },
-                [
-                  _vm._v("\n                        Текущие "),
-                  _c("span", { staticClass: "count-orders" }, [
-                    _vm._v(" " + _vm._s(_vm.COUNT_ORDERS) + " ")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
         _vm._l(_vm.ORDERS, function(list, i) {
           return _c(
             "div",
             { key: i },
             [
               _vm._l(list[0].address.address, function(address, address_id) {
-                return _c("div", [
+                return _c("div", { staticClass: "address" }, [
+                  _c("span", { staticClass: "address-info" }, [
+                    _vm._v("Адрес:")
+                  ]),
                   _vm._v(
-                    "\n                " +
-                      _vm._s(address.address) +
-                      " / " +
-                      _vm._s(address.kv) +
-                      "\n            "
-                  )
+                    " " + _vm._s(address.address) + "   \n                "
+                  ),
+                  _c("span", { staticClass: "address-info" }, [
+                    _vm._v("Квартира:")
+                  ]),
+                  _vm._v(" " + _vm._s(address.kv) + "\n            ")
                 ])
               }),
               _vm._v(" "),
@@ -47321,16 +46920,16 @@ var render = function() {
                 )
               }),
               _vm._v(" "),
-              _c("div", { staticClass: "map" }, [
-                _c("span", { on: { click: _vm.openMap } }, [
+              _c("div", { staticClass: "map-info" }, [
+                _c("span", { staticClass: "map", on: { click: _vm.openMap } }, [
                   _vm._v("Показать адрес на карте")
                 ])
               ]),
               _vm._v(" "),
               _c(
-                "span",
+                "button",
                 {
-                  staticClass: "btn btn-danger",
+                  staticClass: "btn btn-default",
                   on: {
                     click: function($event) {
                       return _vm.orderDelivered(list[0].order_status_id)
@@ -47342,29 +46941,23 @@ var render = function() {
             ],
             2
           )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c(
-        "yandex-map",
-        { attrs: { coords: _vm.coords, zoom: 10, settings: _vm.settings } },
-        [
-          _c("ymap-marker", {
-            attrs: {
-              coords: _vm.coords,
-              "marker-id": "123",
-              "hint-content": "some hint"
-            }
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 title" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("h1", [_vm._v("Режим доставки")])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47373,7 +46966,7 @@ var staticRenderFns = [
       _c(
         "a",
         { staticClass: "nav-link active", attrs: { href: "/driver/archive" } },
-        [_vm._v("\n                        Архив\n                    ")]
+        [_vm._v("\n                    Архив\n                ")]
       )
     ])
   }
@@ -47397,7 +46990,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
     [
       _vm.ROLE == 4 ? _c("Admin") : _vm._e(),
       _vm._v(" "),
