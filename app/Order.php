@@ -34,7 +34,7 @@ class Order extends Model
      */
     public function order_status_last()
     {
-        return $this->hasOne(OrderStatus::class, 'order_id', 'id')->latest()->limit(1)->first();
+        return $this->hasOne(OrderStatus::class, 'order_id', 'id')->latest();
     }
 
     /**

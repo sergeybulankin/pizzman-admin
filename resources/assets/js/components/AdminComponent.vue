@@ -6,7 +6,7 @@
                 <ul class="nav">
                     <li class="nav-item" v-for="(status, index) in ALL_STATUSES" :key="index">
                         <a class="nav-link active" href="#" @click="changeOrdersByStatus(status.id)">
-                            {{ status.name }} <span class="count" v-if="status.count > 0">{{ status.count }}</span>
+                            {{ status.status_name }} <span class="count" v-if="status.count > 0">{{ status.count }}</span>
                         </a>
                     </li>
                 </ul>
@@ -36,7 +36,7 @@
                     <td class="address">
                         {{ order.address.address }} - {{ order.address.kv }}
 
-                        <div v-if="order.status[0].status_id == 5">
+                        <div v-if="order.last_status.status_id == 5">
                             <span class="view-driver" @click="viewDriver(order.courier.user_id)">Посмотреть водителя</span>
                             <div class="driver">
                                 Заказ везёт <strong>{{ DRIVER.name }} - <span v-for="(driver, i) in DRIVER"> {{ driver.name }} </span>  </strong>
@@ -44,7 +44,7 @@
                         </div>
                     </td>
                     <td>
-                        <div v-if="order.status[0].status_id == 4">
+                        <div v-if="order.last_status.status_id == 4">
                             <select name="driver" class="form-control" v-model="driver">
                                 <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
                             </select>
@@ -54,7 +54,7 @@
                         </div>
 
                         <div v-else>
-                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.status[0].status_id < 4">Дальше</button>
+                            <button class="btn btn-danger" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.last_status.status_id < 4">Дальше</button>
                         </div>
                     </td>
                 </tr>

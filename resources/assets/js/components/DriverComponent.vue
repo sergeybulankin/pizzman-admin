@@ -47,7 +47,7 @@
         </div>
 
 
-        <!--<yandex-map
+        <yandex-map
                 :coords="coords"
                 :zoom="10"
                 :settings="settings">
@@ -55,7 +55,7 @@
                     :coords="coords"
                     marker-id="123"
                     hint-content="some hint"/>
-        </yandex-map>-->
+        </yandex-map>
 
 
     </div>

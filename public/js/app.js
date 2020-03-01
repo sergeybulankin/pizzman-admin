@@ -46062,7 +46062,7 @@ var debug = "development" !== 'production';
     actions: {
         SELECTED_ALL_STATUSES: function SELECTED_ALL_STATUSES(ctx) {
             axios.get('/api/selected-all-statuses').then(function (res) {
-                ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data);
+                ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -46674,7 +46674,9 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        " + _vm._s(status.name) + " "
+                    "\n                        " +
+                      _vm._s(status.status_name) +
+                      " "
                   ),
                   status.count > 0
                     ? _c("span", { staticClass: "count" }, [
@@ -46739,7 +46741,7 @@ var render = function() {
                     _vm._s(order.address.kv) +
                     "\n\n                    "
                 ),
-                order.status[0].status_id == 5
+                order.last_status.status_id == 5
                   ? _c("div", [
                       _c(
                         "span",
@@ -46774,7 +46776,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                order.status[0].status_id == 4
+                order.last_status.status_id == 4
                   ? _c("div", [
                       _c(
                         "select",
@@ -46841,7 +46843,7 @@ var render = function() {
                       )
                     ])
                   : _c("div", [
-                      order.status[0].status_id < 4
+                      order.last_status.status_id < 4
                         ? _c(
                             "button",
                             {
@@ -47214,130 +47216,153 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _c("h1", [_vm._v("Режим доставки")]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "nav" }, [
-          _c("li", { staticClass: "nav-item" }, [
-            _c(
-              "a",
-              { staticClass: "nav-link active", attrs: { href: "/dashboard" } },
-              [
-                _vm._v("\n                        Текущие "),
-                _c("span", { staticClass: "count-orders" }, [
-                  _vm._v(" " + _vm._s(_vm.COUNT_ORDERS) + " ")
-                ])
-              ]
-            )
-          ]),
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("h1", [_vm._v("Режим доставки")]),
           _vm._v(" "),
-          _vm._m(0)
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      _vm._l(_vm.ORDERS, function(list, i) {
-        return _c(
-          "div",
-          { key: i },
-          [
-            _vm._l(list[0].address.address, function(address, address_id) {
-              return _c("div", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(address.address) +
-                    " / " +
-                    _vm._s(address.kv) +
-                    "\n            "
-                )
-              ])
-            }),
-            _vm._v(" "),
-            _vm._l(list, function(order, order_i) {
-              return _c(
-                "div",
-                { key: order_i },
-                _vm._l(order.food, function(food_additive, food_additive_i) {
-                  return _c(
-                    "div",
-                    { key: food_additive_i },
-                    _vm._l(food_additive.food, function(food, food_i) {
-                      return _c(
-                        "div",
-                        { key: food_i, staticClass: "food-position" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(food.name) +
-                              "\n                        "
-                          ),
-                          _vm._l(food_additive.additive, function(
-                            additive,
-                            additive_i
-                          ) {
-                            return _c(
-                              "div",
-                              {
-                                key: additive_i,
-                                staticClass: "additive-position"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            добавки - " +
-                                    _vm._s(additive.name) +
-                                    "\n                        "
-                                )
-                              ]
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "count-food" }, [
-                            _vm._v(
-                              "\n                            количество - " +
-                                _vm._s(order.count) +
-                                "\n                        "
-                            )
-                          ])
-                        ],
-                        2
-                      )
-                    }),
-                    0
-                  )
-                }),
-                0
+          _c("ul", { staticClass: "nav" }, [
+            _c("li", { staticClass: "nav-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link active",
+                  attrs: { href: "/dashboard" }
+                },
+                [
+                  _vm._v("\n                        Текущие "),
+                  _c("span", { staticClass: "count-orders" }, [
+                    _vm._v(" " + _vm._s(_vm.COUNT_ORDERS) + " ")
+                  ])
+                ]
               )
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "map" }, [
-              _c("span", { on: { click: _vm.openMap } }, [
-                _vm._v("Показать адрес на карте")
-              ])
             ]),
             _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function($event) {
-                    return _vm.orderDelivered(list[0].order_status_id)
+            _vm._m(0)
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._l(_vm.ORDERS, function(list, i) {
+          return _c(
+            "div",
+            { key: i },
+            [
+              _vm._l(list[0].address.address, function(address, address_id) {
+                return _c("div", [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(address.address) +
+                      " / " +
+                      _vm._s(address.kv) +
+                      "\n            "
+                  )
+                ])
+              }),
+              _vm._v(" "),
+              _vm._l(list, function(order, order_i) {
+                return _c(
+                  "div",
+                  { key: order_i },
+                  _vm._l(order.food, function(food_additive, food_additive_i) {
+                    return _c(
+                      "div",
+                      { key: food_additive_i },
+                      _vm._l(food_additive.food, function(food, food_i) {
+                        return _c(
+                          "div",
+                          { key: food_i, staticClass: "food-position" },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(food.name) +
+                                "\n                        "
+                            ),
+                            _vm._l(food_additive.additive, function(
+                              additive,
+                              additive_i
+                            ) {
+                              return _c(
+                                "div",
+                                {
+                                  key: additive_i,
+                                  staticClass: "additive-position"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            добавки - " +
+                                      _vm._s(additive.name) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "count-food" }, [
+                              _vm._v(
+                                "\n                            количество - " +
+                                  _vm._s(order.count) +
+                                  "\n                        "
+                              )
+                            ])
+                          ],
+                          2
+                        )
+                      }),
+                      0
+                    )
+                  }),
+                  0
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "map" }, [
+                _c("span", { on: { click: _vm.openMap } }, [
+                  _vm._v("Показать адрес на карте")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "btn btn-danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.orderDelivered(list[0].order_status_id)
+                    }
                   }
-                }
-              },
-              [_vm._v("Доставлено")]
-            )
-          ],
-          2
-        )
-      }),
-      0
-    )
-  ])
+                },
+                [_vm._v("Доставлено")]
+              )
+            ],
+            2
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "yandex-map",
+        { attrs: { coords: _vm.coords, zoom: 10, settings: _vm.settings } },
+        [
+          _c("ymap-marker", {
+            attrs: {
+              coords: _vm.coords,
+              "marker-id": "123",
+              "hint-content": "some hint"
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

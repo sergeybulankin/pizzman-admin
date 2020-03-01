@@ -81,7 +81,9 @@ class OrderController extends Controller
             $query->where('status_id', $id)
                 ->where('success', 0)
                 ->orderBy('status_id', 'DESC');
-        })->get();
+        })
+            ->with('order_status_last')
+            ->get();
 
         return OrderResource::collection($orders);
     }
