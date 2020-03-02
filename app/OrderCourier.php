@@ -25,6 +25,16 @@ class OrderCourier extends Model
     }
 
     /**
+     * @return $this
+     */
+    public function counts()
+    {
+        return $this->hasMany(OrderStatus::class, 'order_id', 'order_id')
+            ->where('success', 0)
+            ->where('status_id', 5);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function order()

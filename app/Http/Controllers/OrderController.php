@@ -45,7 +45,6 @@ class OrderController extends Controller
         foreach ($foods_in_orders as $k => $v) {
             foreach ($v['food_additive'] as $key => $value) {
                 $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
-                //$order[$k]['additive'][$key] = FoodAdditive::with('food', 'additive')->where('id', $value->additive_id)->get();
                 $order[$k]['count'] = $v->count;
                 $order[$k]['food_key'] = $v->u_id;
             }
@@ -61,7 +60,6 @@ class OrderController extends Controller
                     $result[$k]['additive'][$key] = $food_value['additive'];
                     $result[$k]['count'] = $value['count'];
                 }
-
             }
         }
 

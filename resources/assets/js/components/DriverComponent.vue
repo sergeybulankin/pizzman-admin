@@ -20,10 +20,22 @@
                 </li>
             </ul>
 
-            <div v-for="(list, i) in ORDERS" :key="i">
-                <div class="address" v-for="(address, address_id) in list[0].address.address">
-                    <span class="address-info">Адрес:</span> {{ address.address }} &nbsp;&nbsp;
-                    <span class="address-info">Квартира:</span> {{ address.kv }}
+            <div class="order" v-for="(list, i) in ORDERS" :key="i">
+                <div class="points">
+                    <div class="pizzman-point">
+                        <div class="point-from"></div>
+                        <div class="address">
+                            Точка на Худайбердина
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="point-to"></div>
+                        <div class="address" v-for="(address, address_id) in list[0].address.address">
+                            <span class="address-info">Адрес:</span> {{ address.address }} &nbsp;&nbsp;
+                            <span class="address-info">Квартира:</span> {{ address.kv }}
+                        </div>
+                    </div>
                 </div>
 
                 <div v-for="(order, order_i) in list" :key="order_i">

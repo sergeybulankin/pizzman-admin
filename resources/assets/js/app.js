@@ -14,10 +14,6 @@ import store from './store/index';
 import VueCountdownTimer from 'vuejs-countdown-timer';
 window.Vue.use(VueCountdownTimer);
 
-/*import YmapPlugin from 'vue-yandex-maps';
-
-Vue.use(YmapPlugin, settings);
-*/
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

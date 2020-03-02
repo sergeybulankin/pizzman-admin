@@ -15,7 +15,8 @@
                         <tr class="table-title" style="text-align: center;">
                             <td class="number-phone">Номер заказа</td>
                             <td class="level">Адрес доставки</td>
-                            <td class="address">Время доставки</td>
+                            <td class="address">Время последнего обновления</td>
+                            <td class="address">Статус</td>
                         </tr>
 
                         @foreach($user_orders as $order)
@@ -23,6 +24,7 @@
                                 <td class="number-phone">{{ $order->order->user->name }}</td>
                                 <td class="level">{{ $order->order->address[0]->address }}</td>
                                 <td>{{ $order->order_status[0]->updated_at }}</td>
+                                <td>{{ $order->order_status[0]->status->name }}</td>
                             </tr>
                         @endforeach()
                     </table>

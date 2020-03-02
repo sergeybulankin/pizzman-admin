@@ -262,6 +262,10 @@ body, html {
   color: white;
 }
 
+.d-inline-block {
+  margin-right: 3px;
+}
+
 .logout {
   margin: 25px 0 0 0 ;
 }
@@ -305,8 +309,14 @@ body, html {
   font-weight: 300;
 }
 
+.order {
+  margin: 0 0 50px 0;
+}
+
 .address {
-  margin: 0 0 15px 0;
+  margin: 0 0 15px 25px;
+  line-height: 16px;
+  vertical-align: middle;
 }
 .address-info {
   font-size: 10px;
@@ -335,7 +345,28 @@ body, html {
   text-decoration: none;
 }
 
+.points {
+  margin: 0 0 10px 0;
+}
 
+.pizzman-point {
+
+}
+.point-from {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: #1bff89;
+  float: left;
+}
+
+.point-to {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: #ff0940;
+  float: left;
+}
 
 
 
@@ -355,6 +386,11 @@ body, html {
   padding: 8px;
   font-size: 14px;
   text-align: center;
+}
+
+.list tr:last-child
+{
+  border-bottom: none;
 }
 
 .list td {
