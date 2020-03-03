@@ -18,3 +18,4 @@ Route::post('send-order-to-courier', 'OrderController@sendOrderToCourier');
 Route::post('selected-orders-for-driver', 'DriverController@index');
 Route::post('count-active-orders', 'DriverController@countOrders');
 Route::post('order-delivered', 'DriverController@orderDelivered');
+Route::post('info-for-user', 'AccountController@account');

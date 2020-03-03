@@ -231,7 +231,7 @@ body, html {
 .content {
   min-width: 700px;
   max-width: 1000px;
-  margin: 80px 0;
+  margin: 30px 0;
 }
 
 .working-field {
@@ -368,6 +368,43 @@ body, html {
   float: left;
 }
 
+
+.control-field {
+  margin: 10px 0;
+}
+
+.account-control {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 5px 0 rgba(214, 214, 214, 0.6);
+  padding: 15px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.time-updated {
+  width: 150px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.time-order {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.time {
+  background-image: url("../images/icons/clock.png");
+  width: 24px;
+  height: 24px;
+  float: left;
+}
+
+.time-info {
+  margin: 0 0 20px 30px;
+  line-height: 24px;
+}
 
 
 

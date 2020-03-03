@@ -21,6 +21,7 @@ window.Vue.use(VueCountdownTimer);
  */
 
 Vue.component('board', require('./components/DashboardComponent.vue'));
+Vue.component('user', require('./components/UserComponent.vue'));
 
 const app = new Vue({
     el: '#app',

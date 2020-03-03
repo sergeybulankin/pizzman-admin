@@ -53,15 +53,15 @@ class DriverController extends Controller
                 $order[$k]['address'] = Order::with('address')->where('id', $v->order_id)->first();
                 $order[$k]['address_id'] = $order[$k]['address']['address_id'];
                 $order[$k]['pizzman_address'] = PizzmanAddress::all()->where('address_id', $order[$k]['address']['pizzman_address_id'])->first();
-                $order_status_id = OrderStatus::select('id', 'order_id')->where('order_id', $v->order_id)->where('status_id', 5)->first();
+                $order_status_id = OrderStatus::select('id', 'order_id', 'updated_at')->where('order_id', $v->order_id)->where('status_id', 5)->first();
                 $order[$k]['food_in_order_id'] = $v->id;
+                $order[$k]['time_order'] = $v->updated_at;
                 $order[$k]['order_status_id'] = $order_status_id['id'];
                 $order[$k]['order_id'] = $order_status_id['order_id'];
                 $order[$k]['food_key'] = $v->u_id;
             }
         }
 
-        // TODO допилить групировку по добавкам
         $result = collect($order)->groupBy('order_id');
 
         return json_encode($result);
@@ -115,19 +115,25 @@ class DriverController extends Controller
     {
         $user = Auth::user()->id;
 
-        $account = User::with('account')->where('id', $user)->first();
-
-        $roles = Role::all();
-
         $role = UserRole::with('role')->where('user_id', $user)->first();
 
         $role_id = $role['role_id'];
 
-        $user_orders = OrderCourier::with('order_status', 'order')
+        $courier = OrderCourier::with('order')
             ->where('user_id', $user)
-            ->orderBy('created_at', 'DESC')
             ->get();
 
-        return view('components.driver.archive', compact('user_orders', 'roles', 'account', 'role_id'));
+        $user_orders = [];
+        foreach ($courier as $k => $v) {
+            $user_orders[$k]['order'] = $v;
+            $user_orders[$k]['status'] = OrderStatus::with('status')
+                ->where('order_id',$v->order['id'])
+                ->where('success', 0)
+                ->get();
+        }
+
+        $user_orders = collect($user_orders);
+
+        return view('components.driver.archive', compact('user_orders', 'role_id'));
     }
 }

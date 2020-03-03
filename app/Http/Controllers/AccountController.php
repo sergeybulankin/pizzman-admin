@@ -211,4 +211,19 @@ class AccountController extends Controller
 
         return AccountResource::collection($accounts);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function account(Request $request)
+    {
+        $user = $request->user;
+
+        $account = User::with('account')
+            ->where('id', $user)
+            ->get();
+
+        return AccountResource::collection($account);
+    }
 }

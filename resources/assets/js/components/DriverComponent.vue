@@ -2,7 +2,7 @@
     <div class="row content">
         <div class="col-md-12 title">
             <div class="panel panel-default">
-                <h1>Режим доставки</h1>
+                <h1>Режим доставки <span class="timer">{{ countDown }}</span></h1>
             </div>
         </div>
 
@@ -35,6 +35,11 @@
                             <span class="address-info">Адрес:</span> {{ address.address }} &nbsp;&nbsp;
                             <span class="address-info">Квартира:</span> {{ address.kv }}
                         </div>
+                    </div>
+
+                    <div class="time-order">
+                        <div class="time"></div>
+                        <div class="time-info"> {{ list[0].time_order.date }} </div>
                     </div>
                 </div>
 
@@ -93,7 +98,13 @@
                     54.82896654088406,
                     39.831893822753904,
                 ],
+
+                countDown: 100
             }
+        },
+        created() {
+            this.updateOrders();
+            this.countDownTimer();
         },
         mounted() {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
@@ -121,6 +132,30 @@
 
             openMap() {
                 console.log('MAP');
+            },
+
+            updateOrders() {
+                var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+                setInterval(() => {
+                    this.SELECTED_ORDERS_FOR_DRIVER(id);
+                    this.COUNT_ACTIVE_ORDERS(id);
+                    console.log('Данные обновились');
+                }, 100000);
+            },
+
+            countDownTimer() {
+                if(this.countDown > 0) {
+                    setTimeout(() => {
+                        this.countDown -= 1
+                        this.countDownTimer()
+                    }, 1000)
+                }
+
+                if(this.countDown <= 0) {
+                    this.countDown = 100;
+                    this.countDownTimer();
+                }
             }
         },
         components: { yandexMap, ymapMarker }

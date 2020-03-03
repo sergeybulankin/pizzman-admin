@@ -36,6 +36,7 @@
     </div>
 
     <div class="right-block">
+        @yield('user')
         @yield('content')
         @yield('calls')
     </div>

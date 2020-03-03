@@ -2181,6 +2181,7 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer___default.a);
  */
 
 Vue.component('board', __webpack_require__(46));
+Vue.component('user', __webpack_require__(56));
 
 var app = new Vue({
   el: '#app',
@@ -45872,19 +45873,38 @@ var debug = "development" !== 'production';
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
+    actions: {
+        SELECTED_ALL_INFO_FOR_USER: function SELECTED_ALL_INFO_FOR_USER(ctx) {
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+            axios.post('/api/info-for-user', { user: id }).then(function (res) {
+                ctx.commit('SELECTED_ALL_FOR_USER_MUTATION', res.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    },
+
     state: {
-        role: []
+        role: [],
+        user: []
     },
 
     mutations: {
         setAuthUser: function setAuthUser(state, role) {
             state.role = role;
+        },
+        SELECTED_ALL_FOR_USER_MUTATION: function SELECTED_ALL_FOR_USER_MUTATION(state, user) {
+            state.user = user;
         }
     },
 
     getters: {
         ROLE: function ROLE(state) {
             return state.role;
+        },
+        USER: function USER(state) {
+            return state.user;
         }
     }
 });
@@ -46763,6 +46783,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -46777,8 +46802,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 version: '2.1'
             },
 
-            coords: [54.82896654088406, 39.831893822753904]
+            coords: [54.82896654088406, 39.831893822753904],
+
+            countDown: 100
         };
+    },
+    created: function created() {
+        this.updateOrders();
+        this.countDownTimer();
     },
     mounted: function mounted() {
         var _this = this;
@@ -46797,6 +46828,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         openMap: function openMap() {
             console.log('MAP');
+        },
+        updateOrders: function updateOrders() {
+            var _this2 = this;
+
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+            setInterval(function () {
+                _this2.SELECTED_ORDERS_FOR_DRIVER(id);
+                _this2.COUNT_ACTIVE_ORDERS(id);
+                console.log('Данные обновились');
+            }, 100000);
+        },
+        countDownTimer: function countDownTimer() {
+            var _this3 = this;
+
+            if (this.countDown > 0) {
+                setTimeout(function () {
+                    _this3.countDown -= 1;
+                    _this3.countDownTimer();
+                }, 1000);
+            }
+
+            if (this.countDown <= 0) {
+                this.countDown = 100;
+                this.countDownTimer();
+            }
         }
     }),
     components: { yandexMap: __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__["a" /* yandexMap */], ymapMarker: __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__["b" /* ymapMarker */] }
@@ -46822,7 +46879,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row content" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "col-md-12 title" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("h1", [
+          _vm._v("Режим доставки "),
+          _c("span", { staticClass: "timer" }, [_vm._v(_vm._s(_vm.countDown))])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -46842,7 +46906,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ]),
         _vm._v(" "),
         _vm._l(_vm.ORDERS, function(list, i) {
@@ -46851,7 +46915,7 @@ var render = function() {
             { key: i, staticClass: "order" },
             [
               _c("div", { staticClass: "points" }, [
-                _vm._m(2, true),
+                _vm._m(1, true),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -46881,7 +46945,15 @@ var render = function() {
                     })
                   ],
                   2
-                )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "time-order" }, [
+                  _c("div", { staticClass: "time" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "time-info" }, [
+                    _vm._v(" " + _vm._s(list[0].time_order.date) + " ")
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _vm._l(list, function(order, order_i) {
@@ -46972,16 +47044,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 title" }, [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _c("h1", [_vm._v("Режим доставки")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-item" }, [
       _c(
         "a",
@@ -47039,6 +47101,163 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-fbc12a80", module.exports)
+  }
+}
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(57)
+/* template */
+var __vue_template__ = __webpack_require__(58)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/UserComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ebaad86a", Component.options)
+  } else {
+    hotAPI.reload("data-v-ebaad86a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.SELECTED_ALL_INFO_FOR_USER();
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['USER']),
+    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_ALL_INFO_FOR_USER'])
+});
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "control-field" },
+    [
+      _vm._l(_vm.USER, function(user, i) {
+        return _c(
+          "span",
+          {
+            key: i,
+            staticClass: "account-control",
+            attrs: {
+              id: "dropdownMenuUser",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }
+          },
+          [
+            _c("img", {
+              staticClass: "d-inline-block align-top",
+              attrs: {
+                src: "/images/icons/user.png",
+                width: "36",
+                height: "36",
+                alt: ""
+              }
+            }),
+            _vm._v("\n        " + _vm._s(user[0].account.name) + " ▼\n    ")
+          ]
+        )
+      }),
+      _vm._v(" "),
+      _vm._m(0)
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "dropdown-menu",
+        attrs: { "aria-labelledby": "dropdownMenuUser" }
+      },
+      [
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Моя статистика")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Изменить профиль")
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ebaad86a", module.exports)
   }
 }
 

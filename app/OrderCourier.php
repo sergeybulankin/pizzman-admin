@@ -21,7 +21,7 @@ class OrderCourier extends Model
      */
     public function order_status()
     {
-        return $this->hasMany(OrderStatus::class, 'id', 'order_id');
+        //return $this->hasManyThrough(Status::class, OrderStatus::class, 'id', 'order_id', 'order_id');
     }
 
     /**
