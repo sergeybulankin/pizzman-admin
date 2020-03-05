@@ -19,7 +19,7 @@
                         <tr class="table-title" style="text-align: center;">
                             <td class="number-phone">Номер заказа</td>
                             <td class="level">Адрес доставки</td>
-                            <td class="address">Время последнего обновления</td>
+                            <td class="address">Время поступления заказа</td>
                             <td class="address">Статус</td>
                         </tr>
 
@@ -28,7 +28,11 @@
                                 <tr style="text-align: center;">
                                     <td class="number-phone">{{ $order[0]['order']['user']['name'] }}</td>
                                     <td class="level">{{ $order[0]['order']['address'][0]['address'] }}</td>
-                                    <td class="time-updated">{{ $order[0]['order']['order_status'][0]['updated_at'] }}</td>
+                                    @if(count($order[0]['order']['order_status']) > 0)
+                                        <td class="time-updated">
+                                            {{ $order[0]['order']['order_status'][count($order[0]['order']['order_status']) - 1]['updated_utc'] }}
+                                        </td>
+                                    @endif()
                                     <td class="address"><strong> {{ $order[0]['status']['name'] }} </strong></td>
                                 </tr>
                             @endforeach()

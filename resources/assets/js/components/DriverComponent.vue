@@ -39,11 +39,11 @@
 
                     <div class="time-order">
                         <div class="time"></div>
-                        <div class="time-info"> {{ list[0].time_order.date }} </div>
+                        <div class="time-info"> {{ list[0].time_order.date | moment }} </div>
                     </div>
                 </div>
 
-                <div v-for="(order, order_i) in list" :key="order_i">
+                <!--<div v-for="(order, order_i) in list" :key="order_i">
                     <div v-for="(food_additive, food_additive_i) in order.food" :key="food_additive_i">
                         <div class="food-position" v-for="(food, food_i) in food_additive.food" :key="food_i">
                             {{ food.name }}
@@ -53,6 +53,17 @@
                             <div class="count-food">
                                 количество - {{ order.count }}
                             </div>
+                        </div>
+                </div>-->
+
+                <div v-for="(order, order_i) in list" :key="order_i">
+                    <div class="food-position" v-for="(food, food_i) in order.food" :key="food_i">
+                        {{ food.name }}
+                        <div class="additive-position" v-for="(additive, additive_i) in order.additive" :key="additive_i">
+                            {{ additive.name }}
+                        </div>
+                        <div class="count-food">
+                            количество - {{ order.count }}
                         </div>
                     </div>
                 </div>
@@ -65,8 +76,7 @@
             </div>
         </div>
 
-
-        <!--<yandex-map
+        <yandex-map
                 :coords="coords"
                 :zoom="10"
                 :settings="settings">
@@ -74,13 +84,15 @@
                     :coords="coords"
                     marker-id="123"
                     hint-content="some hint"/>
-        </yandex-map>-->
+        </yandex-map>
 
 
     </div>
 </template>
 
 <script>
+    moment.locale('ru');
+
     import { mapGetters, mapActions } from 'vuex';
     import { yandexMap, ymapMarker } from 'vue-yandex-maps';
 
@@ -119,6 +131,11 @@
             'ORDERS',
             'COUNT_ORDERS'
         ]),
+        filters: {
+            moment: (date) => {
+                return moment(date).format('D MMMM, H:mm');
+            }
+        },
         methods: {
             ...mapActions([
                 'SELECTED_ORDERS_FOR_DRIVER',
@@ -127,7 +144,13 @@
             ]),
 
             orderDelivered(order_status_id) {
+                var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
                 this.ORDER_DELIVERED(order_status_id);
+
+                this.SELECTED_ORDERS_FOR_DRIVER(id);
+                this.COUNT_ACTIVE_ORDERS(id);
+                console.log('Данные обновились');
             },
 
             openMap() {

@@ -14,6 +14,11 @@ import store from './store/index';
 import VueCountdownTimer from 'vuejs-countdown-timer';
 window.Vue.use(VueCountdownTimer);
 
+window.moment = require('moment');
+
+import lodash from 'lodash';
+Vue.prototype._ = lodash;
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -6,7 +6,6 @@
             {{ user[0].account.name }} ▼
         </span>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuUser">
-            <a class="dropdown-item" href="#">Моя статистика</a>
             <a class="dropdown-item" href="#">Изменить профиль</a>
         </div>
     </div>
