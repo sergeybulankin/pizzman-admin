@@ -1,5 +1,9 @@
 @extends('layouts.body')
 
-@section('crud')
+@section('user')
+    <user></user>
+@endsection()
+
+@section('content')
     @include('layouts.crud')
 @endsection()

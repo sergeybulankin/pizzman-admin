@@ -38,8 +38,8 @@
                         {{ order.address.address }} - {{ order.address.kv }}
 
                         <div v-if="order.last_status.status_id == 5">
-                            <div class="view-driver" @click="viewDriver(order.courier.user_id)">Посмотреть водителя ▼</div>
-                            <div class="driver" v-show="showDriver">
+                            <div class="view-driver" @click="viewDriver(order.courier.user_id, order.id)">Посмотреть водителя ▼</div>
+                            <div :class="'driver-'+order.id">
                                 <div class="driver-phone">{{ DRIVER.name }} </div>
                                 <div class="driver-name" v-for="(driver, i) in DRIVER"> {{ driver.name }} </div>
                             </div>
@@ -107,8 +107,7 @@
             return {
                 driver: '',
                 countDown: 100,
-                showModal: false,
-                showDriver: false
+                showModal: false
             }
         },
         created() {
@@ -171,9 +170,9 @@
             }, 100000);
         },
 
-        viewDriver(driver) {
-            this.showDriver = !this.showDriver;
+        viewDriver(driver, order) {
             this.VIEW_DRIVER(driver);
+            $('.driver-' + order).css('display', 'block');
         },
 
         countDownTimer() {

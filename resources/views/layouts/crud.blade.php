@@ -1,19 +1,69 @@
-<div class="list-group">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Пользователи
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/create/account">Добавить</a>
-                            <a class="dropdown-item" href="/list/accounts">Список</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+<div class="row content">
+    <div class="col-md-12 title">
+        <div class="panel panel-default">
+            <h1>Панель управления</h1>
         </div>
-    </nav>
+    </div>
+
+    <div class="col-md-12 working-field">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <a href="/list/accounts">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/users.png" alt="">
+                        </div>
+                        Пользователи
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <div class=panel-crud-image>
+                        <img src="../images/icons/admin/foods.png" alt="">
+                    </div>
+                    Блюда
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <a href="/list/additives">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/additives.png" alt="">
+                        </div>
+                        Добавки
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <div class=panel-crud-image>
+                        <img src="../images/icons/admin/food_additives.png" alt="">
+                    </div>
+                    Еда с добавками
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <div class=panel-crud-image>
+                        <img src="../images/icons/admin/types.png" alt="">
+                    </div>
+                    Типы блюд
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <div class=panel-crud-image>
+                        <img src="../images/icons/admin/categories.png" alt="">
+                    </div>
+                    Категории блюд
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

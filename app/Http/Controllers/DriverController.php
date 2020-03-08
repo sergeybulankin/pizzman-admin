@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\FoodAdditive;
 use App\FoodInOrder;
-use App\Http\Resources\DriverResource;
 use App\Order;
 use App\OrderCourier;
 use App\OrderStatus;
-use App\PizzmanAddress;
-use App\Role;
-use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,25 +42,9 @@ class DriverController extends Controller
                 ->get();
         }
 
-        $order = [];
-        foreach (collect($foods_in_orders)->collapse() as $k => $v) {
-            foreach ($v['food_additive'] as $key => $value) {
-                $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
-                $order[$k]['count'] = $v->count;
-                $order[$k]['address'] = Order::with('address')->where('id', $v->order_id)->first();
-                $order[$k]['address_id'] = $order[$k]['address']['address_id'];
-                $order[$k]['pizzman_address'] = PizzmanAddress::all()->where('address_id', $order[$k]['address']['pizzman_address_id'])->first();
-                $order_status_id = OrderStatus::select('id', 'order_id', 'updated_at')->where('order_id', $v->order_id)->where('status_id', 5)->first();
-                $order[$k]['food_in_order_id'] = $v->id;
-                $order[$k]['time_order'] = $v->updated_utc;
-                $order[$k]['order_status_id'] = $order_status_id['id'];
-                $order[$k]['order_id'] = $order_status_id['order_id'];
-                $order[$k]['food_key'] = $v->u_id;
-            }
-        }
+        $result = $this->compilationOrder($foods_in_orders);
 
-        $result = collect($order)->groupBy('order_id');
-
+        // Если блюдо одинаковое, то забираем добавки и группируем
         $count_additive = [];
         foreach ($result->collapse() as $k => $v) {
             $count_additive[] = $v['food_key'];
@@ -77,7 +58,6 @@ class DriverController extends Controller
         }
 
         $additives_array = [];
-        $orders = [];
         foreach ($result->collapse() as $k => $v) {
             foreach ($additives as $additive_key) {
                 if ($additive_key == $v['food_key']) {
@@ -93,17 +73,69 @@ class DriverController extends Controller
 
         $sort_additive_array = collect($additives_array)->groupBy('food_key');
 
-        foreach ($result->collapse() as $k => $v) {
-            foreach ($additives as $additive_key) {
-                if ($additive_key == $v['food_key']) {
-                    $orders[$k]['food'] = $v['food'][0]['food'];
-                    $orders[$k]['additive'] = $sort_additive_array[$additive_key];
-                }else {
-                    $orders[$k]['food'] = $v['food'];
-                    foreach ($v['food'] as $item) {
-                        $orders[$k]['food'] = $item['food'];
-                        $orders[$k]['additive'] = $item['additive'];
+        $result = $this->formatOrderForDriver($result, $additives, $sort_additive_array);
+
+        return json_encode($result);
+    }
+
+
+    /**
+     * Формируем данные для водителя
+     *
+     * @param $foods_in_orders
+     * @return mixed
+     */
+    public function compilationOrder($foods_in_orders)
+    {
+        $order = [];
+        foreach (collect($foods_in_orders)->collapse() as $k => $v) {
+            foreach ($v['food_additive'] as $key => $value) {
+                $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
+                $order[$k]['count'] = $v->count;
+                $order[$k]['address'] = Order::with('address')->where('id', $v->order_id)->first();
+                $order[$k]['address_id'] = $order[$k]['address']['address_id'];
+                $order[$k]['pizzman_address'] = Address::all()->where('id', $order[$k]['address']['pizzman_address_id'])->first();
+                $order_status_id = OrderStatus::select('id', 'order_id', 'updated_at')->where('order_id', $v->order_id)->where('status_id', 5)->first();
+                $order[$k]['food_in_order_id'] = $v->id;
+                $order[$k]['time_order'] = $v->updated_utc;
+                $order[$k]['order_status_id'] = $order_status_id['id'];
+                $order[$k]['order_id'] = $order_status_id['order_id'];
+                $order[$k]['food_key'] = $v->u_id;
+            }
+        }
+
+        return collect($order)->groupBy('order_id');
+    }
+
+
+    /**
+     * Форматируем заказы для того, чтобы убрать дубликаты
+     *
+     * @param $order
+     * @param $additives
+     * @param $sort_additive_array
+     * @return mixed
+     */
+    public function formatOrderForDriver($order, $additives, $sort_additive_array)
+    {
+        $orders = [];
+        foreach ($order->collapse() as $k => $v) {
+            if (!empty($additives)) {
+                foreach ($additives as $additive_key) {
+                    if ($additive_key == $v['food_key']) {
+                        $orders[$k]['food'] = $v['food'][0]['food'];
+                        $orders[$k]['additive'] = $sort_additive_array[$additive_key];
+                    }else {
+                        foreach ($v['food'] as $item) {
+                            $orders[$k]['food'] = $item['food'];
+                            $orders[$k]['additive'] = $item['additive'];
+                        }
                     }
+                }
+            }else {
+                foreach ($v['food'] as $item) {
+                    $orders[$k]['food'] = $item['food'];
+                    $orders[$k]['additive'] = $item['additive'];
                 }
             }
 
@@ -118,10 +150,10 @@ class DriverController extends Controller
             $orders[$k]['food_key'] = $v['food_key'];
         }
 
-        $result = collect($orders)->groupBy('order_id');
-
-        return json_encode($result);
+        return collect($orders)->unique('food_key')->groupBy('order_id');
     }
+
+
 
     /**
      * подсчет количества активных заявок

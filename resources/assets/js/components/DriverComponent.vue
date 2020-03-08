@@ -25,7 +25,7 @@
                     <div class="pizzman-point">
                         <div class="point-from"></div>
                         <div class="address">
-                            Точка на Худайбердина
+                            <span class="address-info">Адрес:</span> {{ list[0].pizzman_address.address }}
                         </div>
                     </div>
 
@@ -42,19 +42,6 @@
                         <div class="time-info"> {{ list[0].time_order.date | moment }} </div>
                     </div>
                 </div>
-
-                <!--<div v-for="(order, order_i) in list" :key="order_i">
-                    <div v-for="(food_additive, food_additive_i) in order.food" :key="food_additive_i">
-                        <div class="food-position" v-for="(food, food_i) in food_additive.food" :key="food_i">
-                            {{ food.name }}
-                            <div class="additive-position" v-for="(additive, additive_i) in food_additive.additive" :key="additive_i">
-                                добавки - {{ additive.name }}
-                            </div>
-                            <div class="count-food">
-                                количество - {{ order.count }}
-                            </div>
-                        </div>
-                </div>-->
 
                 <div v-for="(order, order_i) in list" :key="order_i">
                     <div class="food-position" v-for="(food, food_i) in order.food" :key="food_i">
@@ -78,12 +65,7 @@
 
         <yandex-map
                 :coords="coords"
-                :zoom="10"
                 :settings="settings">
-            <ymap-marker
-                    :coords="coords"
-                    marker-id="123"
-                    hint-content="some hint"/>
         </yandex-map>
 
 

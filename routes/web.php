@@ -21,7 +21,10 @@ Route::get('/list/accounts', 'AccountController@show');
 Route::put('/list/account/black/{id}', 'AccountController@blackList')->middleware('auth');
 Route::put('/list/account/unblack/{id}', 'AccountController@unlockedUser')->middleware('auth');
 
+Route::get('/list/additives', 'AdditiveController@show');
+
 Route::get('/create/account', 'AccountController@index');
+Route::get('/create/additive', 'AdditiveController@index');
 
 Route::put('/edit/account/{id}', 'AccountController@edit')->middleware('auth');
 

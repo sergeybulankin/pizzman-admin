@@ -20,6 +20,12 @@
                     </div>
                 @endif()
 
+                <div class="add-to-table">
+                    <a href="/create/account">
+                        Добавить пользователя
+                    </a>
+                </div>
+
                 <table>
                     <tr class="table-title" style="text-align: center;">
                         <td class="number-phone">Номер телефона</td>

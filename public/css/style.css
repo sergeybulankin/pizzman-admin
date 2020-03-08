@@ -406,6 +406,51 @@ body, html {
   line-height: 24px;
 }
 
+.panel-crud {
+  margin: 0 0 25px 0;
+  padding: 8px;
+  border: 1px solid #2B1B35;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  cursor: pointer;
+}
+.panel-crud:hover {
+  background: #f4f4f4;
+}
+.panel-crud a {
+  text-decoration: none;
+  color: black;
+}
+
+.panel-crud-image {
+  margin: 0 0 10px 0;
+}
+.panel-crud-image img {
+  width: 36px;
+}
+
+.add-to-table {
+  width: 200px;
+  margin: 0 0 15px 15px;
+  padding: 5px;
+  background-color: #2B1B35;
+  border-radius: 3px;
+  text-align: center;
+}
+.add-to-table a {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+}
+
+
+div[class^="driver-"] {
+  display: none;
+  background: black;
+}
 
 
 
