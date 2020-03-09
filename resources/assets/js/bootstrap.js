@@ -21,7 +21,18 @@ try {
 
 window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+//window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ *
+ * Передаем токен по запросу
+ *
+ *  */
+window.axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + Laravel.apiToken
+};
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

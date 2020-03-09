@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Http\Resources\CallResource;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
@@ -64,5 +65,15 @@ class CallController extends Controller
         $call->save();
 
         return redirect()->back()->with('success', 'Заявка обработана');
+    }
+
+    /**
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function countCalls()
+    {
+        $count = Call::all()->where('noted', 0)->count();
+
+        return json_encode($count);
     }
 }

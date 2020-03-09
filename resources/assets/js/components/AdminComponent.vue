@@ -39,9 +39,10 @@
 
                         <div v-if="order.last_status.status_id == 5">
                             <div class="view-driver" @click="viewDriver(order.courier.user_id, order.id)">Посмотреть водителя ▼</div>
-                            <div :class="'driver-'+order.id">
+                            <div :class="'driver-'+order.id" style="display: none;">
                                 <div class="driver-phone">{{ DRIVER.name }} </div>
                                 <div class="driver-name" v-for="(driver, i) in DRIVER"> {{ driver.name }} </div>
+                                <div class="hide-driver" @click="hideDriver(order.id)">▲</div>
                             </div>
                         </div>
                     </td>
@@ -173,6 +174,10 @@
         viewDriver(driver, order) {
             this.VIEW_DRIVER(driver);
             $('.driver-' + order).css('display', 'block');
+        },
+
+        hideDriver(order) {
+            $('.driver-' + order).css('display', 'none');
         },
 
         countDownTimer() {

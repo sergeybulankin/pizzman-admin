@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 141);
+/******/ 	return __webpack_require__(__webpack_require__.s = 142);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1919,7 +1919,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(174)("./" + name);
+                __webpack_require__(175)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4680,7 +4680,7 @@
 
 
 var bind = __webpack_require__(7);
-var isBuffer = __webpack_require__(149);
+var isBuffer = __webpack_require__(150);
 
 /*global toString:true*/
 
@@ -4984,33 +4984,6 @@ module.exports = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6071,7 +6044,34 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 4 */
@@ -6190,7 +6190,7 @@ module.exports = function normalizeComponent (
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(151);
+var normalizeHeaderName = __webpack_require__(152);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -6526,12 +6526,12 @@ process.umask = function() { return 0; };
 
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(152);
-var buildURL = __webpack_require__(154);
-var parseHeaders = __webpack_require__(155);
-var isURLSameOrigin = __webpack_require__(156);
+var settle = __webpack_require__(153);
+var buildURL = __webpack_require__(155);
+var parseHeaders = __webpack_require__(156);
+var isURLSameOrigin = __webpack_require__(157);
 var createError = __webpack_require__(10);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(157);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(158);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -6628,7 +6628,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(158);
+      var cookies = __webpack_require__(159);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -6712,7 +6712,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(153);
+var enhanceError = __webpack_require__(154);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -6775,7 +6775,7 @@ module.exports = Cancel;
 if (false) {
   module.exports = require('./vue.common.prod.js')
 } else {
-  module.exports = __webpack_require__(166)
+  module.exports = __webpack_require__(167)
 }
 
 
@@ -18979,20 +18979,32 @@ if (false) {
 
 /***/ }),
 /* 141 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(142);
+"use strict";
+/* unused harmony export loadYmap */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return v; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return O; });
+function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(t)}function t(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function o(e,t,o){return t in e?Object.defineProperty(e,t,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[t]=o,e}function r(e){return function(e){if(Array.isArray(e)){for(var t=0,o=new Array(e.length);t<e.length;t++)o[t]=e[t];return o}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function n(e,t){var o=t.options,n=t.callbacks,a=t.map,i=t.useObjectManager,s=t.objectManagerClusterize,c={},l=[];if(e.forEach(function(e){e.clusterName?c[e.clusterName]=c[e.clusterName]?[].concat(r(c[e.clusterName]),[e]):[e]:l.push(e)}),Object.keys(c).forEach(function(e){var t=o[e]||{},r=n[e]||{},l=t.layout||"\n      <div>{{ properties.balloonContentHeader }}</div>\n      <div>{{ properties.balloonContentBody }}</div>\n      <div>{{ properties.balloonContentFooter }}</div>\n    ";t.clusterBalloonItemContentLayout=ymaps.templateLayoutFactory.createClass(l);var u=t.clusterBalloonLayout||t.clusterLayout;delete t.clusterBalloonLayout;var p=u?ymaps.templateLayoutFactory.createClass(u):t.clusterBalloonContentLayout||"cluster#balloonTwoColumns";t.clusterBalloonContentLayout=p;var d=t.clusterIconContentLayout;if(t.clusterIconContentLayout=d&&ymaps.templateLayoutFactory.createClass(d),i){var m=new ymaps.ObjectManager(Object.assign({clusterize:s},t));Object.keys(r).forEach(function(e){m.clusters.events.add(e,r[e])}),m.add(c[e]),a.geoObjects.add(m)}else{var f=new ymaps.Clusterer(t);Object.keys(r).forEach(function(e){f.events.add(e,r[e])}),t.createCluster&&(f.createCluster=t.createCluster),f.add(c[e]),a.geoObjects.add(f)}}),l.length){var u=i?new ymaps.ObjectManager({clusterize:!1}):new ymaps.GeoObjectCollection;l.forEach(function(e){return u.add(e)}),a.geoObjects.add(u)}}function a(e){return e.charAt(0).toUpperCase()+e.slice(1)}function i(e){return(e.icon.color||"blue")+(e.icon.glyph?a(e.icon.glyph):e.icon.content?"Stretchy":"")}function s(e){return e.map(function(e){return Array.isArray(e)?s(e):+e})}function c(t,o){var r=[];return function t(o,n){if(o===n)return!0;if(o instanceof Date&&n instanceof Date)return+o==+n;if("object"!==e(o)||"object"!==e(n))return!1;if(function(e,t){for(var o=r.length;o--;)if(!(r[o][0]!==e&&r[o][0]!==t||r[o][1]!==t&&r[o][1]!==e))return!0;return!1}(o,n))return!0;r.push([o,n]);var a=Object.keys(o),i=a.length;if(Object.keys(n).length!==i)return!1;for(;i--;)if(!t(o[a[i]],n[a[i]]))return!1;return!0}(t,o)}var l=new(function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.events={},this.ymapReady=!1,this.scriptIsNotAttached=!0}var o,r,n;return o=e,(r=[{key:"$on",value:function(e,t){var o=this;return this.events[e]||(this.events[e]=[]),this.events[e].push(t),function(){o.events[e]=o.events[e].filter(function(e){return t!==e})}}},{key:"$emit",value:function(e,t){var o=this.events[e];o&&o.forEach(function(e){return e(t)})}}])&&t(o.prototype,r),n&&t(o,n),e}()),u=["fullscreenControl","geolocationControl","routeEditor","rulerControl","searchControl","trafficControl","typeSelector","zoomControl","routePanelControl"];function p(e){return 0===e.filter(function(e){return![].concat(u,["default"]).includes(e)}).length}function d(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return new Promise(function(t,o){if(window.ymaps)return t();var r=document.createElement("SCRIPT"),n=e.apiKey,a=void 0===n?"":n,i=e.lang,s=void 0===i?"ru_RU":i,c=e.version,u=void 0===c?"2.1":c,p=e.coordorder,d=void 0===p?"latlong":p,m=e.debug,f=void 0!==m&&m?"debug":"release",h="lang=".concat(s).concat(a&&"&apikey=".concat(a),"&mode=").concat(f,"&coordorder=").concat(d),y="https://api-maps.yandex.ru/".concat(u,"/?").concat(h);r.setAttribute("src",y),r.setAttribute("async",""),r.setAttribute("defer",""),document.body.appendChild(r),l.scriptIsNotAttached=!1,r.onload=function(){ymaps.ready(function(){l.ymapReady=!0,l.$emit("scriptIsLoaded"),t()})},r.onerror=o})}var m=l,f=["actionend","balloonclose","balloonopen","click","contextmenu","dblclick","destroy","hintclose","hintopen","optionschange","sizechange","typechange"],h={pluginOptions:{},provide:function(){var e,t,o=this,r=[],n=[];return{useObjectManager:this.useObjectManager,addMarker:this.addMarker,deleteMarker:function(t){o.myMap.geoObjects&&(r.push(t),e&&clearTimeout(e),e=setTimeout(function(){o.deleteMarkers(r),r=[]},0))},compareValues:function(e){var r=e.newVal,a=e.oldVal,i=e.marker;c(r,a)||(n.push(i),t&&clearTimeout(t),t=setTimeout(function(){o.setMarkers(n),n=[]},0))}}},data:function(){return{ymapId:"yandexMap".concat(Math.round(1e5*Math.random())),myMap:{},style:this.ymapClass?"":"width: 100%; height: 100%;",isReady:!1,debounce:null,markers:[]}},props:{coords:{type:Array,required:!0},zoom:{validator:function(e){return!Number.isNaN(e)},default:18},bounds:Array,clusterOptions:{type:Object,default:function(){return{}}},clusterCallbacks:{type:Object,default:function(){return{}}},behaviors:{type:Array,default:function(){return["default"]}},controls:{type:Array,default:function(){return["default"]},validator:function(e){return p(e)}},detailedControls:{type:Object,validator:function(e){return p(Object.keys(e))}},scrollZoom:{type:Boolean,default:!0},mapType:{type:String,default:"map",validator:function(e){return["map","satellite","hybrid"].includes(e)}},placemarks:{type:Array,default:function(){return[]}},useObjectManager:{type:Boolean,default:!1},objectManagerClusterize:{type:Boolean,default:!0},ymapClass:String,initWithoutMarkers:{type:Boolean,default:!0},debug:{type:Boolean,default:!1},settings:{type:Object,default:function(){return{}}},options:{type:Object,default:function(){return{}}},showAllMarkers:Boolean},computed:{coordinates:function(){return this.coords.map(function(e){return+e})}},methods:{init:function(){var e=this;if(window.ymaps&&ymaps.GeoObjectCollection&&(this.initWithoutMarkers||this.$slots.default||this.placemarks.length)){if(this.$emit("map-initialization-started"),this.myMap=new ymaps.Map(this.ymapId,{center:this.coordinates,zoom:+this.zoom,bounds:this.bounds,behaviors:this.behaviors,controls:this.controls,type:"yandex#".concat(this.mapType)},this.options),f.forEach(function(t){return e.myMap.events.add(t,function(o){return e.$emit(t,o)})}),this.myMap.events.add("boundschange",function(t){var o=t.originalEvent,r=o.newZoom,n=o.newCenter,a=o.newBounds;e.$emit("boundschange",t),e.$emit("update:zoom",r),e.$emit("update:coords",n),e.$emit("update:bounds",a)}),this.detailedControls)Object.keys(this.detailedControls).forEach(function(t){e.myMap.controls.remove(t),e.myMap.controls.add(t,e.detailedControls[t])});!1===this.scrollZoom&&this.myMap.behaviors.disable("scrollZoom"),this.isReady=!0,this.$emit("map-was-initialized",this.myMap)}},addMarker:function(e){var t=this;this.markers.push(e),this.debounce&&clearTimeout(this.debounce),this.debounce=setTimeout(function(){t.setMarkers(t.markers)},0)},setMarkers:function(e){var t=this,o={options:this.clusterOptions,callbacks:this.clusterCallbacks,map:this.myMap,useObjectManager:this.useObjectManager,objectManagerClusterize:this.objectManagerClusterize};if(this.markers!==e){var r=e.map(function(e){return t.useObjectManager?e.id:e.properties.get("markerId")});this.deleteMarkers(r),n(e,o),this.$emit("markers-was-change",r)}else n(e,o);this.markers=[],this.showAllMarkers&&this.myMap.setBounds(this.myMap.geoObjects.getBounds())},deleteMarkers:function(e){var t=this;this.myMap.geoObjects.each(function(o){var r=[];if(t.useObjectManager)o.remove(e);else{var n,a=function(t){var o=t.properties.get("markerId");e.includes(o)&&r.push(t)};if(o.each)o.each(a),n=o.getLength();else if(o.getGeoObjects){var i=o.getGeoObjects();i.forEach(a),n=i.length}0===n||n===r.length?t.myMap.geoObjects.remove(o):r.length&&r.forEach(function(e){return o.remove(e)})}}),this.$emit("markers-was-delete",e)}},watch:{coordinates:function(e){this.myMap.panTo&&this.myMap.getZoom()&&this.myMap.panTo(e)},zoom:function(){this.myMap.setZoom(this.zoom)},bounds:function(e){this.myMap.setBounds&&this.myMap.setBounds(e)}},render:function(e){return e("section",{class:"ymap-container",ref:"mapContainer"},[e("div",{attrs:{id:this.ymapId,class:this.ymapClass,style:this.style}}),this.isReady&&e("div",{ref:"markersContainer",attrs:{class:"ymap-markers"}},[this.$slots.default])])},mounted:function(){var e=this;if(this.$attrs["map-link"]||this.$attrs.mapLink)throw new Error("Vue-yandex-maps: Attribute mapLink is not supported. Use settings.");if(this.placemarks&&this.placemarks.length)throw new Error("Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.");this.mapObserver=new MutationObserver(function(){e.myMap.container&&e.myMap.container.fitToViewport()});var t=this.$refs.mapContainer;if(this.mapObserver.observe(t,{attributes:!0,childList:!0,characterData:!0,subtree:!1}),m.scriptIsNotAttached){var r=this.debug;d(function(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{},n=Object.keys(r);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(r).filter(function(e){return Object.getOwnPropertyDescriptor(r,e).enumerable}))),n.forEach(function(t){o(e,t,r[t])})}return e}({},this.$options.pluginOptions,this.settings,{debug:r}))}m.ymapReady?ymaps.ready(this.init):m.$on("scriptIsLoaded",function(){ymaps.ready(e.init)})},beforeDestroy:function(){this.myMap.geoObjects&&this.myMap.geoObjects.removeAll()}},y=["placemark","polyline","rectangle","polygon","circle"],b=["balloonclose","balloonopen","click","contextmenu","dblclick","drag","dragend","dragstart","hintclose","hintopen","mouseenter","mouseleave"],g={inject:["useObjectManager","addMarker","deleteMarker","compareValues"],props:{coords:Array,hintContent:String,icon:Object,balloon:Object,markerType:{type:String,validator:function(e){return y.includes(e.toLowerCase())},default:"placemark"},markerFill:Object,markerStroke:Object,clusterName:[String,Number],circleRadius:{validator:function(e){return!Number.isNaN(e)},default:1e3},balloonTemplate:String,markerId:{type:[String,Number],required:!0},properties:Object,options:Object},data:function(){return{unwatchArr:[]}},render:function(e){return this.$slots.balloon&&e("div",{style:"display: none;"},[this.$slots.balloon])},mounted:function(){var e=this;Object.keys(this.$props).forEach(function(t){e.unwatchArr.push(e.$watch(t,function(t,o){return e.compareValues({newVal:t,oldVal:o,marker:e.defineMarker()})}))}),this.addMarker(this.defineMarker())},methods:{defineMarker:function(){var e=this,t={};this.balloonTemplate&&(t={balloonContentLayout:ymaps.templateLayoutFactory.createClass(this.balloonTemplate)});this.$slots.balloon&&(t={balloonContentLayout:ymaps.templateLayoutFactory.createClass(this.$slots.balloon[0].elm.outerHTML)});var o={markerId:this.markerId,markerType:this.markerType||"placemark",coords:s(this.coords),hintContent:this.hintContent,markerFill:this.markerFill,circleRadius:+this.circleRadius,clusterName:this.clusterName,markerStroke:this.markerStroke,balloon:this.balloon,properties:this.properties,options:this.options,balloonOptions:t};this.icon&&["default#image","default#imageWithContent"].includes(this.icon.layout)?(o.iconContent=this.icon.content,o.iconLayout=this.icon.layout,o.iconImageHref=this.icon.imageHref,o.iconImageSize=this.icon.imageSize,o.iconImageOffset=this.icon.imageOffset,o.iconContentOffset=this.icon.contentOffset,this.icon.contentLayout&&"string"==typeof this.icon.contentLayout&&(o.iconContentLayout=ymaps.templateLayoutFactory.createClass(this.icon.contentLayout))):o.icon=this.icon;var r=function(e,t){var o=a(e);if(!t)return o;switch(o){case"Placemark":return"Point";case"Polyline":return"LineString";default:return o}}(o.markerType,this.useObjectManager),n={hintContent:o.hintContent,iconContent:o.icon?o.icon.content:o.iconContent,markerId:o.markerId},c=o.balloon?{balloonContentHeader:o.balloon.header,balloonContentBody:o.balloon.body,balloonContentFooter:o.balloon.footer}:{},l=Object.assign(n,c,o.properties),u=o.iconLayout?{iconLayout:o.iconLayout,iconImageHref:o.iconImageHref,iconImageSize:o.iconImageSize,iconImageOffset:o.iconImageOffset,iconContentOffset:o.iconContentOffset,iconContentLayout:o.iconContentLayout}:{preset:o.icon&&"islands#".concat(i(o),"Icon")},p=o.markerStroke?{strokeColor:o.markerStroke.color||"0066ffff",strokeOpacity:parseFloat(o.markerStroke.opacity)>=0?parseFloat(o.markerStroke.opacity):1,strokeStyle:o.markerStroke.style,strokeWidth:parseFloat(o.markerStroke.width)>=0?parseFloat(o.markerStroke.width):1}:{},d=o.markerFill?{fill:o.markerFill.enabled||!0,fillColor:o.markerFill.color||"0066ff99",fillOpacity:parseFloat(o.markerFill.opacity)>=0?parseFloat(o.markerFill.opacity):1,fillImageHref:o.markerFill.imageHref||""}:{},m=Object.assign(u,p,d,o.balloonOptions,o.options);"Circle"===r&&(o.coords=[o.coords,o.circleRadius]);var f=function(e,t){var o=t?{type:"Feature",id:e.properties.markerId,geometry:{type:e.markerType,coordinates:e.coords},properties:e.properties,options:e.options}:new ymaps[e.markerType](e.coords,e.properties,e.options);return o.clusterName=e.clusterName,o}({properties:l,options:m,markerType:r,coords:o.coords,clusterName:o.clusterName},this.useObjectManager,this.$emit);return this.useObjectManager||b.forEach(function(t){return f.events.add(t,function(o){return e.$emit(t,o)})}),f}},beforeDestroy:function(){this.unwatchArr.forEach(function(e){return e()}),this.deleteMarker(this.markerId)}};h.install=function e(t){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};e.installed||(e.installed=!0,h.pluginOptions=o,t.component("yandex-map",h),t.component("ymap-marker",g))},"undefined"!=typeof window&&window.Vue&&window.Vue.use(h);var k=d,v=h,O=g;/* harmony default export */ __webpack_exports__["a"] = (h);
 
 
 /***/ }),
 /* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(143);
+
+
+/***/ }),
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_yandex_maps__ = __webpack_require__(141);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -19000,7 +19012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(143);
+__webpack_require__(144);
 
 window.Vue = __webpack_require__(13);
 
@@ -19011,26 +19023,40 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuejs_countdown_timer___default.a);
 
 window.moment = __webpack_require__(0);
 
+var settings = {
+  apiKey: '38ec5068-da01-4278-9dab-69c6ccfa0954',
+  lang: 'ru_RU',
+  coordorder: 'latlong',
+  version: '2.1'
+};
+
+
+
+window.Vue.config.productionTip = false;
+window.Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_yandex_maps__["a" /* default */], settings);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('board', __webpack_require__(175));
+Vue.component('board', __webpack_require__(176));
 Vue.component('user', __webpack_require__(185));
+Vue.component('navigation', __webpack_require__(188));
 
 var app = new Vue({
   el: '#app',
-  store: __WEBPACK_IMPORTED_MODULE_0__store_index__["a" /* default */]
+  store: __WEBPACK_IMPORTED_MODULE_0__store_index__["a" /* default */],
+  components: { yandexMap: __WEBPACK_IMPORTED_MODULE_2_vue_yandex_maps__["b" /* yandexMap */], ymapMarker: __WEBPACK_IMPORTED_MODULE_2_vue_yandex_maps__["c" /* ymapMarker */] }
 });
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(144);
+window._ = __webpack_require__(145);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -19039,9 +19065,9 @@ window._ = __webpack_require__(144);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(145);
+  window.$ = window.jQuery = __webpack_require__(146);
 
-  __webpack_require__(146);
+  __webpack_require__(147);
 } catch (e) {}
 
 /**
@@ -19050,9 +19076,20 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(147);
+window.axios = __webpack_require__(148);
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+//window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ *
+ * Передаем токен по запросу
+ *
+ *  */
+window.axios.defaults.headers.common = {
+  'X-CSRF-TOKEN': Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest',
+  'Authorization': 'Bearer ' + Laravel.apiToken
+};
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -19086,7 +19123,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -36203,10 +36240,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(6)(module)))
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -46811,7 +46848,7 @@ return jQuery;
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports) {
 
 /*!
@@ -49397,13 +49434,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(148);
+module.exports = __webpack_require__(149);
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49411,7 +49448,7 @@ module.exports = __webpack_require__(148);
 
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(7);
-var Axios = __webpack_require__(150);
+var Axios = __webpack_require__(151);
 var defaults = __webpack_require__(5);
 
 /**
@@ -49446,14 +49483,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(164);
+axios.CancelToken = __webpack_require__(165);
 axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(165);
+axios.spread = __webpack_require__(166);
 
 module.exports = axios;
 
@@ -49462,7 +49499,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports) {
 
 /*!
@@ -49489,7 +49526,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49497,8 +49534,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(5);
 var utils = __webpack_require__(1);
-var InterceptorManager = __webpack_require__(159);
-var dispatchRequest = __webpack_require__(160);
+var InterceptorManager = __webpack_require__(160);
+var dispatchRequest = __webpack_require__(161);
 
 /**
  * Create a new instance of Axios
@@ -49575,7 +49612,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49594,7 +49631,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49627,7 +49664,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49655,7 +49692,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49730,7 +49767,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49790,7 +49827,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49865,7 +49902,7 @@ module.exports = (
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49908,7 +49945,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49968,7 +50005,7 @@ module.exports = (
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50027,18 +50064,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(161);
+var transformData = __webpack_require__(162);
 var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(5);
-var isAbsoluteURL = __webpack_require__(162);
-var combineURLs = __webpack_require__(163);
+var isAbsoluteURL = __webpack_require__(163);
+var combineURLs = __webpack_require__(164);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -50120,7 +50157,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50147,7 +50184,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50168,7 +50205,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50189,7 +50226,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50253,7 +50290,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50287,7 +50324,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62251,10 +62288,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(167).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(168).setImmediate))
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -62310,7 +62347,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(168);
+__webpack_require__(169);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -62321,10 +62358,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -62514,19 +62551,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_dashboard__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_user__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_driver__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_dashboard__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_user__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_driver__ = __webpack_require__(173);
 
 
 
@@ -62550,7 +62587,7 @@ var debug = "development" !== 'production';
 }));
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62677,7 +62714,7 @@ var debug = "development" !== 'production';
 });
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62691,12 +62728,22 @@ var debug = "development" !== 'production';
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        SELECTED_CALLS: function SELECTED_CALLS(ctx) {
+            setInterval(function () {
+                axios.get('/api/selected-calls').then(function (res) {
+                    ctx.commit('SELECTED_CALLS_MUTATION', res.data);
+                }).then(console.log('Обновился счетчик звонков')).catch(function (error) {
+                    console.log(error);
+                });
+            }, 100000);
         }
     },
 
     state: {
         role: [],
-        user: []
+        user: [],
+        calls: 0
     },
 
     mutations: {
@@ -62705,6 +62752,9 @@ var debug = "development" !== 'production';
         },
         SELECTED_ALL_FOR_USER_MUTATION: function SELECTED_ALL_FOR_USER_MUTATION(state, user) {
             state.user = user;
+        },
+        SELECTED_CALLS_MUTATION: function SELECTED_CALLS_MUTATION(state, calls) {
+            state.calls = calls;
         }
     },
 
@@ -62714,12 +62764,15 @@ var debug = "development" !== 'production';
         },
         USER: function USER(state) {
             return state.user;
+        },
+        CALLS: function CALLS(state) {
+            return state.calls;
         }
     }
 });
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62768,13 +62821,13 @@ var debug = "development" !== 'production';
 });
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define("VueCountdownTimer",[],e):"object"==typeof exports?exports.VueCountdownTimer=e():t.VueCountdownTimer=e()}(window,function(){return function(t){var e={};function n(i){if(e[i])return e[i].exports;var s=e[i]={i:i,l:!1,exports:{}};return t[i].call(s.exports,s,s.exports,n),s.l=!0,s.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)n.d(i,s,function(e){return t[e]}.bind(null,s));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=1)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t,e){for(var n=[],i={},s=0;s<e.length;s++){var r=e[s],o=r[0],u=r[1],a=r[2],c=r[3],h={id:t+":"+s,css:u,media:a,sourceMap:c};i[o]?i[o].parts.push(h):n.push(i[o]={id:o,parts:[h]})}return n}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var i=function(t){return t&&t.__esModule?t:{default:t}}(n(6));var s={install:function(t,e){t.component("VueCountdownTimer",{mixins:[i.default],props:{startLabel:{type:String,default:""},endLabel:{type:String,default:""},labelPosition:{type:String,default:"begin"},interval:{type:Number,default:function(){return 1e3}},leadingZero:{type:Boolean,default:function(){return!0}},showZero:{type:Boolean,default:function(){return!0}},startTime:{type:Number|String},endTime:{type:Number|String},endText:{type:String,default:function(){return"Event ended!"}},dayTxt:{type:null|String,default:function(){return":"}},hourTxt:{type:null|String,default:function(){return":"}},minutesTxt:{type:null|String,default:function(){return":"}},secondsTxt:{type:String,default:function(){return":"}},secondsFixed:{type:Boolean,default:function(){return!1}}},data:function(){return{tips:!0,current:"",count:0,counting:!1,showDay:!0,showHour:!0,showMinute:!0}},computed:{days:function(){return this.preprocess(Math.floor(this.count/864e5))},hours:function(){var t=Math.floor(this.count%864e5/36e5);return this.dayTxt||(t+=24*Math.floor(this.count/864e5)),this.preprocess(t)},minutes:function(){var t=Math.floor(this.count%36e5/6e4);if(!this.hourTxt){var e=Math.floor(this.count/864e5);t+=60*Math.floor(this.count%864e5/36e5),this.dayTxt||(t+=24*e*60)}return this.preprocess(t)},seconds:function(){var t=this.interval,e=this.count%6e4/1e3;this.minutesTxt||(e+=60*Math.floor(this.count%36e5/6e4),this.hourTxt||(e+=60*Math.floor(this.count%864e5/36e5)*60,this.dayTxt||(e+=24*Math.floor(this.count/864e5)*60*60)));return t<10?this.preprocess(parseFloat(e.toFixed(3))):t>=10&&t<100?this.preprocess(parseFloat(e.toFixed(2))):t>=100&&t<1e3?this.preprocess(parseFloat(e.toFixed(1))):this.preprocess(Math.floor(e))},status:function(){return this.current>new Date(this.formatTime(this.endTime)).getTime()?0:this.current<new Date(this.formatTime(this.startTime)).getTime()?1:this.current>=new Date(this.formatTime(this.startTime)).getTime()&&this.current<new Date(this.formatTime(this.endTime)).getTime()?2:void 0}},methods:{init:function(){var t=this;this.dayTxt||(this.showDay=!1),this.hourTxt||(this.showHour=!1),this.minutesTxt||(this.showMinute=!1),this.stop(),this.$set(this,"current",(new Date).getTime());var e=new Date(this.formatTime(this.startTime)).getTime()-this.current,n=new Date(this.formatTime(this.endTime)).getTime()-this.current,i=this.status;if(0===i)return this.count=0,void this.end_message();1===i&&(this.$set(this,"tips",!0),this.count=Math.max(0,e)),2===i&&(this.$set(this,"tips",!1),this.$emit("start_callback",i),this.count=Math.max(0,n)),0!==this.count?this.$nextTick(function(){t.start()}):this.end_message()},start:function(){this.counting||(this.counting=!0,this.next())},next:function(){this.timeout=setTimeout(this.step.bind(this),this.interval)},step:function(){this.counting&&(this.count>this.interval?(this.showZero||(0===Number(this.days)&&(this.showDay=!1),this.showDay||0!==Number(this.hours)||(this.showHour=!1),this.showHour||0!==Number(this.minutes)||(this.showMinute=!1)),this.count-=this.interval,this.next()):(this.count=0,this.init()))},stop:function(){this.counting=!1,clearTimeout(this.timeout),this.timeout=void 0},start_message:function(){this.$set(this,"tips",!1),this.$emit("start_callback",this.status)},end_message:function(){this.currentTime<=0||this.currentTime<new Date(this.formatTime(this.endTime)).getTime()||this.$emit("end_callback",this.status)},formatTime:function(t){return"number"==typeof t&&10===t.toString().length?1e3*t:t},preprocess:function(t){return this.leadingZero&&t<10?"0"+t:t},update:function(){if(this.counting){this.$set(this,"current",(new Date).getTime());var t=new Date(this.formatTime(this.startTime)).getTime()-this.current,e=new Date(this.formatTime(this.endTime)).getTime()-this.current,n=this.status;if(0===n)return this.count=0,this.stop(),void this.end_message();1===n&&(this.$set(this,"tips",!0),this.count=Math.max(0,t)),2===n&&(this.$set(this,"tips",!1),this.$emit("start_callback",this.status),this.count=Math.max(0,e))}}},watch:{startTime:function(){this.init()},endTime:function(){this.init()}},created:function(){this.init()},mounted:function(){window.addEventListener("focus",this.onFocus=this.update.bind(this))},beforeDestroy:function(){window.removeEventListener("focus",this.onFocus),clearTimeout(this.timeout)}})}};"undefined"!=typeof window&&window.Vue&&window.Vue.use(s),e.default=s},function(t,e,n){var i=n(3);"string"==typeof i&&(i=[[t.i,i,""]]),i.locals&&(t.exports=i.locals);(0,n(5).default)("3f71a86a",i,!0,{})},function(t,e,n){(t.exports=n(4)(!1)).push([t.i,"",""])},function(t,e,n){"use strict";t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var n=function(t,e){var n=t[1]||"",i=t[3];if(!i)return n;if(e&&"function"==typeof btoa){var s=function(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}(i),r=i.sources.map(function(t){return"/*# sourceURL="+i.sourceRoot+t+" */"});return[n].concat(r).concat([s]).join("\n")}return[n].join("\n")}(e,t);return e[2]?"@media "+e[2]+"{"+n+"}":n}).join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var i={},s=0;s<this.length;s++){var r=this[s][0];"number"==typeof r&&(i[r]=!0)}for(s=0;s<t.length;s++){var o=t[s];"number"==typeof o[0]&&i[o[0]]||(n&&!o[2]?o[2]=n:n&&(o[2]="("+o[2]+") and ("+n+")"),e.push(o))}},e}},function(t,e,n){"use strict";n.r(e),n.d(e,"default",function(){return m});var i=n(0),s=n.n(i),r="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!r)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var o={},u=r&&(document.head||document.getElementsByTagName("head")[0]),a=null,c=0,h=!1,d=function(){},f=null,l="data-vue-ssr-id",p="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());function m(t,e,n,i){h=n,f=i||{};var r=s()(t,e);return v(r),function(e){for(var n=[],i=0;i<r.length;i++){var u=r[i];(a=o[u.id]).refs--,n.push(a)}e?v(r=s()(t,e)):r=[];for(i=0;i<n.length;i++){var a;if(0===(a=n[i]).refs){for(var c=0;c<a.parts.length;c++)a.parts[c]();delete o[a.id]}}}}function v(t){for(var e=0;e<t.length;e++){var n=t[e],i=o[n.id];if(i){i.refs++;for(var s=0;s<i.parts.length;s++)i.parts[s](n.parts[s]);for(;s<n.parts.length;s++)i.parts.push(T(n.parts[s]));i.parts.length>n.parts.length&&(i.parts.length=n.parts.length)}else{var r=[];for(s=0;s<n.parts.length;s++)r.push(T(n.parts[s]));o[n.id]={id:n.id,refs:1,parts:r}}}}function _(){var t=document.createElement("style");return t.type="text/css",u.appendChild(t),t}function T(t){var e,n,i=document.querySelector("style["+l+'~="'+t.id+'"]');if(i){if(h)return d;i.parentNode.removeChild(i)}if(p){var s=c++;i=a||(a=_()),e=y.bind(null,i,s,!1),n=y.bind(null,i,s,!0)}else i=_(),e=function(t,e){var n=e.css,i=e.media,s=e.sourceMap;i&&t.setAttribute("media",i);f.ssrId&&t.setAttribute(l,e.id);s&&(n+="\n/*# sourceURL="+s.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(s))))+" */");if(t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}.bind(null,i),n=function(){i.parentNode.removeChild(i)};return e(t),function(i){if(i){if(i.css===t.css&&i.media===t.media&&i.sourceMap===t.sourceMap)return;e(t=i)}else n()}}var b=function(){var t=[];return function(e,n){return t[e]=n,t.filter(Boolean).join("\n")}}();function y(t,e,n,i){var s=n?"":i.css;if(t.styleSheet)t.styleSheet.cssText=b(e,s);else{var r=document.createTextNode(s),o=t.childNodes;o[e]&&t.removeChild(o[e]),o.length?t.insertBefore(r,o[e]):t.appendChild(r)}}},function(t,e,n){"use strict";n.r(e);var i=function(t,e,n,i,s,r,o,u){var a=typeof(t=t||{}).default;"object"!==a&&"function"!==a||(t=t.default);var c,h="function"==typeof t?t.options:t;if(e&&(h.render=e,h.staticRenderFns=n,h._compiled=!0),i&&(h.functional=!0),r&&(h._scopeId=r),o?(c=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),s&&s.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(o)},h._ssrRegister=c):s&&(c=u?function(){s.call(this,this.$root.$options.shadowRoot)}:s),c)if(h.functional){h._injectStyles=c;var d=h.render;h.render=function(t,e){return c.call(e),d(t,e)}}else{var f=h.beforeCreate;h.beforeCreate=f?[].concat(f,c):[c]}return{exports:t,options:h}}(null,function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",[t.status>0?t._t("start-label",[""!==t.startLabel&&t.tips&&"begin"===t.labelPosition?n("span",[t._v(t._s(t.startLabel)+":")]):t._e(),t._v(" "),""===t.endLabel||t.tips||"begin"!==t.labelPosition?t._e():n("span",[t._v(t._s(t.endLabel)+":")])],{props:{tips:t.tips,startLabel:t.startLabel,endLabel:t.endLabel,labelPosition:t.labelPosition}}):t._e(),t._v(" "),t.status>0?t._t("countdown",[t.showDay?n("span",[t._v(t._s(t.days))]):t._e(),t._v(" "),t.showDay?n("i",[t._v(t._s(t.dayTxt))]):t._e(),t._v(" "),t.showHour?n("span",[t._v(t._s(t.hours))]):t._e(),t._v(" "),t.showHour?n("i",[t._v(t._s(t.hourTxt))]):t._e(),t._v(" "),t.showMinute?n("span",[t._v(t._s(t.minutes))]):t._e(),t._v(" "),t.showMinute?n("i",[t._v(t._s(t.minutesTxt))]):t._e(),t._v(" "),n("span",[t._v(t._s(t.seconds))]),t._v(" "),t.secondsTxt?n("i",[t._v(t._s(t.secondsTxt))]):t._e()],{props:{status:t.status,days:t.days,hours:t.hours,minutes:t.minutes,seconds:t.seconds,dayTxt:t.dayTxt,hourTxt:t.hourTxt,minutesTxt:t.minutesTxt,secondsTxt:t.secondsTxt,showDay:t.showDay,showHour:t.showHour,showMinute:t.showMinute}}):t._e(),t._v(" "),t.status>0?t._t("end-label",[""!==t.startLabel&&t.tips&&"end"===t.labelPosition?n("span",[t._v(t._s(t.startLabel)+":")]):t._e(),t._v(" "),""===t.endLabel||t.tips||"end"!==t.labelPosition?t._e():n("span",[t._v(t._s(t.endLabel)+":")])],{props:{tips:t.tips,startLabel:t.startLabel,endLabel:t.endLabel,labelPosition:t.labelPosition}}):t._e(),t._v(" "),t.status<=0?t._t("end-text",[t._v("\n    "+t._s(t.endText)+"\n  ")],{props:{endText:t.endText}}):t._e()],2)},[],!1,function(t){n(2)},"data-v-7c035809",null);e.default=i.exports}])});
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -63047,16 +63100,16 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 174;
+webpackContext.id = 175;
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(176)
+var __vue_script__ = __webpack_require__(177)
 /* template */
 var __vue_template__ = __webpack_require__(184)
 /* template functional */
@@ -63097,15 +63150,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AdminComponent__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AdminComponent__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AdminComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AdminComponent__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DriverComponent__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DriverComponent__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DriverComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__DriverComponent__);
 //
 //
@@ -63132,15 +63185,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(179)
 /* template */
-var __vue_template__ = __webpack_require__(179)
+var __vue_template__ = __webpack_require__(180)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63179,14 +63232,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -63343,6 +63397,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.VIEW_DRIVER(driver);
             $('.driver-' + order).css('display', 'block');
         },
+        hideDriver: function hideDriver(order) {
+            $('.driver-' + order).css('display', 'none');
+        },
         countDownTimer: function countDownTimer() {
             var _this2 = this;
 
@@ -63362,7 +63419,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63480,7 +63537,10 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { class: "driver-" + order.id },
+                        {
+                          class: "driver-" + order.id,
+                          staticStyle: { display: "none" }
+                        },
                         [
                           _c("div", { staticClass: "driver-phone" }, [
                             _vm._v(_vm._s(_vm.DRIVER.name) + " ")
@@ -63490,7 +63550,20 @@ var render = function() {
                             return _c("div", { staticClass: "driver-name" }, [
                               _vm._v(" " + _vm._s(driver.name) + " ")
                             ])
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "hide-driver",
+                              on: {
+                                click: function($event) {
+                                  return _vm.hideDriver(order.id)
+                                }
+                              }
+                            },
+                            [_vm._v("▲")]
+                          )
                         ],
                         2
                       )
@@ -63727,13 +63800,13 @@ if (false) {
 }
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(181)
+var __vue_script__ = __webpack_require__(182)
 /* template */
 var __vue_template__ = __webpack_require__(183)
 /* template functional */
@@ -63774,18 +63847,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
 //
 //
 //
@@ -63862,17 +63931,9 @@ moment.locale('ru');
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            settings: {
-                apiKey: '5bee05a1-94b7-46f1-a64f-5ed7d3b1f4cd',
-                lang: 'ru_RU',
-                coordorder: 'latlong',
-                version: '2.1'
-            },
-
             coords: [54.82896654088406, 39.831893822753904],
 
             countDown: 100
@@ -63947,20 +64008,8 @@ moment.locale('ru');
                 this.countDownTimer();
             }
         }
-    }),
-    components: { yandexMap: __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__["a" /* yandexMap */], ymapMarker: __WEBPACK_IMPORTED_MODULE_1_vue_yandex_maps__["b" /* ymapMarker */] }
+    })
 });
-
-/***/ }),
-/* 182 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export loadYmap */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return v; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return O; });
-function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(t)}function t(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function o(e,t,o){return t in e?Object.defineProperty(e,t,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[t]=o,e}function r(e){return function(e){if(Array.isArray(e)){for(var t=0,o=new Array(e.length);t<e.length;t++)o[t]=e[t];return o}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function n(e,t){var o=t.options,n=t.callbacks,a=t.map,i=t.useObjectManager,s=t.objectManagerClusterize,c={},l=[];if(e.forEach(function(e){e.clusterName?c[e.clusterName]=c[e.clusterName]?[].concat(r(c[e.clusterName]),[e]):[e]:l.push(e)}),Object.keys(c).forEach(function(e){var t=o[e]||{},r=n[e]||{},l=t.layout||"\n      <div>{{ properties.balloonContentHeader }}</div>\n      <div>{{ properties.balloonContentBody }}</div>\n      <div>{{ properties.balloonContentFooter }}</div>\n    ";t.clusterBalloonItemContentLayout=ymaps.templateLayoutFactory.createClass(l);var u=t.clusterBalloonLayout||t.clusterLayout;delete t.clusterBalloonLayout;var p=u?ymaps.templateLayoutFactory.createClass(u):t.clusterBalloonContentLayout||"cluster#balloonTwoColumns";t.clusterBalloonContentLayout=p;var d=t.clusterIconContentLayout;if(t.clusterIconContentLayout=d&&ymaps.templateLayoutFactory.createClass(d),i){var m=new ymaps.ObjectManager(Object.assign({clusterize:s},t));Object.keys(r).forEach(function(e){m.clusters.events.add(e,r[e])}),m.add(c[e]),a.geoObjects.add(m)}else{var f=new ymaps.Clusterer(t);Object.keys(r).forEach(function(e){f.events.add(e,r[e])}),t.createCluster&&(f.createCluster=t.createCluster),f.add(c[e]),a.geoObjects.add(f)}}),l.length){var u=i?new ymaps.ObjectManager({clusterize:!1}):new ymaps.GeoObjectCollection;l.forEach(function(e){return u.add(e)}),a.geoObjects.add(u)}}function a(e){return e.charAt(0).toUpperCase()+e.slice(1)}function i(e){return(e.icon.color||"blue")+(e.icon.glyph?a(e.icon.glyph):e.icon.content?"Stretchy":"")}function s(e){return e.map(function(e){return Array.isArray(e)?s(e):+e})}function c(t,o){var r=[];return function t(o,n){if(o===n)return!0;if(o instanceof Date&&n instanceof Date)return+o==+n;if("object"!==e(o)||"object"!==e(n))return!1;if(function(e,t){for(var o=r.length;o--;)if(!(r[o][0]!==e&&r[o][0]!==t||r[o][1]!==t&&r[o][1]!==e))return!0;return!1}(o,n))return!0;r.push([o,n]);var a=Object.keys(o),i=a.length;if(Object.keys(n).length!==i)return!1;for(;i--;)if(!t(o[a[i]],n[a[i]]))return!1;return!0}(t,o)}var l=new(function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.events={},this.ymapReady=!1,this.scriptIsNotAttached=!0}var o,r,n;return o=e,(r=[{key:"$on",value:function(e,t){var o=this;return this.events[e]||(this.events[e]=[]),this.events[e].push(t),function(){o.events[e]=o.events[e].filter(function(e){return t!==e})}}},{key:"$emit",value:function(e,t){var o=this.events[e];o&&o.forEach(function(e){return e(t)})}}])&&t(o.prototype,r),n&&t(o,n),e}()),u=["fullscreenControl","geolocationControl","routeEditor","rulerControl","searchControl","trafficControl","typeSelector","zoomControl","routePanelControl"];function p(e){return 0===e.filter(function(e){return![].concat(u,["default"]).includes(e)}).length}function d(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return new Promise(function(t,o){if(window.ymaps)return t();var r=document.createElement("SCRIPT"),n=e.apiKey,a=void 0===n?"":n,i=e.lang,s=void 0===i?"ru_RU":i,c=e.version,u=void 0===c?"2.1":c,p=e.coordorder,d=void 0===p?"latlong":p,m=e.debug,f=void 0!==m&&m?"debug":"release",h="lang=".concat(s).concat(a&&"&apikey=".concat(a),"&mode=").concat(f,"&coordorder=").concat(d),y="https://api-maps.yandex.ru/".concat(u,"/?").concat(h);r.setAttribute("src",y),r.setAttribute("async",""),r.setAttribute("defer",""),document.body.appendChild(r),l.scriptIsNotAttached=!1,r.onload=function(){ymaps.ready(function(){l.ymapReady=!0,l.$emit("scriptIsLoaded"),t()})},r.onerror=o})}var m=l,f=["actionend","balloonclose","balloonopen","click","contextmenu","dblclick","destroy","hintclose","hintopen","optionschange","sizechange","typechange"],h={pluginOptions:{},provide:function(){var e,t,o=this,r=[],n=[];return{useObjectManager:this.useObjectManager,addMarker:this.addMarker,deleteMarker:function(t){o.myMap.geoObjects&&(r.push(t),e&&clearTimeout(e),e=setTimeout(function(){o.deleteMarkers(r),r=[]},0))},compareValues:function(e){var r=e.newVal,a=e.oldVal,i=e.marker;c(r,a)||(n.push(i),t&&clearTimeout(t),t=setTimeout(function(){o.setMarkers(n),n=[]},0))}}},data:function(){return{ymapId:"yandexMap".concat(Math.round(1e5*Math.random())),myMap:{},style:this.ymapClass?"":"width: 100%; height: 100%;",isReady:!1,debounce:null,markers:[]}},props:{coords:{type:Array,required:!0},zoom:{validator:function(e){return!Number.isNaN(e)},default:18},bounds:Array,clusterOptions:{type:Object,default:function(){return{}}},clusterCallbacks:{type:Object,default:function(){return{}}},behaviors:{type:Array,default:function(){return["default"]}},controls:{type:Array,default:function(){return["default"]},validator:function(e){return p(e)}},detailedControls:{type:Object,validator:function(e){return p(Object.keys(e))}},scrollZoom:{type:Boolean,default:!0},mapType:{type:String,default:"map",validator:function(e){return["map","satellite","hybrid"].includes(e)}},placemarks:{type:Array,default:function(){return[]}},useObjectManager:{type:Boolean,default:!1},objectManagerClusterize:{type:Boolean,default:!0},ymapClass:String,initWithoutMarkers:{type:Boolean,default:!0},debug:{type:Boolean,default:!1},settings:{type:Object,default:function(){return{}}},options:{type:Object,default:function(){return{}}},showAllMarkers:Boolean},computed:{coordinates:function(){return this.coords.map(function(e){return+e})}},methods:{init:function(){var e=this;if(window.ymaps&&ymaps.GeoObjectCollection&&(this.initWithoutMarkers||this.$slots.default||this.placemarks.length)){if(this.$emit("map-initialization-started"),this.myMap=new ymaps.Map(this.ymapId,{center:this.coordinates,zoom:+this.zoom,bounds:this.bounds,behaviors:this.behaviors,controls:this.controls,type:"yandex#".concat(this.mapType)},this.options),f.forEach(function(t){return e.myMap.events.add(t,function(o){return e.$emit(t,o)})}),this.myMap.events.add("boundschange",function(t){var o=t.originalEvent,r=o.newZoom,n=o.newCenter,a=o.newBounds;e.$emit("boundschange",t),e.$emit("update:zoom",r),e.$emit("update:coords",n),e.$emit("update:bounds",a)}),this.detailedControls)Object.keys(this.detailedControls).forEach(function(t){e.myMap.controls.remove(t),e.myMap.controls.add(t,e.detailedControls[t])});!1===this.scrollZoom&&this.myMap.behaviors.disable("scrollZoom"),this.isReady=!0,this.$emit("map-was-initialized",this.myMap)}},addMarker:function(e){var t=this;this.markers.push(e),this.debounce&&clearTimeout(this.debounce),this.debounce=setTimeout(function(){t.setMarkers(t.markers)},0)},setMarkers:function(e){var t=this,o={options:this.clusterOptions,callbacks:this.clusterCallbacks,map:this.myMap,useObjectManager:this.useObjectManager,objectManagerClusterize:this.objectManagerClusterize};if(this.markers!==e){var r=e.map(function(e){return t.useObjectManager?e.id:e.properties.get("markerId")});this.deleteMarkers(r),n(e,o),this.$emit("markers-was-change",r)}else n(e,o);this.markers=[],this.showAllMarkers&&this.myMap.setBounds(this.myMap.geoObjects.getBounds())},deleteMarkers:function(e){var t=this;this.myMap.geoObjects.each(function(o){var r=[];if(t.useObjectManager)o.remove(e);else{var n,a=function(t){var o=t.properties.get("markerId");e.includes(o)&&r.push(t)};if(o.each)o.each(a),n=o.getLength();else if(o.getGeoObjects){var i=o.getGeoObjects();i.forEach(a),n=i.length}0===n||n===r.length?t.myMap.geoObjects.remove(o):r.length&&r.forEach(function(e){return o.remove(e)})}}),this.$emit("markers-was-delete",e)}},watch:{coordinates:function(e){this.myMap.panTo&&this.myMap.getZoom()&&this.myMap.panTo(e)},zoom:function(){this.myMap.setZoom(this.zoom)},bounds:function(e){this.myMap.setBounds&&this.myMap.setBounds(e)}},render:function(e){return e("section",{class:"ymap-container",ref:"mapContainer"},[e("div",{attrs:{id:this.ymapId,class:this.ymapClass,style:this.style}}),this.isReady&&e("div",{ref:"markersContainer",attrs:{class:"ymap-markers"}},[this.$slots.default])])},mounted:function(){var e=this;if(this.$attrs["map-link"]||this.$attrs.mapLink)throw new Error("Vue-yandex-maps: Attribute mapLink is not supported. Use settings.");if(this.placemarks&&this.placemarks.length)throw new Error("Vue-yandex-maps: Attribute placemarks is not supported. Use marker component.");this.mapObserver=new MutationObserver(function(){e.myMap.container&&e.myMap.container.fitToViewport()});var t=this.$refs.mapContainer;if(this.mapObserver.observe(t,{attributes:!0,childList:!0,characterData:!0,subtree:!1}),m.scriptIsNotAttached){var r=this.debug;d(function(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{},n=Object.keys(r);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(r).filter(function(e){return Object.getOwnPropertyDescriptor(r,e).enumerable}))),n.forEach(function(t){o(e,t,r[t])})}return e}({},this.$options.pluginOptions,this.settings,{debug:r}))}m.ymapReady?ymaps.ready(this.init):m.$on("scriptIsLoaded",function(){ymaps.ready(e.init)})},beforeDestroy:function(){this.myMap.geoObjects&&this.myMap.geoObjects.removeAll()}},y=["placemark","polyline","rectangle","polygon","circle"],b=["balloonclose","balloonopen","click","contextmenu","dblclick","drag","dragend","dragstart","hintclose","hintopen","mouseenter","mouseleave"],g={inject:["useObjectManager","addMarker","deleteMarker","compareValues"],props:{coords:Array,hintContent:String,icon:Object,balloon:Object,markerType:{type:String,validator:function(e){return y.includes(e.toLowerCase())},default:"placemark"},markerFill:Object,markerStroke:Object,clusterName:[String,Number],circleRadius:{validator:function(e){return!Number.isNaN(e)},default:1e3},balloonTemplate:String,markerId:{type:[String,Number],required:!0},properties:Object,options:Object},data:function(){return{unwatchArr:[]}},render:function(e){return this.$slots.balloon&&e("div",{style:"display: none;"},[this.$slots.balloon])},mounted:function(){var e=this;Object.keys(this.$props).forEach(function(t){e.unwatchArr.push(e.$watch(t,function(t,o){return e.compareValues({newVal:t,oldVal:o,marker:e.defineMarker()})}))}),this.addMarker(this.defineMarker())},methods:{defineMarker:function(){var e=this,t={};this.balloonTemplate&&(t={balloonContentLayout:ymaps.templateLayoutFactory.createClass(this.balloonTemplate)});this.$slots.balloon&&(t={balloonContentLayout:ymaps.templateLayoutFactory.createClass(this.$slots.balloon[0].elm.outerHTML)});var o={markerId:this.markerId,markerType:this.markerType||"placemark",coords:s(this.coords),hintContent:this.hintContent,markerFill:this.markerFill,circleRadius:+this.circleRadius,clusterName:this.clusterName,markerStroke:this.markerStroke,balloon:this.balloon,properties:this.properties,options:this.options,balloonOptions:t};this.icon&&["default#image","default#imageWithContent"].includes(this.icon.layout)?(o.iconContent=this.icon.content,o.iconLayout=this.icon.layout,o.iconImageHref=this.icon.imageHref,o.iconImageSize=this.icon.imageSize,o.iconImageOffset=this.icon.imageOffset,o.iconContentOffset=this.icon.contentOffset,this.icon.contentLayout&&"string"==typeof this.icon.contentLayout&&(o.iconContentLayout=ymaps.templateLayoutFactory.createClass(this.icon.contentLayout))):o.icon=this.icon;var r=function(e,t){var o=a(e);if(!t)return o;switch(o){case"Placemark":return"Point";case"Polyline":return"LineString";default:return o}}(o.markerType,this.useObjectManager),n={hintContent:o.hintContent,iconContent:o.icon?o.icon.content:o.iconContent,markerId:o.markerId},c=o.balloon?{balloonContentHeader:o.balloon.header,balloonContentBody:o.balloon.body,balloonContentFooter:o.balloon.footer}:{},l=Object.assign(n,c,o.properties),u=o.iconLayout?{iconLayout:o.iconLayout,iconImageHref:o.iconImageHref,iconImageSize:o.iconImageSize,iconImageOffset:o.iconImageOffset,iconContentOffset:o.iconContentOffset,iconContentLayout:o.iconContentLayout}:{preset:o.icon&&"islands#".concat(i(o),"Icon")},p=o.markerStroke?{strokeColor:o.markerStroke.color||"0066ffff",strokeOpacity:parseFloat(o.markerStroke.opacity)>=0?parseFloat(o.markerStroke.opacity):1,strokeStyle:o.markerStroke.style,strokeWidth:parseFloat(o.markerStroke.width)>=0?parseFloat(o.markerStroke.width):1}:{},d=o.markerFill?{fill:o.markerFill.enabled||!0,fillColor:o.markerFill.color||"0066ff99",fillOpacity:parseFloat(o.markerFill.opacity)>=0?parseFloat(o.markerFill.opacity):1,fillImageHref:o.markerFill.imageHref||""}:{},m=Object.assign(u,p,d,o.balloonOptions,o.options);"Circle"===r&&(o.coords=[o.coords,o.circleRadius]);var f=function(e,t){var o=t?{type:"Feature",id:e.properties.markerId,geometry:{type:e.markerType,coordinates:e.coords},properties:e.properties,options:e.options}:new ymaps[e.markerType](e.coords,e.properties,e.options);return o.clusterName=e.clusterName,o}({properties:l,options:m,markerType:r,coords:o.coords,clusterName:o.clusterName},this.useObjectManager,this.$emit);return this.useObjectManager||b.forEach(function(t){return f.events.add(t,function(o){return e.$emit(t,o)})}),f}},beforeDestroy:function(){this.unwatchArr.forEach(function(e){return e()}),this.deleteMarker(this.markerId)}};h.install=function e(t){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};e.installed||(e.installed=!0,h.pluginOptions=o,t.component("yandex-map",h),t.component("ymap-marker",g))},"undefined"!=typeof window&&window.Vue&&window.Vue.use(h);var k=d,v=h,O=g;/* unused harmony default export */ var _unused_webpack_default_export = (h);
-
 
 /***/ }),
 /* 183 */
@@ -64150,9 +64199,7 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("yandex-map", {
-        attrs: { coords: _vm.coords, settings: _vm.settings }
-      })
+      _c("yandex-map", { attrs: { coords: _vm.coords } })
     ],
     1
   )
@@ -64261,7 +64308,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
 //
 //
 //
@@ -64357,6 +64404,281 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-ebaad86a", module.exports)
+  }
+}
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(189)
+/* template */
+var __vue_template__ = __webpack_require__(190)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/NavigationComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-73ba5f62", Component.options)
+  } else {
+    hotAPI.reload("data-v-73ba5f62", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.$store.commit('setAuthUser', window.Laravel.role);
+        this.SELECTED_CALLS();
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ROLE', 'CALLS']),
+    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_CALLS'])
+});
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "list-group" }, [
+    _vm.ROLE == 4
+      ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [
+          _c("div", { staticClass: "collapse navbar-collapse" }, [
+            _c("ul", { staticClass: "navbar-nav flex-column" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  { staticClass: "nav-link", attrs: { href: "/calls" } },
+                  [
+                    _c("img", {
+                      staticClass: "d-inline-block align-top",
+                      attrs: {
+                        src: "/images/icons/telephone.png",
+                        width: "24",
+                        height: "24",
+                        alt: ""
+                      }
+                    }),
+                    _vm._v("\n                        Звонки "),
+                    _c("span", { staticClass: "count-calls" }, [
+                      _vm._v(_vm._s(_vm.CALLS))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ])
+        ])
+      : _vm.ROLE == 3
+      ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [_vm._m(3)])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item active" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/dashboard" } }, [
+        _c("img", {
+          staticClass: "d-inline-block align-top",
+          attrs: {
+            src: "/images/icons/home.png",
+            width: "24",
+            height: "24",
+            alt: ""
+          }
+        }),
+        _vm._v("\n                        Заказы\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/control" } }, [
+        _c("img", {
+          staticClass: "d-inline-block align-top",
+          attrs: {
+            src: "/images/icons/administration.png",
+            width: "24",
+            height: "24",
+            alt: ""
+          }
+        }),
+        _vm._v("\n                        Управление\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item logout" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/logout" } }, [
+        _c("img", {
+          staticClass: "d-inline-block align-top",
+          attrs: {
+            src: "/images/icons/logout.png",
+            width: "24",
+            height: "24",
+            alt: ""
+          }
+        }),
+        _vm._v("\n                        выход\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "collapse navbar-collapse" }, [
+      _c("ul", { staticClass: "navbar-nav flex-column" }, [
+        _c("li", { staticClass: "nav-item active" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "/dashboard" } }, [
+            _c("img", {
+              staticClass: "d-inline-block align-top",
+              attrs: {
+                src: "/images/icons/home.png",
+                width: "24",
+                height: "24",
+                alt: ""
+              }
+            }),
+            _vm._v("\n                        Заказы\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item logout" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "/logout" } }, [
+            _c("img", {
+              staticClass: "d-inline-block align-top",
+              attrs: {
+                src: "/images/icons/logout.png",
+                width: "24",
+                height: "24",
+                alt: ""
+              }
+            }),
+            _vm._v("\n                        выход\n                    ")
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-73ba5f62", module.exports)
   }
 }
 

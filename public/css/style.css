@@ -303,10 +303,12 @@ body, html {
 .driver-name {
   font-size: 14px;
   font-weight: 600;
+  padding: 0 5px;
 }
 .driver-phone {
   font-size: 18px;
   font-weight: 300;
+  padding: 0 5px;
 }
 
 .order {
@@ -448,9 +450,20 @@ body, html {
 
 
 div[class^="driver-"] {
-  display: none;
-  background: black;
+  background: #d6d6d6;
 }
+
+.hide-driver {
+  margin: 5px 0 0 0;
+  padding: 5px 0;
+  text-align: center;
+  background: #848484;
+  cursor: pointer;
+}
+
+
+
+
 
 
 

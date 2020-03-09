@@ -63,10 +63,7 @@
             </div>
         </div>
 
-        <yandex-map
-                :coords="coords"
-                :settings="settings">
-        </yandex-map>
+        <yandex-map :coords="coords"></yandex-map>
 
 
     </div>
@@ -76,18 +73,10 @@
     moment.locale('ru');
 
     import { mapGetters, mapActions } from 'vuex';
-    import { yandexMap, ymapMarker } from 'vue-yandex-maps';
 
     export default {
         data() {
             return {
-                settings: {
-                    apiKey: '5bee05a1-94b7-46f1-a64f-5ed7d3b1f4cd',
-                    lang: 'ru_RU',
-                    coordorder: 'latlong',
-                    version: '2.1'
-                },
-
                 coords: [
                     54.82896654088406,
                     39.831893822753904,
@@ -162,7 +151,6 @@
                     this.countDownTimer();
                 }
             }
-        },
-        components: { yandexMap, ymapMarker }
+        }
     }
 </script>

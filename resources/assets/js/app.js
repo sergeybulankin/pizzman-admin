@@ -16,6 +16,20 @@ window.Vue.use(VueCountdownTimer);
 
 window.moment = require('moment');
 
+const settings = {
+    apiKey: '38ec5068-da01-4278-9dab-69c6ccfa0954',
+    lang: 'ru_RU',
+    coordorder: 'latlong',
+    version: '2.1',
+};
+
+
+import YmapPlugin from 'vue-yandex-maps';
+import { yandexMap, ymapMarker } from 'vue-yandex-maps';
+window.Vue.config.productionTip = false;
+window.Vue.use(YmapPlugin, settings);
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25,8 +39,10 @@ window.moment = require('moment');
 
 Vue.component('board', require('./components/DashboardComponent.vue'));
 Vue.component('user', require('./components/UserComponent.vue'));
+Vue.component('navigation', require('./components/NavigationComponent.vue'));
 
 const app = new Vue({
     el: '#app',
-    store
+    store,
+    components: { yandexMap, ymapMarker },
 });

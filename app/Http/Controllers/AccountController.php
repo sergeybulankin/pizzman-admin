@@ -33,9 +33,7 @@ class AccountController extends Controller
 
         $points = PizzmanAddress::all();
 
-        $count_calls = Call::all()->where('noted', 0)->count();
-
-        return view('components.users.create', compact('roles', 'account', 'points', 'role_id', 'count_calls'));
+        return view('components.users.create', compact('roles', 'account', 'points', 'role_id'));
     }
 
     /**
@@ -55,9 +53,7 @@ class AccountController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $count_calls = Call::all()->where('noted', 0)->count();
-
-        return view('components.users.list', compact('accounts', 'account', 'role_id', 'count_calls'));
+        return view('components.users.list', compact('accounts', 'account', 'role_id'));
     }
 
     /**
@@ -79,11 +75,9 @@ class AccountController extends Controller
 
         $role_id = $role['role_id'];
 
-        $count_calls = Call::all()->where('noted', 0)->count();
-
         $points = PizzmanAddress::all();
 
-        return view('components.users.edit', compact('roles', 'account', 'points', 'account_user', 'role_id', 'count_calls'));
+        return view('components.users.edit', compact('roles', 'account', 'points', 'account_user', 'role_id'));
     }
     
     

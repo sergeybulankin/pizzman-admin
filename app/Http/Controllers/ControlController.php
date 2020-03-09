@@ -23,8 +23,6 @@ class ControlController extends Controller
 
         $role_id = $role['role_id'];
 
-        $count_calls = Call::all()->where('noted', 0)->count();
-
-        return view('control', compact('account', 'role', 'count_calls', 'role_id'));
+        return view('control', compact('role_id'));
     }
 }
