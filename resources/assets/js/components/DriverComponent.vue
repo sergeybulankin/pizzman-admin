@@ -63,9 +63,9 @@
             </div>
         </div>
 
-        <yandex-map :coords="coords"></yandex-map>
-
-
+        <yandex-map
+                :coords="coords">
+        </yandex-map>
     </div>
 </template>
 
