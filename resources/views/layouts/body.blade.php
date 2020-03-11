@@ -27,6 +27,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <!--<script src={{ asset('js/dropzone.js') }} type="text/javascript"></script>-->
 </head>
 
 <body>
@@ -44,6 +45,24 @@
 </div>
 </body>
 <script src={{ asset('js/app.js') }} type="text/javascript"></script>
+<script>
+    // upload preview image
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#onload-image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image").change(function(){
+        readURL(this);
+    });
+</script>
 <script>
     $(document).ready(function(){
         $('.alert-success, .alert-danger').fadeIn().delay(3000).fadeOut();

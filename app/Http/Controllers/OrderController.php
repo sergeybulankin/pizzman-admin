@@ -37,13 +37,13 @@ class OrderController extends Controller
      */
     public function listFood(Request $request)
     {
-        $foods_in_orders = FoodInOrder::with('food_additive')
+        $foods_in_orders = FoodInOrder::with('food_additives')
             ->where('order_id', $request->id)
             ->get();
 
         $order = [];
         foreach ($foods_in_orders as $k => $v) {
-            foreach ($v['food_additive'] as $key => $value) {
+            foreach ($v['food_additives'] as $key => $value) {
                 $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
                 $order[$k]['count'] = $v->count;
                 $order[$k]['food_key'] = $v->u_id;

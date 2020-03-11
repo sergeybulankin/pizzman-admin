@@ -461,12 +461,27 @@ div[class^="driver-"] {
   cursor: pointer;
 }
 
+.preview-image img {
+  margin: 15px 0;
+}
 
 
 
 
 
 
+
+.structure-food {
+  width: 100px;
+}
+
+.food-type {
+  width: 400px;
+  vertical-align: text-top;
+}
+.food-type-delete {
+  margin-right: 10px;
+}
 
 
 .table-title {
@@ -503,6 +518,14 @@ div[class^="driver-"] {
 }
 .list-foods {
   width: 250px;
+}
+.type {
+  font-size: 10px;
+  font-style: italic;
+}
+.structure {
+  font-size: 10px;
+  font-weight: 600;
 }
 
 

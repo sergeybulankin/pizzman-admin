@@ -20,10 +20,12 @@
 
             <div class="col-md-3">
                 <div class="panel-crud">
-                    <div class=panel-crud-image>
-                        <img src="../images/icons/admin/foods.png" alt="">
-                    </div>
-                    Блюда
+                    <a href="/list/foods">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/foods.png" alt="">
+                        </div>
+                        Блюда
+                    </a>
                 </div>
             </div>
 
@@ -40,28 +42,45 @@
 
             <div class="col-md-3">
                 <div class="panel-crud">
-                    <div class=panel-crud-image>
-                        <img src="../images/icons/admin/food_additives.png" alt="">
-                    </div>
-                    Еда с добавками
+                    <a href="/list/ftypes">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/food_additives.png" alt="">
+                        </div>
+                        Еда по типам
+                    </a>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="panel-crud">
-                    <div class=panel-crud-image>
-                        <img src="../images/icons/admin/types.png" alt="">
-                    </div>
-                    Типы блюд
+                    <a href="/list/fadditives">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/food_additives.png" alt="">
+                        </div>
+                        Еда с добавками
+                    </a>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="panel-crud">
-                    <div class=panel-crud-image>
-                        <img src="../images/icons/admin/categories.png" alt="">
-                    </div>
-                    Категории блюд
+                    <a href="/list/types">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/types.png" alt="">
+                        </div>
+                        Типы блюд
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <a href="/list/categories">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/categories.png" alt="">
+                        </div>
+                        Категории блюд
+                    </a>
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@ class DriverController extends Controller
 
         $foods_in_orders = [];
         foreach (collect($current_orders)->collapse() as $k => $v) {
-            $foods_in_orders[] = FoodInOrder::with('food_additive')
+            $foods_in_orders[] = FoodInOrder::with('food_additives')
                 ->where('order_id', $v['order_id'])
                 ->get();
         }
@@ -89,7 +89,7 @@ class DriverController extends Controller
     {
         $order = [];
         foreach (collect($foods_in_orders)->collapse() as $k => $v) {
-            foreach ($v['food_additive'] as $key => $value) {
+            foreach ($v['food_additives'] as $key => $value) {
                 $order[$k]['food'] = FoodAdditive::with('food', 'additive')->where('id', $v->food_id)->get();
                 $order[$k]['count'] = $v->count;
                 $order[$k]['address'] = Order::with('address')->where('id', $v->order_id)->first();

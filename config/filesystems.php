@@ -55,6 +55,27 @@ return [
             'visibility' => 'public',
         ],
 
+        'categories' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images/categories'),
+            'url' => env('APP_URL').'/storage/app',
+            'visibility' => 'public',
+        ],
+
+        'types' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images/types'),
+            'url' => env('APP_URL').'/storage/app',
+            'visibility' => 'public',
+        ],
+
+        'foods' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images/foods'),
+            'url' => env('APP_URL').'/storage/app',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -2,30 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Additive;
-use App\Call;
+use App\Type;
 use App\UserRole;
 use Illuminate\Http\Request;
+use App\Library\UploadImage;
 use Illuminate\Support\Facades\Auth;
 
-class AdditiveController extends Controller
+class TypeController extends Controller
 {
+    public $path = 'types';
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $user = Auth::user()->id;        
+        $user = Auth::user()->id;
 
         $role = UserRole::with('role')->where('user_id', $user)->first();
 
         $role_id = $role['role_id'];
 
-        return view('components.additives.create', compact('role_id'));
+        return view('components.types.create', compact('role_id'));
     }
-    
+
     /**
-     * @return mixed
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show()
     {
@@ -35,9 +37,9 @@ class AdditiveController extends Controller
 
         $role_id = $role['role_id'];
 
-        $additives = Additive::all();
-        
-        return view('components.additives.list', compact('additives', 'role_id'));
+        $types = Type::all();
+
+        return view('components.types.list', compact('types', 'role_id'));
     }
 
     /**
@@ -47,16 +49,17 @@ class AdditiveController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name_additive' => 'required|min:3'
+            'name_type' => 'required|min:3',
+            'image' => 'required'
         ]);
 
-        $name = $request->name_additive;
-        $price = $request->price;
+        $name = $request->name_type;
+        $image = UploadImage::upload($request->image, $this->path);
 
-        $additive = new Additive();
-        $additive->name =  $name;
-        $additive->price = $price;
-        $additive->save();
+        $type = new Type();
+        $type->name = $name;
+        $type->icon = $image;
+        $type->save();
 
         return redirect()->back()->with('success', 'Данные добавились');
     }
@@ -73,9 +76,9 @@ class AdditiveController extends Controller
 
         $role_id = $role['role_id'];
 
-        $additive = Additive::find($request->id);
+        $type = Type::find($request->id);
 
-        return view('components.additives.edit', compact('role_id', 'additive'));
+        return view('components.types.edit', compact('role_id', 'type'));
     }
 
     /**
@@ -85,17 +88,22 @@ class AdditiveController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name_additive' => 'required|min:3'
+            'name_type' => 'required|min:3'
         ]);
 
-        $name = $request->name_additive;
-        $price = $request->price;
+        $name = $request->name_type;
+        if ($request->image != null) {
+            UploadImage::delete($request->type_id, $this->path, Type::class);
+            $image = UploadImage::upload($request->image, $this->path);
+        }
 
-        $additive = Additive::find($request->additive_id);
-        $additive->name = $name;
-        $additive->price = $price;
-        $additive->save();
+        $type = Type::find($request->type_id);
+        $type->name = $name;
+        if ($request->image != null) {
+            $type->icon = $image;
+        }
+        $type->save();
 
-        return redirect('/list/additives')->with('success', 'Данные обновились');
+        return redirect('/list/types')->with('success', 'Данные обновились');
     }
 }
