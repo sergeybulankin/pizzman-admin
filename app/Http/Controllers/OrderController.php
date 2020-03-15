@@ -11,18 +11,27 @@ use App\Order;
 use App\OrderCourier;
 use App\OrderStatus;
 use App\User;
+use App\UserPoint;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     /**
+     * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::whereHas('order_status', function ($query) {
+        $user = $request->user;
+
+        $user_pizzman_point = UserPoint::select('pizzman_address_id')
+            ->where('user_id', $user)
+            ->first();
+
+        $orders = Order::whereHas('order_status', function ($query) use($user_pizzman_point) {
             $query->where('status_id', 2)
                 ->where('success', 0)
+                ->where('pizzman_address_id', $user_pizzman_point)
                 ->orderBy('status_id', 'DESC');
         })
             ->orderBy('created_at', 'DESC')

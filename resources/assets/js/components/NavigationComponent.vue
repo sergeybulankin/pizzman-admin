@@ -21,6 +21,12 @@
                             Звонки <span class="count-calls">{{ CALLS }}</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/statistics">
+                            <img src="/images/icons/statistics.png" width="24" height="24" class="d-inline-block align-top" alt="">
+                            Статистика
+                        </a>
+                    </li>
                     <li class="nav-item logout">
                         <a class="nav-link" href="/logout">
                             <img src="/images/icons/logout.png" width="24" height="24" class="d-inline-block align-top" alt="">

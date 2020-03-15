@@ -2,11 +2,21 @@
 
 namespace App;
 
+use Jenssegers\Date\Date;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     protected $table = 'orders';
+
+    protected $appends = [
+        'created_utc'
+    ];
+
+    protected $dates =[
+        'created_utc'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -59,5 +69,21 @@ class Order extends Model
     public function courier()
     {
         return $this->hasOne(OrderCourier::class, 'order_id', 'id');
+    }
+    
+    
+    public function courier_info()
+    {
+        return $this->hasManyThrough(User::class, OrderCourier::class, 'id', 'id', 'order_id');
+    }
+
+    /**
+     * @return static
+     */
+    public function getCreatedUtcAttribute()
+    {
+        $timeZone = 'Asia/Yekaterinburg';
+
+        return Date::createFromFormat('Y-m-d H:i:s', $this->getOriginal('created_at'))->timezone($timeZone);
     }
 }

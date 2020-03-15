@@ -63,9 +63,10 @@
             </div>
         </div>
 
-        <yandex-map
-                :coords="coords">
-        </yandex-map>
+
+        <a href="/map">Карта</a>
+
+
     </div>
 </template>
 
@@ -77,11 +78,6 @@
     export default {
         data() {
             return {
-                coords: [
-                    54.82896654088406,
-                    39.831893822753904,
-                ],
-
                 countDown: 100
             }
         },

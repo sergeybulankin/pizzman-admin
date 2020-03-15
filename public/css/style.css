@@ -471,6 +471,86 @@ div[class^="driver-"] {
 
 
 
+.pivot-table {
+  width: 100%;
+}
+
+.pivot-table-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+}
+.pivot-table-title td {
+  padding: 10px;
+}
+
+.pivot-number-order {
+  width: 80px;
+  text-align: center;
+}
+
+.pivot-food-order {
+  width: 250px;
+}
+
+.pivot-address-order {
+  width: 150px;
+}
+
+.pivot-courier-order {
+  width: 100px;
+}
+
+.pivot-date-start-order, .pivot-date-end-order {
+  width: 150px;
+}
+
+.pivot-status-order {
+  width: 80px;
+  font-weight: 600;
+}
+
+.pivot-additive-order {
+  font-size: 11px;
+  font-style: italic;
+}
+
+.pivot-count-food {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.pivot-address-field {
+  font-size: 10px;
+  color: #7e7e7e;
+}
+
+
+
+
+
+.pivot-table-data {
+  font-size: 14px;
+}
+.pivot-table-data td {
+  padding: 10px;
+  border-bottom: 1px solid #2B1B35;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .structure-food {
   width: 100px;
 }

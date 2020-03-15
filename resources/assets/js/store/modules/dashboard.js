@@ -7,8 +7,10 @@ export default {
         },
 
         SELECTED_ORDERS(ctx) {
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
             setTimeout(() => {
-                axios.get('/api/selected-orders')
+                axios.post('/api/selected-orders', {user: id})
                     .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
                     .catch(error => {console.log(error)})
                     .finally (() => { ctx.commit('LOADER_MUTATION') })
