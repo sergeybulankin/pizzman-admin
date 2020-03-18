@@ -4,7 +4,7 @@ export default {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
 
             axios.post('/api/info-for-user', {user: id})
-                .then(res => {ctx.commit('SELECTED_ALL_FOR_USER_MUTATION', res.data)})
+                .then(res => {ctx.commit('SELECTED_ALL_FOR_USER_MUTATION', res.data.data)})
                 .catch(error => {console.log(error)})
         },
 

@@ -18,7 +18,6 @@ class AccountResource extends Resource
 
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'name' => $this->name,
             'second_name' => $this->second_name,
 

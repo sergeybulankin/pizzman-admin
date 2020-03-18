@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\BlackList;
-use App\Call;
 use App\Http\Resources\AccountResource;
 use App\PizzmanAddress;
 use App\Role;
 use App\User;
 use App\UserPoint;
 use App\UserRole;
+use App\Library\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
+    public $path = 'userpic';
+
     /**
      * @return mixed
      */
@@ -79,8 +81,11 @@ class AccountController extends Controller
 
         return view('components.users.edit', compact('roles', 'account', 'points', 'account_user', 'role_id'));
     }
-    
-    
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
         $phone = $request->name;
@@ -208,7 +213,7 @@ class AccountController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AccountResource
      */
     public function account(Request $request)
     {
@@ -216,8 +221,54 @@ class AccountController extends Controller
 
         $account = User::with('account')
             ->where('id', $user)
-            ->get();
+            ->first();
 
-        return AccountResource::collection($account);
+        return new AccountResource($account);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editAccount(Request $request)
+    {
+        $account = Account::all()->where('user_id', $request->id)->first();
+
+        $role = UserRole::with('role')->where('user_id', $request->id)->first();
+
+        $role_id = $role['role_id'];
+
+        return view('components.user.edit', compact('role_id', 'account'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAccount(Request $request)
+    {
+        $phone = $request->name;
+        $password = $request->password;
+        $name = $request->name_account;
+        $user_id = $request->user_id;
+        if ($request->image != null) {
+            //UploadImage::delete($request->user_id, $this->path, Account::class, 'link');
+            $image = UploadImage::upload($request->image, $this->path);
+        }
+
+        $user = User::all()->where('id', $user_id)->first();
+        $user->name = $phone;
+        $user->password = bcrypt($password);
+        $user->save();
+
+        $account = Account::all()->where('user_id', $user_id)->first();
+        $account->name = $name;
+        $account->second_name = '';
+        if ($request->image != null) {
+            $account->link = $image;
+        }
+        $account->save();
+
+        return redirect('/list/accounts')->with('success', 'Данные обновились');
     }
 }

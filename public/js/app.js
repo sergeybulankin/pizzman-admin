@@ -62569,7 +62569,9 @@ var debug = "development" !== 'production';
 /* harmony default export */ __webpack_exports__["a"] = ({
     actions: {
         SELECTED_ALL_STATUSES: function SELECTED_ALL_STATUSES(ctx) {
-            axios.get('/api/selected-all-statuses').then(function (res) {
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+            axios.post('/api/selected-all-statuses', { user: id }).then(function (res) {
                 ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data);
             }).catch(function (error) {
                 console.log(error);
@@ -62591,8 +62593,10 @@ var debug = "development" !== 'production';
         SELECTED_ORDERS_BY_STATUS: function SELECTED_ORDERS_BY_STATUS(ctx, id) {
             ctx.commit('LOADER_VISIBILITY_MUTATION');
 
+            var user = document.querySelector("meta[name='user-id']").getAttribute('content');
+
             setTimeout(function () {
-                axios.post('/api/selected-orders-by-status', { id: id }).then(function (res) {
+                axios.post('/api/selected-orders-by-status', { id: id, user: user }).then(function (res) {
                     ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data);
                 }).catch(function (error) {
                     console.log(error);
@@ -62701,7 +62705,7 @@ var debug = "development" !== 'production';
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
 
             axios.post('/api/info-for-user', { user: id }).then(function (res) {
-                ctx.commit('SELECTED_ALL_FOR_USER_MUTATION', res.data);
+                ctx.commit('SELECTED_ALL_FOR_USER_MUTATION', res.data.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -63319,6 +63323,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63462,180 +63484,256 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _vm._l(_vm.ALL_ORDERS, function(order, index) {
-            return _c("tr", { key: index, staticClass: "list" }, [
-              _c("td", { staticClass: "number-order" }, [
-                _vm._v("# " + _vm._s(order.id))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "number-phone" }, [
-                _vm._v(_vm._s(order.user.name))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "list-foods" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "list-food",
-                    on: {
-                      click: function($event) {
-                        return _vm.listFood(order.id)
+            return _c(
+              "tr",
+              {
+                key: index,
+                staticClass: "list",
+                style:
+                  order.type_of_time == 1
+                    ? "background-color: #EAF793;"
+                    : "background-color: white;"
+              },
+              [
+                _c("td", { staticClass: "number-order" }, [
+                  _vm._v("# " + _vm._s(order.id))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "number-phone" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(order.user.name) +
+                      "\n\n                    "
+                  ),
+                  order.type_of_time == 1
+                    ? _c("div", { staticClass: "type-of-time" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(order.date) +
+                            "\n                    "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "list-foods" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "list-food",
+                      on: {
+                        click: function($event) {
+                          return _vm.listFood(order.id)
+                        }
                       }
-                    }
+                    },
+                    [_vm._v("просмотреть")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "address",
+                    style:
+                      order.type_of_delivery == 1
+                        ? "background-color: #89E538;"
+                        : "background-color: white;"
                   },
-                  [_vm._v("просмотреть")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "address" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(order.address.address) +
-                    " - " +
-                    _vm._s(order.address.kv) +
-                    "\n\n                    "
+                  [
+                    _vm._l(order.address, function(address, i) {
+                      return _c("div", { key: i }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(address.address) +
+                            " - " +
+                            _vm._s(address.kv) +
+                            "\n                    "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    order.type_of_delivery == 0
+                      ? _c("div", [
+                          order.last_status.status_id == 5
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "view-driver",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.viewDriver(
+                                          order.courier.user_id,
+                                          order.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Посмотреть водителя ▼")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    class: "driver-" + order.id,
+                                    staticStyle: { display: "none" }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "driver-phone" }, [
+                                      _vm._v(_vm._s(_vm.DRIVER.name) + " ")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.DRIVER, function(driver, i) {
+                                      return _c(
+                                        "div",
+                                        { staticClass: "driver-name" },
+                                        [
+                                          _vm._v(
+                                            " " + _vm._s(driver.name) + " "
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "hide-driver",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.hideDriver(order.id)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("▲")]
+                                    )
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      : _vm._e()
+                  ],
+                  2
                 ),
-                order.last_status.status_id == 5
-                  ? _c("div", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "view-driver",
-                          on: {
-                            click: function($event) {
-                              return _vm.viewDriver(
-                                order.courier.user_id,
-                                order.id
-                              )
-                            }
-                          }
-                        },
-                        [_vm._v("Посмотреть водителя ▼")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          class: "driver-" + order.id,
-                          staticStyle: { display: "none" }
-                        },
-                        [
-                          _c("div", { staticClass: "driver-phone" }, [
-                            _vm._v(_vm._s(_vm.DRIVER.name) + " ")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.DRIVER, function(driver, i) {
-                            return _c("div", { staticClass: "driver-name" }, [
-                              _vm._v(" " + _vm._s(driver.name) + " ")
-                            ])
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "hide-driver",
-                              on: {
-                                click: function($event) {
-                                  return _vm.hideDriver(order.id)
-                                }
-                              }
-                            },
-                            [_vm._v("▲")]
-                          )
-                        ],
-                        2
-                      )
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                order.last_status.status_id == 4
-                  ? _c("div", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.driver,
-                              expression: "driver"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { name: "driver" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.driver = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        _vm._l(_vm.ALL_DRIVERS, function(driver, i) {
-                          return _c(
-                            "option",
-                            { key: i, domProps: { value: driver.user_id } },
-                            [
-                              _vm._v(
-                                _vm._s(driver.name) +
-                                  "  " +
-                                  _vm._s(driver.second_name)
-                              )
-                            ]
-                          )
-                        }),
-                        0
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-default",
-                          on: {
-                            click: function($event) {
-                              return _vm.passOrder(
-                                order.id,
-                                order.status[0].status_id,
-                                _vm.driver
-                              )
-                            }
-                          }
-                        },
-                        [_vm._v("Дальше")]
-                      )
-                    ])
-                  : _c("div", [
-                      order.last_status.status_id < 4
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-default",
-                              on: {
-                                click: function($event) {
-                                  return _vm.nextStep(
-                                    order.id,
-                                    order.status[0].status_id
+                _vm._v(" "),
+                _c("td", [
+                  order.type_of_delivery == 0
+                    ? _c("div", [
+                        order.last_status.status_id == 4
+                          ? _c("div", [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.driver,
+                                      expression: "driver"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { name: "driver" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.driver = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.ALL_DRIVERS, function(driver, i) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: i,
+                                      domProps: { value: driver.user_id }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(driver.name) +
+                                          "  " +
+                                          _vm._s(driver.second_name)
+                                      )
+                                    ]
                                   )
-                                }
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-default",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.passOrder(
+                                        order.id,
+                                        order.status[0].status_id,
+                                        _vm.driver
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Дальше")]
+                              )
+                            ])
+                          : _c("div", [
+                              order.last_status.status_id < 4
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-default",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.nextStep(
+                                            order.id,
+                                            order.status[0].status_id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Дальше ➜")]
+                                  )
+                                : _vm._e()
+                            ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            on: {
+                              click: function($event) {
+                                return _vm.nextStep(
+                                  order.id,
+                                  order.status[0].status_id
+                                )
                               }
-                            },
-                            [_vm._v("Дальше ➜")]
-                          )
-                        : _vm._e()
-                    ])
-              ])
-            ])
+                            }
+                          },
+                          [_vm._v("Дальше ➜")]
+                        )
+                      ])
+                ])
+              ]
+            )
           })
         ],
         2
@@ -64282,7 +64380,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -64303,62 +64400,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "control-field" },
-    [
-      _vm._l(_vm.USER, function(user, i) {
-        return _c(
-          "span",
-          {
-            key: i,
-            staticClass: "account-control",
-            attrs: {
-              id: "dropdownMenuUser",
-              "data-toggle": "dropdown",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }
-          },
-          [
-            _c("img", {
-              staticClass: "d-inline-block align-top",
-              attrs: {
-                src: "/images/icons/user.png",
-                width: "36",
-                height: "36",
-                alt: ""
-              }
-            }),
-            _vm._v("\n        " + _vm._s(user[0].account.name) + " ▼\n    ")
-          ]
-        )
-      }),
-      _vm._v(" "),
-      _vm._m(0)
-    ],
-    2
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
+  return _c("div", { staticClass: "control-field" }, [
+    _c(
+      "span",
+      {
+        staticClass: "account-control",
+        attrs: {
+          id: "dropdownMenuUser",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          staticClass: "d-inline-block align-top",
+          attrs: {
+            src: "/images/icons/user.png",
+            width: "36",
+            height: "36",
+            alt: ""
+          }
+        }),
+        _vm._v("\n        " + _vm._s(_vm.USER.account.name) + " ▼\n    ")
+      ]
+    ),
+    _vm._v(" "),
+    _c(
       "div",
       {
         staticClass: "dropdown-menu",
         attrs: { "aria-labelledby": "dropdownMenuUser" }
       },
       [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Изменить профиль")
-        ])
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item",
+            attrs: { href: "edit/user/" + _vm.USER.id }
+          },
+          [_vm._v("Изменить профиль")]
+        )
       ]
     )
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

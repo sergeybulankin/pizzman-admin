@@ -28,36 +28,54 @@
                     <td class="address">Адрес доставки</td>
                     <td class="next-step"></td>
                 </tr>
-                <tr class="list" v-for="(order, index) in ALL_ORDERS" :key="index">
+                <tr class="list" v-for="(order, index) in ALL_ORDERS" :key="index"
+                    :style="order.type_of_time == 1 ? 'background-color: #EAF793;' : 'background-color: white;' ">
                     <td class="number-order"># {{ order.id }}</td>
-                    <td class=number-phone>{{ order.user.name }}</td>
+                    <td class=number-phone>
+                        {{ order.user.name }}
+
+                        <div class="type-of-time" v-if="order.type_of_time == 1">
+                            {{ order.date }}
+                        </div>
+                    </td>
                     <td class="list-foods">
                         <span class="list-food" @click="listFood(order.id)">просмотреть</span>
                     </td>
-                    <td class="address">
-                        {{ order.address.address }} - {{ order.address.kv }}
+                    <td class="address"
+                        :style="order.type_of_delivery == 1 ? 'background-color: #89E538;' : 'background-color: white;' ">
+                        <div v-for="(address, i) in order.address" :key="i">
+                            {{ address.address }} - {{ address.kv }}
+                        </div>
 
-                        <div v-if="order.last_status.status_id == 5">
-                            <div class="view-driver" @click="viewDriver(order.courier.user_id, order.id)">Посмотреть водителя ▼</div>
-                            <div :class="'driver-'+order.id" style="display: none;">
-                                <div class="driver-phone">{{ DRIVER.name }} </div>
-                                <div class="driver-name" v-for="(driver, i) in DRIVER"> {{ driver.name }} </div>
-                                <div class="hide-driver" @click="hideDriver(order.id)">▲</div>
+                        <div v-if="order.type_of_delivery == 0">
+                            <div v-if="order.last_status.status_id == 5">
+                                <div class="view-driver" @click="viewDriver(order.courier.user_id, order.id)">Посмотреть водителя ▼</div>
+                                <div :class="'driver-'+order.id" style="display: none;">
+                                    <div class="driver-phone">{{ DRIVER.name }} </div>
+                                    <div class="driver-name" v-for="(driver, i) in DRIVER"> {{ driver.name }} </div>
+                                    <div class="hide-driver" @click="hideDriver(order.id)">▲</div>
+                                </div>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div v-if="order.last_status.status_id == 4">
-                            <select name="driver" class="form-control" v-model="driver">
-                                <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
-                            </select>
-                            <br>
+                        <div v-if="order.type_of_delivery == 0">
+                            <div v-if="order.last_status.status_id == 4">
+                                <select name="driver" class="form-control" v-model="driver">
+                                    <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
+                                </select>
+                                <br>
 
-                            <button class="btn btn-default" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                                <button class="btn btn-default" @click="passOrder(order.id, order.status[0].status_id, driver)">Дальше</button>
+                            </div>
+
+                            <div v-else>
+                                <button class="btn btn-default" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.last_status.status_id < 4">Дальше ➜</button>
+                            </div>
                         </div>
 
                         <div v-else>
-                            <button class="btn btn-default" @click="nextStep(order.id, order.status[0].status_id)" v-if="order.last_status.status_id < 4">Дальше ➜</button>
+                            <button class="btn btn-default" @click="nextStep(order.id, order.status[0].status_id)">Дальше ➜</button>
                         </div>
                     </td>
                 </tr>

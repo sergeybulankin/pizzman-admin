@@ -21,7 +21,7 @@
             {{ csrf_field() }}
 
             <div class="form-group">
-                <input type="text" name="user_id" id="user_id" placeholder="Телефон" class="form-control" value="{{ $account_user->user_id }}">
+                <input type="hidden" name="user_id" id="user_id" placeholder="Телефон" class="form-control" value="{{ $account_user->user_id }}">
             </div>
 
             <div class="form-group">

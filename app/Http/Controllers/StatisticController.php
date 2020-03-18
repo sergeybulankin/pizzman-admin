@@ -24,7 +24,7 @@ class StatisticController extends Controller
         $user_point = UserPoint::select('pizzman_address_id')->where('user_id', $user)->first();
 
         $orders = Order::with('food', 'order_status', 'order_status_last', 'address', 'courier', 'courier_info')
-            ->where('pizzman_address_id', $user_point['pizzman_address_id'])
+            ->where('pizzman_address_id', $user_point->pizzman_address_id)
             ->get();
 
         return view('statistic', compact('role_id', 'orders'));

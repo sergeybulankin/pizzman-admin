@@ -30,7 +30,7 @@ class FoodInOrder extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function food_additive()
+    public function food_additives()
     {
         return $this->hasMany(FoodAdditive::class, 'id', 'food_id');
     }

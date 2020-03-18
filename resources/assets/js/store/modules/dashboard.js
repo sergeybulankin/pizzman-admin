@@ -1,7 +1,9 @@
 export default {
     actions: {
         SELECTED_ALL_STATUSES(ctx) {
-            axios.get('/api/selected-all-statuses')
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+            axios.post('/api/selected-all-statuses', {user: id})
                 .then(res => {ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data)})
                 .catch(error => {console.log(error)})
         },
@@ -20,8 +22,10 @@ export default {
         SELECTED_ORDERS_BY_STATUS(ctx, id) {
             ctx.commit('LOADER_VISIBILITY_MUTATION');
 
+            var user = document.querySelector("meta[name='user-id']").getAttribute('content');
+
             setTimeout(() => {
-                axios.post('/api/selected-orders-by-status', {id: id})
+                axios.post('/api/selected-orders-by-status', {id: id, user: user})
                     .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
                     .catch(error => {console.log(error)})
                     .finally (() => { ctx.commit('LOADER_MUTATION') })

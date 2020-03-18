@@ -7,7 +7,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('selected-all-statuses', 'StatusController@index');
+Route::post('selected-all-statuses', 'StatusController@index');
 Route::post('selected-orders', 'OrderController@index');
 Route::get('selected-calls', 'CallController@countCalls');
 Route::post('selected-orders-by-status', 'OrderController@selectOrderByStatus');

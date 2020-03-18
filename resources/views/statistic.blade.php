@@ -31,9 +31,9 @@
                                 {{ $order->id }}
                             </td>
                             <td class="pivot-food-order">
-                                {{ $order->food[0]->food_additive[0]->food[0]->name }}
+                                {{ $order->food[0]->food_additives[0]->food[0]->name }}
                                 @foreach($order->food as $food_additive)
-                                    @foreach($food_additive->food_additive as $food)
+                                    @foreach($food_additive->food_additives as $food)
                                         @foreach($food->additive as $additive)
                                             <div class="pivot-additive-order">
                                             {{ $additive->name }}

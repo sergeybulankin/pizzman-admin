@@ -31,7 +31,7 @@ class OrderController extends Controller
         $orders = Order::whereHas('order_status', function ($query) use($user_pizzman_point) {
             $query->where('status_id', 2)
                 ->where('success', 0)
-                ->where('pizzman_address_id', $user_pizzman_point)
+                ->where('pizzman_address_id', $user_pizzman_point->pizzman_address_id)
                 ->orderBy('status_id', 'DESC');
         })
             ->orderBy('created_at', 'DESC')
@@ -84,9 +84,16 @@ class OrderController extends Controller
     {
         $id = $request->id;
 
-        $orders = Order::whereHas('order_status', function ($query) use($id) {
+        $user = $request->user;
+
+        $user_pizzman_point = UserPoint::select('pizzman_address_id')
+            ->where('user_id', $user)
+            ->first();
+
+        $orders = Order::whereHas('order_status', function ($query) use($id, $user_pizzman_point) {
             $query->where('status_id', $id)
                 ->where('success', 0)
+                ->where('pizzman_address_id', $user_pizzman_point->pizzman_address_id)
                 ->orderBy('status_id', 'DESC');
         })
             ->with('order_status_last')

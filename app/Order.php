@@ -70,11 +70,13 @@ class Order extends Model
     {
         return $this->hasOne(OrderCourier::class, 'order_id', 'id');
     }
-    
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
     public function courier_info()
     {
-        return $this->hasManyThrough(User::class, OrderCourier::class, 'id', 'id', 'order_id');
+        return $this->hasManyThrough(User::class, OrderCourier::class, 'user_id', 'id', 'order_id');
     }
 
     /**

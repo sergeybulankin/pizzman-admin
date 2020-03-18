@@ -10,7 +10,7 @@ class UploadImage {
      * @param $image
      * @return string
      */
-    static public function upload($image, $path, $weight = 60 )
+    static public function upload($image, $path, $weight = 60)
     {
         $img = Image::make($image);
         $img->resize($weight, null, function ($c) {
@@ -28,12 +28,12 @@ class UploadImage {
      * @param $path
      * @param $class
      */
-    static function delete($id, $path, $class)
+    static function delete($id, $path, $class, $field = 'icon')
     {
-        $img = $class::select('icon')->where('id', $id)->first();
+        $img = $class::select($field)->where('id', $id)->first();
 
         if ($img != null) {
-            Storage::disk($path)->delete($img->icon);
+            Storage::disk($path)->delete($img->$field);
         }
     }
 }

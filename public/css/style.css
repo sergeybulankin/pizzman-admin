@@ -699,3 +699,12 @@ div[class^="driver-"] {
   font-size: 14px;
   font-style: italic;
 }
+
+
+.type-of-time {
+  background-color: #f7e0af;
+  padding: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+}

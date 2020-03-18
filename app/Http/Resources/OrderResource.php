@@ -18,8 +18,11 @@ class OrderResource extends Resource
 
         return [
             'id' => $this->id,
+            'type_of_time' => $this->type_of_time_id,
+            'type_of_delivery' => $this->type_of_delivery,
+            'date' => $this->date,
 
-            'address' => $this->address[0],
+            'address' => $this->address,
             'user' => $this->user,
             'status' => $this->order_status,
             'last_status' => $this->order_status_last,

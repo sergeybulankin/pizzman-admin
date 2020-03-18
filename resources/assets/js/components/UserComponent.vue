@@ -1,12 +1,11 @@
 <template>
     <div class="control-field">
-        <span class="account-control" id="dropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            v-for="(user, i) in USER" :key="i">
+        <span class="account-control" id="dropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="/images/icons/user.png" width="36" height="36" class="d-inline-block align-top" alt="">
-            {{ user[0].account.name }} ▼
+            {{ USER.account.name }} ▼
         </span>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuUser">
-            <a class="dropdown-item" href="#">Изменить профиль</a>
+            <a class="dropdown-item" :href="'edit/user/' + USER.id">Изменить профиль</a>
         </div>
     </div>
 </template>
