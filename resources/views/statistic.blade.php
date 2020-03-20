@@ -19,7 +19,6 @@
                         <td class="pivot-number-order">#</td>
                         <td class="pivot-food-order">Блюдо</td>
                         <td class="pivot-address-order">Адрес</td>
-                        <td class="pivot-courier-order">Курьер</td>
                         <td class="pivot-date-start-order">Время заказа</td>
                         <td class="pivot-date-end-order">Последнее время</td>
                         <td class="pivot-status-order">Стадия</td>
@@ -33,6 +32,7 @@
                             <td class="pivot-food-order">
                                 {{ $order->food[0]->food_additives[0]->food[0]->name }}
                                 @foreach($order->food as $food_additive)
+                                    <!-- TODO вывести само блюдо -->
                                     @foreach($food_additive->food_additives as $food)
                                         @foreach($food->additive as $additive)
                                             <div class="pivot-additive-order">
@@ -42,15 +42,31 @@
                                     @endforeach()
                                 @endforeach()
                                 <span class="pivot-count-food">Количество:</span> {{ $order->food[0]->count }}
+
+                                <div style="width: 100px;">
+                                    @if(empty($order->type_time))
+                                        <div class="type-of-time" style="font-size: 10px;">Срочная</div>
+                                    @else
+                                        <div class="type-of-time" style="font-size: 10px;">
+                                            Ко времени <br>
+                                            {{ $order->date }}
+                                        </div>
+                                    @endif()
+                                </div>
                             </td>
                             <td class="pivot-address-order">
                                 @foreach($order->address as $address)
                                     <span class="pivot-address-field">улица</span> {{ $address->address }} <br>
                                     <span class="pivot-address-field">кв</span> {{ $address->kv }}
                                 @endforeach()
-                            </td>
-                            <td class="pivot-courier-order">
-                                {{ $order->courier_info }}
+
+
+                                @foreach($order->courier_info as $courier)
+                                    <div class="pivot-courier-order">
+                                        {{ $courier->account->name }} <br>
+                                        <strong>{{ $courier->name }}</strong>
+                                    </div>
+                                @endforeach()
                             </td>
                             <td class="pivot-date-start-order">
                                 {{ $order->created_utc }}

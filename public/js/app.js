@@ -63341,6 +63341,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -63372,6 +63376,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.LIST_FOOD(id);
         },
         passOrder: function passOrder(id, status_id, driver) {
+            console.log(driver);
             var data = { id: id, driver: driver };
             this.SEND_ORDER_TO_COURIER(data);
 
@@ -63478,6 +63483,14 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _vm.ALL_ORDERS.length == 0
+        ? _c("div", { staticClass: "not-work" }, [
+            _vm._v(
+              "\n            ¯\\_(ツ)_/¯ Работы на этой  стадии нет\n        "
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "table",
         [
@@ -63491,7 +63504,7 @@ var render = function() {
                 staticClass: "list",
                 style:
                   order.type_of_time == 1
-                    ? "background-color: #EAF793;"
+                    ? "background-color: #D4F7F0;"
                     : "background-color: white;"
               },
               [
@@ -63537,7 +63550,7 @@ var render = function() {
                     staticClass: "address",
                     style:
                       order.type_of_delivery == 1
-                        ? "background-color: #89E538;"
+                        ? "background-color: #E7F7CA;"
                         : "background-color: white;"
                   },
                   [
@@ -64380,6 +64393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -64413,16 +64427,26 @@ var render = function() {
         }
       },
       [
-        _c("img", {
-          staticClass: "d-inline-block align-top",
-          attrs: {
-            src: "/images/icons/user.png",
-            width: "36",
-            height: "36",
-            alt: ""
-          }
-        }),
-        _vm._v("\n        " + _vm._s(_vm.USER.account.name) + " ▼\n    ")
+        _vm.USER.account.link == ""
+          ? _c("img", {
+              staticClass: "d-inline-block align-top",
+              attrs: {
+                src: "/images/icons/user.png",
+                width: "36",
+                height: "36",
+                alt: "userpic"
+              }
+            })
+          : _c("img", {
+              staticClass: "d-inline-block align-top",
+              attrs: {
+                src: "/images/userpic/" + _vm.USER.account.link,
+                width: "36",
+                height: "36",
+                alt: "userpic"
+              }
+            }),
+        _vm._v("\n        " + _vm._s(_vm.USER.name) + " ▼\n    ")
       ]
     ),
     _vm._v(" "),
@@ -64437,7 +64461,7 @@ var render = function() {
           "a",
           {
             staticClass: "dropdown-item",
-            attrs: { href: "edit/user/" + _vm.USER.id }
+            attrs: { href: "/edit/user/" + _vm.USER.id }
           },
           [_vm._v("Изменить профиль")]
         )

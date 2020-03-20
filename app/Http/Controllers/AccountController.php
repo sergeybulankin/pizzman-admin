@@ -247,12 +247,16 @@ class AccountController extends Controller
      */
     public function updateAccount(Request $request)
     {
+        $this->validate($request, [
+            'password' => 'required|min:5'
+        ]);
+
         $phone = $request->name;
         $password = $request->password;
         $name = $request->name_account;
         $user_id = $request->user_id;
         if ($request->image != null) {
-            //UploadImage::delete($request->user_id, $this->path, Account::class, 'link');
+            UploadImage::delete($request->user_id, $this->path, Account::class, 'link');
             $image = UploadImage::upload($request->image, $this->path);
         }
 

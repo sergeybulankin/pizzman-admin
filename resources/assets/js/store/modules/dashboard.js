@@ -51,6 +51,7 @@ export default {
         },
 
         SEND_ORDER_TO_COURIER(ctx, data) {
+
             axios.post('/api/send-order-to-courier', {order_id: data.id, driver: data.driver})
                 .then(res => {console.log('Заказ закреплен за курьером')})
                 .catch(error => {console.log(error)})

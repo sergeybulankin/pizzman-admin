@@ -485,7 +485,7 @@ div[class^="driver-"] {
 }
 
 .pivot-number-order {
-  width: 80px;
+  width: 40px;
   text-align: center;
 }
 
@@ -494,11 +494,12 @@ div[class^="driver-"] {
 }
 
 .pivot-address-order {
-  width: 150px;
+  width: 250px;
 }
 
 .pivot-courier-order {
-  width: 100px;
+  background-color: #f7e0af;
+  padding: 5px;
 }
 
 .pivot-date-start-order, .pivot-date-end-order {
@@ -506,7 +507,7 @@ div[class^="driver-"] {
 }
 
 .pivot-status-order {
-  width: 80px;
+  width: 100px;
   font-weight: 600;
 }
 
@@ -701,10 +702,22 @@ div[class^="driver-"] {
 }
 
 
+
+
 .type-of-time {
-  background-color: #f7e0af;
+  background-color: #f1f7e2;
   padding: 3px;
   font-size: 12px;
   font-weight: 600;
   font-style: italic;
+}
+
+.not-work {
+  background-color: #f7e0af;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
+  padding: 10px;
+  margin: 15px;
 }

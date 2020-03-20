@@ -76,7 +76,12 @@ class Order extends Model
      */
     public function courier_info()
     {
-        return $this->hasManyThrough(User::class, OrderCourier::class, 'user_id', 'id', 'order_id');
+        return $this->hasManyThrough(User::class, OrderCourier::class, 'order_id', 'id', 'id');
+    }
+
+    public function type_time()
+    {
+        return $this->hasOne(TypeOfTime::class, 'id', 'type_of_delivery');
     }
 
     /**

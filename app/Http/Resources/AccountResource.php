@@ -21,6 +21,8 @@ class AccountResource extends Resource
             'name' => $this->name,
             'second_name' => $this->second_name,
 
+            'user_id' => $this->user_id,
+
             'account' => $this->account,
         ];
     }

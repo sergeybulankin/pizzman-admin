@@ -55,6 +55,7 @@ Route::group(['prefix' => 'edit'], function() {
     Route::put('/category/{id}', 'CategoryController@edit')->middleware('auth');
     Route::put('/type/{id}', 'TypeController@edit')->middleware('auth');
     Route::put('/food/{id}', 'FoodController@edit')->middleware('auth');
+    Route::get('/user/{id}', 'AccountController@editAccount')->middleware('auth');
 });
 
 Route::group(['prefix' => 'store'], function() {
@@ -74,6 +75,7 @@ Route::group(['prefix' => 'update'], function() {
     Route::put('/type/{id}', 'TypeController@update')->middleware('auth');
     Route::put('/food/{id}', 'FoodController@update')->middleware('auth');
     Route::put('/call/{id}', 'CallController@update')->middleware('auth');
+    Route::put('/user/{id}', 'AccountController@updateAccount')->middleware('auth');
 });
 
 Route::group(['prefix' => 'delete'], function() {

@@ -20,6 +20,10 @@
                 <h4>Загружаем заказы...</h4>
             </div>
 
+            <div class="not-work" v-if="ALL_ORDERS.length == 0">
+                ¯\_(ツ)_/¯ Работы на этой  стадии нет
+            </div>
+
             <table>
                 <tr class="table-title">
                     <td class="number-order">Номер заказа</td>
@@ -29,7 +33,7 @@
                     <td class="next-step"></td>
                 </tr>
                 <tr class="list" v-for="(order, index) in ALL_ORDERS" :key="index"
-                    :style="order.type_of_time == 1 ? 'background-color: #EAF793;' : 'background-color: white;' ">
+                    :style="order.type_of_time == 1 ? 'background-color: #D4F7F0;' : 'background-color: white;' ">
                     <td class="number-order"># {{ order.id }}</td>
                     <td class=number-phone>
                         {{ order.user.name }}
@@ -42,7 +46,7 @@
                         <span class="list-food" @click="listFood(order.id)">просмотреть</span>
                     </td>
                     <td class="address"
-                        :style="order.type_of_delivery == 1 ? 'background-color: #89E538;' : 'background-color: white;' ">
+                        :style="order.type_of_delivery == 1 ? 'background-color: #E7F7CA;' : 'background-color: white;' ">
                         <div v-for="(address, i) in order.address" :key="i">
                             {{ address.address }} - {{ address.kv }}
                         </div>
@@ -168,7 +172,8 @@
         },
 
         passOrder(id, status_id, driver){
-            var data = {id, driver}
+            console.log(driver);
+            var data = {id, driver};
             this.SEND_ORDER_TO_COURIER(data);
 
             this.nextStep(id, status_id);

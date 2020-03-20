@@ -16,7 +16,7 @@
             </div>
         @endif()
 
-        <form action="/update/user/{{ $account->id }}" method="POST">
+        <form action="/update/user/{{ $account->id }}" method="POST"  enctype="multipart/form-data">
             {{ method_field('PUT') }}
             {{ csrf_field() }}
 
