@@ -1,9 +1,13 @@
 export default {
     actions: {
         SELECTED_ORDERS_FOR_DRIVER(ctx, id) {
+            var success = 'Заказы: работают в фоновом режиме';
+            var error_message = 'Заказы: произошел сбои в работе';
+
             axios.post('/api/selected-orders-for-driver', {user: id})
                 .then(res => {ctx.commit('SELECTED_ORDERS_FOR_DRIVER_MUTATION', res.data)})
-                .catch(error => {console.log(error)})
+                .then(res => {ctx.commit('SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION', success)})
+                .catch(error => {ctx.commit('SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION', error_message)})
         },
 
         COUNT_ACTIVE_ORDERS(ctx, id) {
@@ -25,11 +29,16 @@ export default {
 
         COUNT_ACTIVE_ORDERS_MUTATION(state, count) {
             state.count_orders = count
+        },
+
+        SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION(state, message) {
+            state.system_orders_for_driver = message
         }
     },
     state: {
         orders: [],
-        count_orders: null
+        count_orders: null,
+        system_orders_for_driver: ''
     },
     getters: {
         ORDERS(state) {
@@ -38,6 +47,10 @@ export default {
 
         COUNT_ORDERS(state) {
             return state.count_orders
-        }
+        },
+
+        SYSTEM_WORK_ORDERS_FOR_DRIVER(state) {
+            return state.system_orders_for_driver
+        },
     }
 }

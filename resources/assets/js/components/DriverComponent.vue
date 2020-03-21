@@ -63,10 +63,6 @@
             </div>
         </div>
 
-
-        <a href="/map">Карта</a>
-
-
     </div>
 </template>
 

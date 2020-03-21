@@ -2,19 +2,26 @@ export default {
     actions: {
         SELECTED_ALL_STATUSES(ctx) {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+            var success = 'Статусы: работают в фоновом режиме';
+            var error_message = 'Статусы: произошел сбои в работе';
 
             axios.post('/api/selected-all-statuses', {user: id})
                 .then(res => {ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data)})
-                .catch(error => {console.log(error)})
+                .then(res => {ctx.commit('SYSTEM_WORK_STATUSES_MUTATION', success)})
+                .catch(error => {ctx.commit('SYSTEM_WORK_STATUSES_MUTATION', error_message)})
         },
 
         SELECTED_ORDERS(ctx) {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+            var success = 'Заказы: работают в фоновом режиме';
+            var error_message = 'Заказы: произошел сбои в работе';
 
             setTimeout(() => {
                 axios.post('/api/selected-orders', {user: id})
                     .then(res => {ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data)})
-                    .catch(error => {console.log(error)})
+                    .then(res => {ctx.commit('SYSTEM_WORK_ORDERS_MUTATION', success)})
+                    .then(res => {ctx.commit('SYSTEM_WORK_ORDERS_UPDATE_MUTATION', Date.now())})
+                    .catch(error => {ctx.commit('SYSTEM_WORK_ORDERS_MUTATION', error_message)})
                     .finally (() => { ctx.commit('LOADER_MUTATION') })
             }, 2000)
         },
@@ -51,7 +58,6 @@ export default {
         },
 
         SEND_ORDER_TO_COURIER(ctx, data) {
-
             axios.post('/api/send-order-to-courier', {order_id: data.id, driver: data.driver})
                 .then(res => {console.log('Заказ закреплен за курьером')})
                 .catch(error => {console.log(error)})
@@ -90,6 +96,18 @@ export default {
 
         LIST_FOOD_MUTATION(state, list) {
             return state.list = list
+        },
+
+        SYSTEM_WORK_STATUSES_MUTATION(state, message) {
+            state.system_statuses = message
+        },
+
+        SYSTEM_WORK_ORDERS_MUTATION(state, message) {
+            state.system_orders = message
+        },
+
+        SYSTEM_WORK_ORDERS_UPDATE_MUTATION(state, date) {
+            state.system_date_update = date
         }
     },
     state: {
@@ -98,6 +116,9 @@ export default {
         drivers: [],
         driver: [],
         list: [],
+        system_statuses: '',
+        system_orders: '',
+        system_date_update: Date.now(),
         loading: true
     },
     getters: {
@@ -123,6 +144,18 @@ export default {
 
         LIST(state) {
             return state.list
+        },
+
+        SYSTEM_WORK_STATUSES(state) {
+            return state.system_statuses
+        },
+
+        SYSTEM_WORK_ORDERS(state) {
+            return state.system_orders
+        },
+
+        SYSTEM_DATE_UPDATE(state) {
+            return state.system_date_update
         }
     }
 }

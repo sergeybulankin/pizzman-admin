@@ -6044,37 +6044,10 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -6180,6 +6153,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -19020,6 +19020,7 @@ window.moment = __webpack_require__(0);
 Vue.component('board', __webpack_require__(175));
 Vue.component('user', __webpack_require__(184));
 Vue.component('navigation', __webpack_require__(187));
+Vue.component('system', __webpack_require__(190));
 
 var app = new Vue({
   el: '#app',
@@ -36215,7 +36216,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(6)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(6)(module)))
 
 /***/ }),
 /* 145 */
@@ -62263,7 +62264,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(167).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(167).setImmediate))
 
 /***/ }),
 /* 167 */
@@ -62333,7 +62334,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 168 */
@@ -62526,7 +62527,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(8)))
 
 /***/ }),
 /* 169 */
@@ -62570,21 +62571,31 @@ var debug = "development" !== 'production';
     actions: {
         SELECTED_ALL_STATUSES: function SELECTED_ALL_STATUSES(ctx) {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+            var success = 'Статусы: работают в фоновом режиме';
+            var error_message = 'Статусы: произошел сбои в работе';
 
             axios.post('/api/selected-all-statuses', { user: id }).then(function (res) {
                 ctx.commit('SELECTED_ALL_STATUSES_MUTATION', res.data.data);
+            }).then(function (res) {
+                ctx.commit('SYSTEM_WORK_STATUSES_MUTATION', success);
             }).catch(function (error) {
-                console.log(error);
+                ctx.commit('SYSTEM_WORK_STATUSES_MUTATION', error_message);
             });
         },
         SELECTED_ORDERS: function SELECTED_ORDERS(ctx) {
             var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+            var success = 'Заказы: работают в фоновом режиме';
+            var error_message = 'Заказы: произошел сбои в работе';
 
             setTimeout(function () {
                 axios.post('/api/selected-orders', { user: id }).then(function (res) {
                     ctx.commit('SELECTED_ORDERS_MUTATION', res.data.data);
+                }).then(function (res) {
+                    ctx.commit('SYSTEM_WORK_ORDERS_MUTATION', success);
+                }).then(function (res) {
+                    ctx.commit('SYSTEM_WORK_ORDERS_UPDATE_MUTATION', Date.now());
                 }).catch(function (error) {
-                    console.log(error);
+                    ctx.commit('SYSTEM_WORK_ORDERS_MUTATION', error_message);
                 }).finally(function () {
                     ctx.commit('LOADER_MUTATION');
                 });
@@ -62662,6 +62673,15 @@ var debug = "development" !== 'production';
         },
         LIST_FOOD_MUTATION: function LIST_FOOD_MUTATION(state, list) {
             return state.list = list;
+        },
+        SYSTEM_WORK_STATUSES_MUTATION: function SYSTEM_WORK_STATUSES_MUTATION(state, message) {
+            state.system_statuses = message;
+        },
+        SYSTEM_WORK_ORDERS_MUTATION: function SYSTEM_WORK_ORDERS_MUTATION(state, message) {
+            state.system_orders = message;
+        },
+        SYSTEM_WORK_ORDERS_UPDATE_MUTATION: function SYSTEM_WORK_ORDERS_UPDATE_MUTATION(state, date) {
+            state.system_date_update = date;
         }
     },
     state: {
@@ -62670,6 +62690,9 @@ var debug = "development" !== 'production';
         drivers: [],
         driver: [],
         list: [],
+        system_statuses: '',
+        system_orders: '',
+        system_date_update: Date.now(),
         loading: true
     },
     getters: {
@@ -62690,6 +62713,15 @@ var debug = "development" !== 'production';
         },
         LIST: function LIST(state) {
             return state.list;
+        },
+        SYSTEM_WORK_STATUSES: function SYSTEM_WORK_STATUSES(state) {
+            return state.system_statuses;
+        },
+        SYSTEM_WORK_ORDERS: function SYSTEM_WORK_ORDERS(state) {
+            return state.system_orders;
+        },
+        SYSTEM_DATE_UPDATE: function SYSTEM_DATE_UPDATE(state) {
+            return state.system_date_update;
         }
     }
 });
@@ -62710,6 +62742,18 @@ var debug = "development" !== 'production';
                 console.log(error);
             });
         },
+        LOADED_CALLS: function LOADED_CALLS(ctx) {
+            var success = 'Звонки: работают в фоновом режиме';
+            var error_message = 'Звонки: произошел сбои в работе';
+
+            axios.get('/api/selected-calls').then(function (res) {
+                ctx.commit('SELECTED_CALLS_MUTATION', res.data);
+            }).then(function (res) {
+                ctx.commit('SYSTEM_WORK_CALLS_MUTATION', success);
+            }).catch(function (error) {
+                ctx.commit('SYSTEM_WORK_CALLS_MUTATION', error_message);
+            });
+        },
         SELECTED_CALLS: function SELECTED_CALLS(ctx) {
             setInterval(function () {
                 axios.get('/api/selected-calls').then(function (res) {
@@ -62724,6 +62768,7 @@ var debug = "development" !== 'production';
     state: {
         role: [],
         user: [],
+        system_calls: '',
         calls: 0
     },
 
@@ -62736,6 +62781,9 @@ var debug = "development" !== 'production';
         },
         SELECTED_CALLS_MUTATION: function SELECTED_CALLS_MUTATION(state, calls) {
             state.calls = calls;
+        },
+        SYSTEM_WORK_CALLS_MUTATION: function SYSTEM_WORK_CALLS_MUTATION(state, message) {
+            state.system_calls = message;
         }
     },
 
@@ -62748,6 +62796,9 @@ var debug = "development" !== 'production';
         },
         CALLS: function CALLS(state) {
             return state.calls;
+        },
+        SYSTEM_WORK_CALLS: function SYSTEM_WORK_CALLS(state) {
+            return state.system_calls;
         }
     }
 });
@@ -62760,10 +62811,15 @@ var debug = "development" !== 'production';
 /* harmony default export */ __webpack_exports__["a"] = ({
     actions: {
         SELECTED_ORDERS_FOR_DRIVER: function SELECTED_ORDERS_FOR_DRIVER(ctx, id) {
+            var success = 'Заказы: работают в фоновом режиме';
+            var error_message = 'Заказы: произошел сбои в работе';
+
             axios.post('/api/selected-orders-for-driver', { user: id }).then(function (res) {
                 ctx.commit('SELECTED_ORDERS_FOR_DRIVER_MUTATION', res.data);
+            }).then(function (res) {
+                ctx.commit('SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION', success);
             }).catch(function (error) {
-                console.log(error);
+                ctx.commit('SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION', error_message);
             });
         },
         COUNT_ACTIVE_ORDERS: function COUNT_ACTIVE_ORDERS(ctx, id) {
@@ -62785,11 +62841,15 @@ var debug = "development" !== 'production';
         },
         COUNT_ACTIVE_ORDERS_MUTATION: function COUNT_ACTIVE_ORDERS_MUTATION(state, count) {
             state.count_orders = count;
+        },
+        SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION: function SYSTEM_WORK_ORDER_FOR_DRIVER_MUTATION(state, message) {
+            state.system_orders_for_driver = message;
         }
     },
     state: {
         orders: [],
-        count_orders: null
+        count_orders: null,
+        system_orders_for_driver: ''
     },
     getters: {
         ORDERS: function ORDERS(state) {
@@ -62797,6 +62857,9 @@ var debug = "development" !== 'production';
         },
         COUNT_ORDERS: function COUNT_ORDERS(state) {
             return state.count_orders;
+        },
+        SYSTEM_WORK_ORDERS_FOR_DRIVER: function SYSTEM_WORK_ORDERS_FOR_DRIVER(state) {
+            return state.system_orders_for_driver;
         }
     }
 });
@@ -63088,7 +63151,7 @@ webpackContext.id = 174;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(176)
 /* template */
@@ -63170,7 +63233,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(178)
 /* template */
@@ -63892,7 +63955,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(181)
 /* template */
@@ -63943,10 +64006,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
 //
 //
 //
@@ -64271,9 +64330,7 @@ var render = function() {
         })
       ],
       2
-    ),
-    _vm._v(" "),
-    _c("a", { attrs: { href: "/map" } }, [_vm._v("Карта")])
+    )
   ])
 }
 var staticRenderFns = [
@@ -64332,7 +64389,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(185)
 /* template */
@@ -64427,7 +64484,7 @@ var render = function() {
         }
       },
       [
-        _vm.USER.account.link == ""
+        _vm.USER.account.link == null
           ? _c("img", {
               staticClass: "d-inline-block align-top",
               attrs: {
@@ -64484,7 +64541,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(188)
 /* template */
@@ -64593,17 +64650,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        this.$store.commit('setAuthUser', window.Laravel.role);
+        this.LOADED_CALLS();
+        console.log('Звонки загрузились');
+    },
     mounted: function mounted() {
         this.$store.commit('setAuthUser', window.Laravel.role);
         this.SELECTED_CALLS();
     },
 
     computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ROLE', 'CALLS']),
-    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_CALLS'])
+    methods: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['LOADED_CALLS', 'SELECTED_CALLS'])
 });
 
 /***/ }),
@@ -64614,47 +64678,54 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "list-group" }, [
-    _vm.ROLE == 4
-      ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [
-          _c("div", { staticClass: "collapse navbar-collapse" }, [
-            _c("ul", { staticClass: "navbar-nav flex-column" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c(
-                  "a",
-                  { staticClass: "nav-link", attrs: { href: "/calls" } },
-                  [
-                    _c("img", {
-                      staticClass: "d-inline-block align-top",
-                      attrs: {
-                        src: "/images/icons/telephone.png",
-                        width: "24",
-                        height: "24",
-                        alt: ""
-                      }
-                    }),
-                    _vm._v("\n                        Звонки "),
-                    _c("span", { staticClass: "count-calls" }, [
-                      _vm._v(_vm._s(_vm.CALLS))
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3)
+  return _c(
+    "div",
+    { staticClass: "list-group" },
+    [
+      _vm.ROLE == 4
+        ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [
+            _c("div", { staticClass: "collapse navbar-collapse" }, [
+              _c("ul", { staticClass: "navbar-nav flex-column" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    { staticClass: "nav-link", attrs: { href: "/calls" } },
+                    [
+                      _c("img", {
+                        staticClass: "d-inline-block align-top",
+                        attrs: {
+                          src: "/images/icons/telephone.png",
+                          width: "24",
+                          height: "24",
+                          alt: ""
+                        }
+                      }),
+                      _vm._v("\n                        Звонки "),
+                      _c("span", { staticClass: "count-calls" }, [
+                        _vm._v(_vm._s(_vm.CALLS))
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3)
+              ])
             ])
           ])
-        ])
-      : _vm.ROLE == 3
-      ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [_vm._m(4)])
-      : _vm._e()
-  ])
+        : _vm.ROLE == 3
+        ? _c("nav", { staticClass: "navbar navbar-expand-lg" }, [_vm._m(4)])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("system")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -64778,6 +64849,183 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-73ba5f62", module.exports)
+  }
+}
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(191)
+/* template */
+var __vue_template__ = __webpack_require__(192)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SystemComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-94f938b2", Component.options)
+  } else {
+    hotAPI.reload("data-v-94f938b2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+moment.locale('ru');
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ROLE', 'SYSTEM_WORK_CALLS', 'SYSTEM_WORK_STATUSES', 'SYSTEM_WORK_ORDERS', 'SYSTEM_DATE_UPDATE', 'SYSTEM_WORK_ORDERS_FOR_DRIVER']),
+    filters: {
+        format: function format(date) {
+            return moment(date).format('D MMMM, H:mm:ss');
+        }
+    }
+});
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "system-works" }, [
+    _vm.ROLE >= 4
+      ? _c("div", [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "system" }, [
+            _vm._v(
+              "\n            " + _vm._s(_vm.SYSTEM_WORK_CALLS) + "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "system" }, [
+            _vm._v(
+              "\n            " + _vm._s(_vm.SYSTEM_WORK_STATUSES) + "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "system" }, [
+            _vm._v(
+              "\n            " + _vm._s(_vm.SYSTEM_WORK_ORDERS) + "\n        "
+            )
+          ])
+        ])
+      : _c("div", [
+          _c("div", { staticClass: "system" }, [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.SYSTEM_WORK_ORDERS_FOR_DRIVER) +
+                "\n        "
+            )
+          ])
+        ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "system-last-update" }, [
+      _vm._v(
+        "\n        " +
+          _vm._s(_vm._f("format")(_vm.SYSTEM_DATE_UPDATE)) +
+          "\n    "
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "blobs-container" }, [
+      _c("div", { staticClass: "blob green" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "system-title" }, [
+        _vm._v("\n                Система\n            ")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-94f938b2", module.exports)
   }
 }
 

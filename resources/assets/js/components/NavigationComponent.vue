@@ -55,6 +55,8 @@
                 </ul>
             </div>
         </nav>
+
+        <system></system>
     </div>
 </template>
 
@@ -62,6 +64,11 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
+        created() {
+            this.$store.commit('setAuthUser', window.Laravel.role);
+            this.LOADED_CALLS();
+            console.log('Звонки загрузились');
+        },
         mounted() {
             this.$store.commit('setAuthUser', window.Laravel.role);
             this.SELECTED_CALLS();
@@ -71,6 +78,7 @@
             'CALLS'
         ]),
         methods: mapActions([
+            'LOADED_CALLS',
             'SELECTED_CALLS'
         ])
     }

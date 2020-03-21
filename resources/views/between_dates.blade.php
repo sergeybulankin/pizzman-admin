@@ -8,7 +8,7 @@
     <div class="row content">
         <div class="col-md-12 title">
             <div class="panel panel-default">
-                <h1>Сводная таблица</h1>
+                <h1>Сводная таблица за промежуток времени</h1>
             </div>
         </div>
 
@@ -21,17 +21,17 @@
                     </div>
                 @endif()
 
-                <div class="statistics-date">
-                    <form action="/statistics/dates" method="POST">
-                        {{ csrf_field() }}
+                    <div class="statistics-date">
+                        <form action="/statistics/dates" method="POST">
+                            {{ csrf_field() }}
 
-                        <input type="date" name="from" class="date-between">
+                            <input type="date" name="from" class="date-between">
 
-                        <input type="date" name="to" class="date-between">
+                            <input type="date" name="to" class="date-between">
 
-                        <button type="submit">Просмотреть</button>
-                    </form>
-                </div>
+                            <button type="submit">Просмотреть</button>
+                        </form>
+                    </div>
 
                 <table class="pivot-table">
                     <tr class="pivot-table-title">
@@ -51,21 +51,19 @@
                             <td class="pivot-food-order">
                                 @foreach($order->food as $food_additives)
                                         @foreach($food_additives->food_additives as $food)
-                                            <div style="margin: 5px 0;">
-                                                @foreach($food->food as $food_item)
-                                                    {{ $food_item->name }}
+                                            @foreach($food->food as $food_item)
+                                                {{ $food_item->name }}
+                                            @endforeach()
 
-                                                    @foreach($food->additive as $additive)
-                                                        <div class="pivot-additive-order">
-                                                            {{ $additive->name }}
-                                                        </div>
-                                                    @endforeach()
-                                                    <span class="pivot-count-food">Количество:</span> {{ $food_additives->count }}
-                                                @endforeach()
-                                            </div>
-
+                                            @foreach($food->additive as $additive)
+                                                <div class="pivot-additive-order">
+                                                    {{ $additive->name }}
+                                                </div>
+                                            @endforeach()
                                         @endforeach()
                                 @endforeach()
+
+                                <span class="pivot-count-food">Количество:</span> {{ $order->food[0]->count }}
 
                                 <div style="width: 100px;">
                                     @if(empty($order->type_time))
