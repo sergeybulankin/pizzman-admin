@@ -181,8 +181,11 @@
 
         nextStep(id, status_id){
             this.TRANSITION_TO_A_NEW_STAGE(id);
-            this.SELECTED_ALL_STATUSES();
-            this.SELECTED_ORDERS_BY_STATUS(status_id)
+            this.SELECTED_ORDERS_BY_STATUS(status_id);
+
+            setTimeout(() => {
+                this.SELECTED_ALL_STATUSES();
+            }, 1000);
         },
 
         updateOrders() {

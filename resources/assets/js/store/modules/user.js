@@ -19,11 +19,15 @@ export default {
         },
 
         SELECTED_CALLS(ctx) {
+            var success = 'Звонки: работают в фоновом режиме';
+            var error_message = 'Звонки: произошел сбои в работе';
+            
             setInterval(() => {
                 axios.get('/api/selected-calls')
                     .then(res => {ctx.commit('SELECTED_CALLS_MUTATION', res.data)})
                     .then(console.log('Обновился счетчик звонков'))
-                    .catch(error => {console.log(error)})
+                    .then(res => {ctx.commit('SYSTEM_WORK_CALLS_MUTATION', success)})
+                    .catch(error => {ctx.commit('SYSTEM_WORK_CALLS_MUTATION', error_message)})
             }, 100000);
         }
     },

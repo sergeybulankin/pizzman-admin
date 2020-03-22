@@ -62755,11 +62755,16 @@ var debug = "development" !== 'production';
             });
         },
         SELECTED_CALLS: function SELECTED_CALLS(ctx) {
+            var success = 'Звонки: работают в фоновом режиме';
+            var error_message = 'Звонки: произошел сбои в работе';
+
             setInterval(function () {
                 axios.get('/api/selected-calls').then(function (res) {
                     ctx.commit('SELECTED_CALLS_MUTATION', res.data);
-                }).then(console.log('Обновился счетчик звонков')).catch(function (error) {
-                    console.log(error);
+                }).then(console.log('Обновился счетчик звонков')).then(function (res) {
+                    ctx.commit('SYSTEM_WORK_CALLS_MUTATION', success);
+                }).catch(function (error) {
+                    ctx.commit('SYSTEM_WORK_CALLS_MUTATION', error_message);
                 });
             }, 100000);
         }
@@ -63446,17 +63451,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.nextStep(id, status_id);
         },
         nextStep: function nextStep(id, status_id) {
-            this.TRANSITION_TO_A_NEW_STAGE(id);
-            this.SELECTED_ALL_STATUSES();
-            this.SELECTED_ORDERS_BY_STATUS(status_id);
-        },
-        updateOrders: function updateOrders() {
             var _this = this;
 
-            setInterval(function () {
+            this.TRANSITION_TO_A_NEW_STAGE(id);
+            this.SELECTED_ORDERS_BY_STATUS(status_id);
+
+            setTimeout(function () {
                 _this.SELECTED_ALL_STATUSES();
-                _this.SELECTED_ORDERS();
-                _this.SELECTED_ALL_DRIVERS();
+            }, 1000);
+        },
+        updateOrders: function updateOrders() {
+            var _this2 = this;
+
+            setInterval(function () {
+                _this2.SELECTED_ALL_STATUSES();
+                _this2.SELECTED_ORDERS();
+                _this2.SELECTED_ALL_DRIVERS();
                 console.log('Данные обновились');
             }, 100000);
         },
@@ -63468,12 +63478,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             $('.driver-' + order).css('display', 'none');
         },
         countDownTimer: function countDownTimer() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (this.countDown > 0) {
                 setTimeout(function () {
-                    _this2.countDown -= 1;
-                    _this2.countDownTimer();
+                    _this3.countDown -= 1;
+                    _this3.countDownTimer();
                 }, 1000);
             }
 
