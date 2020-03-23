@@ -23,6 +23,7 @@ Route::get('/statistics', 'StatisticController@index');
 Route::get('/driver/archive', 'DriverController@archive');
 Route::get('/statistics', 'StatisticController@index');
 Route::post('/statistics/dates', 'StatisticController@betweenDates');
+Route::post('/statistics/upload', 'StatisticController@upload');
 
 Route::group(['prefix' => 'list'], function () {
     Route::get('/accounts', 'AccountController@show');

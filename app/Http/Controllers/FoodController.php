@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Food;
+use App\FoodAdditive;
 use App\Library\UploadImage;
 use App\UserRole;
 use Illuminate\Http\Request;
@@ -88,6 +89,11 @@ class FoodController extends Controller
         $food->recommend = 0;
         $food->visibility = 1;
         $food->save();
+
+        $food_additive = new FoodAdditive();
+        $food_additive->food_id = $food->id;
+        $food_additive->additive_id = 1;
+        $food_additive->save();
 
         return redirect()->back()->with('success', 'Данные добавились');
     }

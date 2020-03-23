@@ -43,7 +43,7 @@
                     @foreach($foods as $food)
                         <tr class="table-list">
                             <td class="number-phone">
-
+                                <img src="/images/foods/{{ $food->image }}" alt="">
                             </td>
                             <td class="level">{{ $food->name }}</td>
                             <td class="level">{{ $food->category->name }}</td>

@@ -21,6 +21,14 @@
                     </div>
                 @endif()
 
+                <div>
+                    <form action="/statistics/upload" method="POST">
+                        {{ csrf_field() }}
+
+                        <button type="submit" class="upload-statistic">Скачать отчет</button>
+                    </form>
+                </div>
+
                 <div class="statistics-date">
                     <form action="/statistics/dates" method="POST">
                         {{ csrf_field() }}

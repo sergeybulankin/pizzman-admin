@@ -8,6 +8,7 @@ use App\UserRole;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class StatisticController extends Controller
 {
@@ -33,6 +34,10 @@ class StatisticController extends Controller
         return view('statistic', compact('role_id', 'orders'));
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function betweenDates(Request $request)
     {
         $request->validate([
@@ -61,5 +66,18 @@ class StatisticController extends Controller
             ->get();
 
         return view('between_dates', compact('role_id', 'orders'));
+    }
+
+
+    public function upload()
+    {
+        $list = collect([
+            [ 'id' => 1, 'name' => 'Jane' ],
+            [ 'id' => 2, 'name' => 'John' ],
+        ]);        
+
+        (new FastExcel($list))->export(public_path('file.xlsx'));
+
+        return redirect()->back();
     }
 }

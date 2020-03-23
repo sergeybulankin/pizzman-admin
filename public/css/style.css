@@ -618,6 +618,19 @@ div[class^="driver-"] {
 
 
 
+.upload-statistic {
+  width: 200px;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #d6d6d6;
+  border: 1px solid #d6d6d6;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+
+
+
 
 
 
