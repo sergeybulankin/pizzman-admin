@@ -79,10 +79,22 @@ class Order extends Model
         return $this->hasManyThrough(User::class, OrderCourier::class, 'order_id', 'id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function type_time()
     {
         return $this->hasOne(TypeOfTime::class, 'id', 'type_of_delivery');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function status()
+    {
+        return $this->belongsToMany(Status::class, 'orders_statuses');
+    }
+
 
     /**
      * @return static

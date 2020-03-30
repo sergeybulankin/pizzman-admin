@@ -35,6 +35,7 @@ Route::group(['prefix' => 'list'], function () {
     Route::get('/types', 'TypeController@show');
     Route::get('/ftypes', 'FoodTypeController@show');
     Route::get('/fadditives', 'FoodAdditiveController@show');
+    Route::get('/faddress', 'PizzmanAddressFoodController@show');
 
     Route::get('/foods', 'FoodController@show');
     Route::put('/food/recomend/{id}', 'FoodController@recomend')->middleware('auth');
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'create'], function() {
     Route::get('/type', 'TypeController@index');
     Route::get('/food', 'FoodController@index');
     Route::get('/ftype', 'FoodTypeController@index');
+    Route::get('/faddress', 'PizzmanAddressFoodController@index');
     Route::get('/fadditive', 'FoodAdditiveController@index');
 });
 
@@ -67,6 +69,7 @@ Route::group(['prefix' => 'store'], function() {
     Route::post('/type', 'TypeController@store')->middleware('auth');
     Route::post('/food', 'FoodController@store')->middleware('auth');
     Route::post('/ftype', 'FoodTypeController@store')->middleware('auth');
+    Route::post('/faddress', 'PizzmanAddressFoodController@store')->middleware('auth');
     Route::post('/fadditive', 'FoodAdditiveController@store')->middleware('auth');
 });
 
@@ -82,5 +85,6 @@ Route::group(['prefix' => 'update'], function() {
 
 Route::group(['prefix' => 'delete'], function() {
     Route::put('/ftype/{id}/{type_id}', 'FoodTypeController@delete')->middleware('auth');
+    Route::put('/faddress/{id}/{address_id}', 'PizzmanAddressFoodController@delete')->middleware('auth');
     Route::put('/fadditive/{id}', 'FoodAdditiveController@delete')->middleware('auth');
 });

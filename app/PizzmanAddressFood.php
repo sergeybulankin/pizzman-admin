@@ -15,4 +15,12 @@ class PizzmanAddressFood extends Model
     {
         return $this->hasOne(Food::class, 'id', 'food_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function pizzman_address()
+    {
+        return $this->hasOne(PizzmanAddress::class, 'id', 'pizzman_address_id');
+    }
 }

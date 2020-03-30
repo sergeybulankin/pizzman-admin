@@ -33,22 +33,26 @@
                     <td class="next-step"></td>
                 </tr>
                 <tr class="list" v-for="(order, index) in ALL_ORDERS" :key="index"
-                    :style="order.type_of_time == 1 ? 'background-color: #D4F7F0;' : 'background-color: white;' ">
+                    :style="order.type_of_time == 1 ? 'background-color: #e3f78b;' : 'background-color: white;' ">
                     <td class="number-order"># {{ order.id }}</td>
                     <td class=number-phone>
                         {{ order.user.name }}
 
                         <div class="type-of-time" v-if="order.type_of_time == 1">
-                            {{ order.date }}
+                            к {{ order.date | moment }}
                         </div>
                     </td>
                     <td class="list-foods">
                         <span class="list-food" @click="listFood(order.id)">просмотреть</span>
                     </td>
                     <td class="address"
-                        :style="order.type_of_delivery == 1 ? 'background-color: #E7F7CA;' : 'background-color: white;' ">
+                        :style="order.type_of_delivery == 1 || order.type_of_delivery == 3 ? 'background-color: #E7F7CA;' : 'background-color: white;' ">
                         <div v-for="(address, i) in order.address" :key="i">
                             {{ address.address }} - {{ address.kv }}
+                        </div>
+
+                        <div v-if="order.type_of_delivery == 3">
+                            <strong>Приду покушать</strong>
                         </div>
 
                         <div v-if="order.type_of_delivery == 0">
@@ -63,7 +67,7 @@
                         </div>
                     </td>
                     <td>
-                        <div v-if="order.type_of_delivery == 0">
+                        <div v-if="order.type_of_delivery == 2">
                             <div v-if="order.last_status.status_id == 4">
                                 <select name="driver" class="form-control" v-model="driver">
                                     <option :value="driver.user_id" v-for="(driver, i) in ALL_DRIVERS" :key="i">{{ driver.name }}  {{ driver.second_name }}</option>
@@ -123,6 +127,8 @@
 </template>
 
 <script>
+    moment.locale('ru');
+
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
@@ -141,6 +147,11 @@
             this.SELECTED_ALL_STATUSES();
             this.SELECTED_ORDERS();
             this.SELECTED_ALL_DRIVERS();
+        },
+        filters: {
+            moment: (date) => {
+                return moment(date).format('D MMMM, H:mm');
+            }
         },
         computed: mapGetters([
             'ALL_STATUSES',

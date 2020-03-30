@@ -83,6 +83,17 @@
                     </a>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="panel-crud">
+                    <a href="/list/faddress">
+                        <div class=panel-crud-image>
+                            <img src="../images/icons/admin/categories.png" alt="">
+                        </div>
+                        Блюда и точки
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

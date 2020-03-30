@@ -63413,6 +63413,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+
+moment.locale('ru');
 
 
 
@@ -63434,6 +63440,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.SELECTED_ALL_DRIVERS();
     },
 
+    filters: {
+        moment: function (_moment) {
+            function moment(_x) {
+                return _moment.apply(this, arguments);
+            }
+
+            moment.toString = function () {
+                return _moment.toString();
+            };
+
+            return moment;
+        }(function (date) {
+            return moment(date).format('D MMMM, H:mm');
+        })
+    },
     computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['ALL_STATUSES', 'ALL_ORDERS', 'ALL_DRIVERS', 'LOADER', 'DRIVER', 'LIST']),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['SELECTED_ALL_STATUSES', 'SELECTED_ORDERS', 'SELECTED_ORDERS_BY_STATUS', 'SELECTED_ALL_DRIVERS', 'LIST_FOOD', 'TRANSITION_TO_A_NEW_STAGE', 'SEND_ORDER_TO_COURIER', 'VIEW_DRIVER']), {
         changeOrdersByStatus: function changeOrdersByStatus(id) {
@@ -63577,7 +63598,7 @@ var render = function() {
                 staticClass: "list",
                 style:
                   order.type_of_time == 1
-                    ? "background-color: #D4F7F0;"
+                    ? "background-color: #e3f78b;"
                     : "background-color: white;"
               },
               [
@@ -63594,8 +63615,8 @@ var render = function() {
                   order.type_of_time == 1
                     ? _c("div", { staticClass: "type-of-time" }, [
                         _vm._v(
-                          "\n                        " +
-                            _vm._s(order.date) +
+                          "\n                        к " +
+                            _vm._s(_vm._f("moment")(order.date)) +
                             "\n                    "
                         )
                       ])
@@ -63622,7 +63643,7 @@ var render = function() {
                   {
                     staticClass: "address",
                     style:
-                      order.type_of_delivery == 1
+                      order.type_of_delivery == 1 || order.type_of_delivery == 3
                         ? "background-color: #E7F7CA;"
                         : "background-color: white;"
                   },
@@ -63638,6 +63659,10 @@ var render = function() {
                         )
                       ])
                     }),
+                    _vm._v(" "),
+                    order.type_of_delivery == 3
+                      ? _c("div", [_c("strong", [_vm._v("Приду покушать")])])
+                      : _vm._e(),
                     _vm._v(" "),
                     order.type_of_delivery == 0
                       ? _c("div", [
@@ -63706,7 +63731,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("td", [
-                  order.type_of_delivery == 0
+                  order.type_of_delivery == 2
                     ? _c("div", [
                         order.last_status.status_id == 4
                           ? _c("div", [

@@ -19,8 +19,9 @@ class StatusResource extends Resource
         return [
             'id' => $this->id,
             'status_name' => $this->name,
+            'count' => $this->counts,
 
-            'count' => $this->counts_count
+            //'count' => $this->counts_count
         ];
     }
 }

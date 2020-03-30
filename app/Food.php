@@ -32,4 +32,12 @@ class Food extends Model
     {
         return $this->belongsToMany(Additive::class, 'foods_additives');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pizzman_address()
+    {
+        return $this->belongsToMany(PizzmanAddress::class, 'pizzmans_addresses_foods');
+    }
 }
