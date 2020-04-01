@@ -630,6 +630,121 @@ div[class^="driver-"] {
 
 
 
+.mobile-block {
+  display: none;
+}
+
+@media (max-width: 992px){
+  .left-block {
+    display: none;
+  }
+
+  .mobile-block {
+    display: inline-block;
+    flex-direction: column;
+    width: 60px;
+    background-color: #2B1B35;
+    min-height: 100vh;
+    box-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.6);
+    font-family: 'Ubuntu';
+    font-weight: 400;
+  }
+
+  .navbar {
+    padding: 30px 0;
+  }
+
+  .navbar-toggler-icon {
+    color: white;
+  }
+
+  .modal-header-close {
+    padding: 20px 10px;
+  }
+
+
+  .working-field, .control-field {
+    width: 650px;
+  }
+  table {
+    width: 650px;
+  }
+  .title {
+    display: none;
+  }
+}
+
+
+
+.navbar-toggler-icon:focus
+{
+  border: 0px;
+}
+
+.navbar-toggler-icon:focus {
+  outline: none;
+}
+
+#menu-mobil .modal-dialog
+{
+  height: 100%;
+  margin: 0px!important;
+  position: absolute;
+  max-width: unset;
+  width: calc(100% + 2px)!important;
+  left: -1px;
+  top: -1px;
+}
+
+#menu-mobil .modal-content
+{
+  border-radius: 0px;
+  color: rgb(255, 255, 255);
+  background-color: #2B1B35;
+  height: 100%;
+}
+
+#menu-mobil .close {
+  color: white;
+  opacity: 1;
+}
+
+#menu-mobil .modal-header
+{
+  border-bottom: 0px;
+}
+
+#about .nav-link, #about i
+{
+  font-size: 14px!important;
+}
+
+
+.li--mobile {
+  background-color: #422950;
+  border-radius: 4px;
+}
+
+.li--mobile {
+  margin: 10px 15px 0 0;
+}
+
+.point--mobile {
+  letter-spacing: 2px;
+}
+
+.user-info--mobile {
+  font-size: 15px;
+}
+
+.point-info--mobile {
+  margin: 10px 0 0 0;
+  padding: 10px 0 0 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-top: 2px solid #422950;
+}
 
 
 

@@ -32,6 +32,17 @@
 
 <body>
 <div id="app" class="wrap">
+
+    <div class="mobile-block">
+        <nav class="navbar navbar-expand-lg nav-gray">
+            <button type="button" data-toggle="modal" data-target="#menu-mobil" class="navbar-toggler">
+                <span class="navbar-toggler-icon fa fa fa-bars"></span>
+            </button>
+        </nav>
+
+        @include('layouts.mobile')
+    </div>
+
     <div class="left-block">
         @include('components.roles.roles')
         @yield('crud')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\BlackList;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\PointResource;
 use App\PizzmanAddress;
 use App\Role;
 use App\User;
@@ -221,9 +222,31 @@ class AccountController extends Controller
 
         $account = User::with('account')
             ->where('id', $user)
-            ->first();
+            ->get();
 
-        return new AccountResource($account);
+        return AccountResource::collection($account);
+    }
+
+    /**
+     * Точка, на которой работает пользователь
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function accountPoint(Request $request)
+    {
+        $point = UserPoint::where('user_id', $request->user)->first();
+
+        $address = PizzmanAddress::with('address_delivery')
+            ->where('address_id', $point->pizzman_address_id)
+            ->get();
+
+        $result = [];
+        foreach ($address as $key => $value) {
+            $result[] = $value->address_delivery;
+        }
+
+        return PointResource::collection(collect($result));
     }
 
     /**

@@ -25,6 +25,7 @@ window.moment = require('moment');
 Vue.component('board', require('./components/DashboardComponent.vue'));
 Vue.component('user', require('./components/UserComponent.vue'));
 Vue.component('navigation', require('./components/NavigationComponent.vue'));
+Vue.component('mobile-navigation', require('./components/MobileNavigationComponent.vue'));
 Vue.component('system', require('./components/SystemComponent.vue'));
 
 const app = new Vue({

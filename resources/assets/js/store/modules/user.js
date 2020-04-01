@@ -18,6 +18,14 @@ export default {
                 .catch(error => {ctx.commit('SYSTEM_WORK_CALLS_MUTATION', error_message)})
         },
 
+        SELECTED_INFO_POINT(ctx) {
+            var id = document.querySelector("meta[name='user-id']").getAttribute('content');
+
+            axios.post('/api/info-for-user-point', {user: id})
+                .then(res => {ctx.commit('SELECTED_INFO_POINT_MUTATION', res.data.data)})
+                .catch(error => {console.log(error)})
+        },
+
         SELECTED_CALLS(ctx) {
             var success = 'Звонки: работают в фоновом режиме';
             var error_message = 'Звонки: произошел сбои в работе';
@@ -36,7 +44,8 @@ export default {
         role: [],
         user: [],
         system_calls: '',
-        calls: 0
+        calls: 0,
+        point: []
     },
 
     mutations: {
@@ -46,6 +55,10 @@ export default {
 
         SELECTED_ALL_FOR_USER_MUTATION(state, user) {
             state.user = user;
+        },
+
+        SELECTED_INFO_POINT_MUTATION(state, point) {
+            state.point = point;
         },
 
         SELECTED_CALLS_MUTATION(state, calls) {
@@ -67,11 +80,15 @@ export default {
         },
 
         CALLS(state) {
-            return state.calls
+            return state.calls;
         },
 
         SYSTEM_WORK_CALLS(state) {
             return state.system_calls;
+        },
+
+        POINT(state) {
+            return state.point;
         }
     }
 }
