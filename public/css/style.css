@@ -664,10 +664,10 @@ div[class^="driver-"] {
 
 
   .working-field, .control-field {
-    width: 650px;
+    width: 500px;
   }
   table {
-    width: 650px;
+    width: 500px;
   }
   .title {
     display: none;
