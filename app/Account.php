@@ -21,7 +21,7 @@ class Account extends Model
      */
     public function role()
     {
-        return $this->hasManyThrough(UserRole::class, User::class, 'id', 'id', 'user_id');
+        return $this->hasManyThrough(UserRole::class, User::class, 'id', 'user_id', 'user_id');
     }
 
     /**

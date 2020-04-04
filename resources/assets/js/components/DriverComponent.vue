@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="map-info">
-                    <span class="map" @click="openMap">Показать адрес на карте</span>
+                    <span class="map" @click="openMap">{{ list[0].phone.name }}</span>
                 </div>
 
                 <button class="btn btn-default" @click="orderDelivered(list[0].order_status_id)">Доставлено</button>

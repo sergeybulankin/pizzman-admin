@@ -64360,7 +64360,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "map-info" }, [
                 _c("span", { staticClass: "map", on: { click: _vm.openMap } }, [
-                  _vm._v("Показать адрес на карте")
+                  _vm._v(_vm._s(list[0].phone.name))
                 ])
               ]),
               _vm._v(" "),

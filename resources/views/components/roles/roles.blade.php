@@ -1,5 +1,5 @@
-<div class="logo">
-    Logo
+<div class="logo" >
+    Админ панель
 </div>
 
 <div class="account">

@@ -8,6 +8,7 @@ use App\FoodInOrder;
 use App\Order;
 use App\OrderCourier;
 use App\OrderStatus;
+use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -148,6 +149,8 @@ class DriverController extends Controller
             $orders[$k]['order_status_id'] = $v['order_status_id'];
             $orders[$k]['order_id'] = $v['order_id'];
             $orders[$k]['food_key'] = $v['food_key'];
+            $user_id = Order::where('id', $v['order_id'])->first();
+            $orders[$k]['phone'] = User::select('name')->where('id', $user_id->user_id)->first();
         }
 
         return collect($orders)->unique('food_key')->groupBy('order_id');
